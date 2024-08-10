@@ -90,7 +90,9 @@
       <td></td>
       <td></td>
       <td></td>
-      <td><div class="event double"><input id="check" type="checkbox" class="checkbox" /><label for="check"></label>8:30–9:30 Yoga</div></td>
+      <td>
+        <app-event eventName="Hot Yoga" start="8:30" end="9:30"></app-event>
+      </td>
       <td></td>
       <td></td>
     </tr>
@@ -118,7 +120,9 @@
       <td class="headcol">10:00</td>
       <td></td>
       <td></td>
-      <td><div class="event double"><input id="check" type="checkbox" class="checkbox" /><label for="check"></label>10:00–11:00 Meeting</div></td>
+      <td>
+        <app-event [eventName]="'Meeting'" start="10:00" end="11:00"></app-event>
+      </td>
       <td></td>
       <td></td>
       <td></td>
