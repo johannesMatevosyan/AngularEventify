@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-event',
@@ -6,5 +6,15 @@ import { Component } from '@angular/core';
   styleUrls: ['./event.component.scss']
 })
 export class EventComponent {
+  @Input() start: string = '';
+  @Input() end: string = '';
+  _eventName: string = '';
 
+  @Input()
+  get eventName(): string {
+    return this._eventName;
+  }
+  set eventName(val: string) {
+    this._eventName = val;
+  }
 }
