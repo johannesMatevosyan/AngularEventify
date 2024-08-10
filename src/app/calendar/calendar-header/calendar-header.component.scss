@@ -19,6 +19,12 @@ header h1 {
 
 }
 
+.calendar-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .secondary {
   color: rgba(0, 0, 0, 0.4);
 }

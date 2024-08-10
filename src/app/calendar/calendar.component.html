@@ -1,6 +1,9 @@
 <div class="calendar">
 
-  <app-calendar-header></app-calendar-header>
+  <app-calendar-header
+    [weekStart]="weekStart"
+    [weekEnd]="weekEnd"
+    [year]="year"></app-calendar-header>
 
   <div class="outer">
 
@@ -121,7 +124,7 @@
       <td></td>
       <td></td>
       <td>
-        <app-event [eventName]="'Meeting'" start="10:00" end="11:00"></app-event>
+        <app-event [eventName]="'Meeting with Melanie'" start="10:00" end="11:00"></app-event>
       </td>
       <td></td>
       <td></td>

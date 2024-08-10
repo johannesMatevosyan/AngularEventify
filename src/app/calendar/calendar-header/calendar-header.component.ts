@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { DateTime } from 'luxon';
 
 @Component({
   selector: 'app-calendar-header',
@@ -6,5 +7,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./calendar-header.component.scss']
 })
 export class CalendarHeaderComponent {
-
+  @Input() year: number = new Date().getFullYear();
+  @Input() weekStart: string = '';
+  @Input() weekEnd: string = '';
 }
