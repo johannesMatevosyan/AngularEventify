@@ -5,12 +5,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CalendarComponent } from './calendar/calendar.component';
 import { CalendarHeaderComponent } from './calendar/calendar-header/calendar-header.component';
+import { EventComponent } from './calendar/event/event.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CalendarComponent,
-    CalendarHeaderComponent
+    CalendarHeaderComponent,
+    EventComponent
   ],
   imports: [
     BrowserModule,
