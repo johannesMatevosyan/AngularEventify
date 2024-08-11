@@ -4,7 +4,9 @@
     [weekStart]="weekStart"
     [weekEnd]="weekEnd"
     [year]="year"
+    [monthName]="monthName"
     (onToday)="getToday($event)"
+    (onWeekCHange)="getWeekChange($event)"
     ></app-calendar-header>
 
   <div class="outer">
