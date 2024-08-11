@@ -30,8 +30,25 @@ export class CalendarComponent implements OnInit {
     this.endOfWeek = this.startOfWeek.endOf('week');
     this.weekStart = this.startOfWeek.toFormat("ccc, dd");
     this.weekEnd = this.endOfWeek.toFormat("ccc, dd");
-    this.weekDates = Array.from({ length: 7 }, (_, i) => {
-      return this.startOfWeek.plus({ days: i }).toFormat('ccc, dd');
-    });
+    this.weekDates = Array.from({ length: 7 }, (_, i) =>
+      this.startOfWeek.plus({ days: i }).toFormat('ccc, dd')
+    );
+  }
+  getFirstOrLastWeek(event$: 'first'|'last'): void {
+    // Get the first or last day of the current year
+    const resultWeek = event$ === 'last' ? this.now.endOf('year'): this.now.startOf('year');
+
+    // Get the start of the first week that contains the first day of the year
+    this.startOfWeek = resultWeek.startOf('week');
+
+    // Get the first or last month name of the the year
+    this.monthName = this.startOfWeek.monthLong;
+    this.weekStart = this.startOfWeek.toFormat("ccc, dd");
+    this.endOfWeek = this.startOfWeek.endOf('week');
+    this.weekEnd = this.endOfWeek.toFormat("ccc, dd");
+    // Create an array of dates for the first week of the year
+    this.weekDates = Array.from({ length: 7 }, (_, i) =>
+      this.startOfWeek.plus({ days: i }).toFormat('ccc, dd') // Format as desired
+    );
   }
 }

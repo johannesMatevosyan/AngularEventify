@@ -1,12 +1,18 @@
 <header>
   <button class="today secondary" (click)="getToday()">Today</button>
   <div class="calendar-title">
+    <div class="icon secondary chevron chevron-left" (click)="getFirstOrLastWeek('first')">
+      <button>&#171;</button>
+    </div>
     <div class="icon secondary chevron chevron-left" (click)="toPreviousWeek()">
       <button>&lsaquo;</button>
     </div>
     <h1 class="week-label"><span></span><strong>{{ weekStart }} – {{ weekEnd }}</strong>, &nbsp;{{ monthName }} &nbsp; {{ year }}</h1>
     <div class="icon secondary chevron chevron-right" (click)="toNextWeek()">
       <button>&rsaquo;</button>
+    </div>
+    <div class="icon secondary chevron chevron-right" (click)="getFirstOrLastWeek('last')">
+      <button>&#187;</button>
     </div>
   </div>
   <div class="header-align"></div>

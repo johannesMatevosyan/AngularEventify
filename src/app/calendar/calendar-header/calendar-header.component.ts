@@ -13,6 +13,7 @@ export class CalendarHeaderComponent {
   @Input() weekEnd: string = '';
   @Output() onToday = new EventEmitter<string>();
   @Output() onWeekCHange = new EventEmitter<string>();
+  @Output() onGetFirstOrLastWeek = new EventEmitter<'first'|'last'>();
 
   getToday(): string {
     console.log(DateTime.now().toFormat('ccc, dd LLL yyyy'))
@@ -25,5 +26,9 @@ export class CalendarHeaderComponent {
 
   toNextWeek(): void {
     this.onWeekCHange.emit('next');
+  }
+
+  getFirstOrLastWeek(value: 'first'|'last'): void {
+    this.onGetFirstOrLastWeek.emit(value);
   }
 }
