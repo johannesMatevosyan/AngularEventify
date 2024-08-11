@@ -73,8 +73,21 @@ button.secondary:focus {
   cursor: pointer;
   vertical-align: middle;
   position: relative;
+  button{
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    font-weight: 700;
+  }
 }
 .today {
   align-self: flex-start;
   flex: 0 0 1;
+}
+.week-label {
+  flex: 1;
+}
+.header-align {
+  align-self: flex-start; flex: 0 0 1
 }
