@@ -12,13 +12,19 @@
   <thead>
     <tr>
       <th class="headcol"></th>
-      <th>Mon, 18</th>
+      <ng-container *ngFor="let singleDate of weekDates; let i = index; let isLast = last">
+        <th *ngIf="i !== weekDates.length - 2 && !isLast">{{ singleDate }}</th>
+        <th *ngIf="i === weekDates.length - 2">{{ singleDate }}</th>
+        <th *ngIf="isLast">{{ singleDate }}</th>
+      </ng-container>
+
+      <!-- <th>Mon, 18</th>
       <th>Tue, 19</th>
       <th class="today">Wed, 20</th>
       <th>Thu, 21</th>
       <th>Fri, 22</th>
       <th class="secondary">Sat, 23</th>
-      <th class="secondary">Sun, 24</th>
+      <th class="secondary">Sun, 24</th> -->
     </tr>
   </thead>
   </table>
@@ -283,6 +289,46 @@
     </tr>
     <tr>
       <td class="headcol">18:00</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td class="headcol"></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td class="headcol">19:00</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td class="headcol"></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td class="headcol">20:00</td>
       <td></td>
       <td></td>
       <td></td>

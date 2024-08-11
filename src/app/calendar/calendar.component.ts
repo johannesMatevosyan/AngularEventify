@@ -7,9 +7,16 @@ import { DateTime } from "luxon";
   styleUrls: ['./calendar.component.scss']
 })
 export class CalendarComponent implements OnInit {
-  dateTime = DateTime.now();
-  weekStart = this.dateTime.startOf('week').toFormat("ccc, dd");
-  weekEnd = this.dateTime.endOf('week').toFormat("ccc, dd");
-  year = this.dateTime.year;
-  ngOnInit(): void {}
+  now = DateTime.now();
+  startOfWeek = this.now.startOf('week');
+  endOfWeek = this.now.endOf('week');
+  weekStart = this.startOfWeek.toFormat("ccc, dd");
+  weekEnd = this.endOfWeek.toFormat("ccc, dd");
+  year = this.now.year;
+  weekDates: string[] = [];
+  ngOnInit(): void {
+    this.weekDates = Array.from({ length: 7 }, (_, i) => {
+      return this.startOfWeek.plus({ days: i }).toFormat('ccc, dd');
+    });
+  }
 }
