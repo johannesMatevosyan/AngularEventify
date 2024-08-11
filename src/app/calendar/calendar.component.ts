@@ -16,12 +16,21 @@ export class CalendarComponent implements OnInit {
   monthName = this.startOfWeek.monthLong;
   weekDates: string[] = [];
   ngOnInit(): void {
+
     this.weekDates = Array.from({ length: 7 }, (_, i) => {
       return this.startOfWeek.plus({ days: i }).toFormat('ccc, dd');
     });
   }
-  getToday(event$: string): string {
-    return event$
+  getToday(): void {
+    this.startOfWeek = this.now.startOf('week');
+    this.endOfWeek = this.now.endOf('week');
+    this.weekStart = this.startOfWeek.toFormat("ccc, dd");
+    this.weekEnd = this.endOfWeek.toFormat("ccc, dd");
+    this.year = this.now.year;
+    this.monthName = this.startOfWeek.monthLong;
+    this.weekDates = Array.from({ length: 7 }, (_, i) => {
+      return this.startOfWeek.plus({ days: i }).toFormat('ccc, dd');
+    });
   }
   getWeekChange(event$: string): void {
     this.startOfWeek = event$ === 'previous' ? this.startOfWeek.minus({ weeks: 1 }) : this.startOfWeek.plus({ weeks: 1 });

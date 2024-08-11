@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { DateTime } from 'luxon';
 
 @Component({
   selector: 'app-calendar-header',
@@ -11,13 +10,12 @@ export class CalendarHeaderComponent {
   @Input() monthName: string = new Date(Date.now()).toLocaleString("en-US", { month: "long" });
   @Input() weekStart: string = '';
   @Input() weekEnd: string = '';
-  @Output() onToday = new EventEmitter<string>();
+  @Output() onToday = new EventEmitter<void>();
   @Output() onWeekCHange = new EventEmitter<string>();
   @Output() onGetFirstOrLastWeek = new EventEmitter<'first'|'last'>();
 
-  getToday(): string {
-    console.log(DateTime.now().toFormat('ccc, dd LLL yyyy'))
-    return DateTime.now().toFormat('ccc, dd LLL yyyy');
+  getToday(): void {
+    this.onToday.emit();
   }
 
   toPreviousWeek(): void {
