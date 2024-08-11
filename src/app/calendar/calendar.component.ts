@@ -19,4 +19,7 @@ export class CalendarComponent implements OnInit {
       return this.startOfWeek.plus({ days: i }).toFormat('ccc, dd');
     });
   }
+  getToday(event$: string): string {
+    return event$
+  }
 }

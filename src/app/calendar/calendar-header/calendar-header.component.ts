@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { DateTime } from 'luxon';
 
 @Component({
@@ -10,4 +10,10 @@ export class CalendarHeaderComponent {
   @Input() year: number = new Date().getFullYear();
   @Input() weekStart: string = '';
   @Input() weekEnd: string = '';
+  @Output() onToday = new EventEmitter<string>();
+
+  getToday(): string {
+    console.log(DateTime.now().toFormat('ccc, dd LLL yyyy'))
+    return DateTime.now().toFormat('ccc, dd LLL yyyy');
+  }
 }

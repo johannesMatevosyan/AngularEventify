@@ -3,10 +3,11 @@
   <app-calendar-header
     [weekStart]="weekStart"
     [weekEnd]="weekEnd"
-    [year]="year"></app-calendar-header>
+    [year]="year"
+    (onToday)="getToday($event)"
+    ></app-calendar-header>
 
   <div class="outer">
-
 
   <table>
   <thead>
@@ -17,14 +18,6 @@
         <th *ngIf="i === weekDates.length - 2">{{ singleDate }}</th>
         <th *ngIf="isLast">{{ singleDate }}</th>
       </ng-container>
-
-      <!-- <th>Mon, 18</th>
-      <th>Tue, 19</th>
-      <th class="today">Wed, 20</th>
-      <th>Thu, 21</th>
-      <th>Fri, 22</th>
-      <th class="secondary">Sat, 23</th>
-      <th class="secondary">Sun, 24</th> -->
     </tr>
   </thead>
   </table>
