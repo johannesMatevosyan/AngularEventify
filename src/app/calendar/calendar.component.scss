@@ -27,11 +27,10 @@ body {
   border-radius: 8px;
 }
 .wrap {
-
   overflow-x: hidden;
   overflow-y: scroll;
-    max-width: 1280px;
-  height: 500px;
+  max-width: 1280px;
+  height: calc(100vh - 120px);
   border-radius: 8px;
 }
 
@@ -70,8 +69,11 @@ table {
   text-align: center;
   border: 0;
   position: relative;
-  top: -12px;
   border-bottom: 1px solid transparent;
+  .headcol-text {
+    position: absolute;
+    top: -10px;
+  }
 }
 
 thead th {
@@ -128,9 +130,10 @@ td:hover:after {
   position: absolute;
 }
 
-
-tr td:nth-child(2), tr td:nth-child(3), .past {
-  background: #fafafa;
+tbody {
+  tr:nth-child(4n), tr:nth-child(4n-1) {
+    background-color: #fafafa;
+  }
 }
 
 .calendar {
