@@ -30,7 +30,7 @@
 
   <tbody>
     <ng-container *ngFor="let time of timeSlots">
-      <tr>
+      <tr [attr.data-time]="'time-' + (time | removeZeros)">
         <td class="headcol">
           <span class="headcol-text">{{ time }}</span>
         </td>
@@ -42,7 +42,7 @@
         <td></td>
         <td></td>
       </tr>
-      <tr>
+      <tr [attr.data-time]="'time-' + (time | removeZeros) + '-30'">
         <td class="headcol"></td>
         <td></td>
         <td></td>
