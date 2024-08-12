@@ -55,16 +55,13 @@ table {
   height: 100%;
   border-collapse: collapse;
   table-layout: fixed;
-
 }
 
-
-
 .headcol {
-  width: 60px;
+  width: 40px;
   font-size: 0.875rem;
   font-weight: 500;
-  color: rgba(0, 0, 0, 0.5);
+  color: rgba(0, 0, 0, 0.75);
   padding: 0.25rem 0;
   text-align: center;
   border: 0;
@@ -73,6 +70,8 @@ table {
   .headcol-text {
     position: absolute;
     top: -10px;
+    font-size: 16px;
+    font-weight: 500;
   }
 }
 
@@ -84,10 +83,9 @@ thead th {
 }
 
 thead {
-    z-index: 2;
-    background: white;
-    border-bottom: 2px solid #ddd;
-
+  z-index: 2;
+  background: white;
+  border-bottom: 2px solid #ddd;
 }
 
 tr, tr td {
@@ -131,7 +129,8 @@ td:hover:after {
 }
 
 tbody {
-  tr:nth-child(4n), tr:nth-child(4n-1) {
+  tr:nth-child(4n) td:not(:first-child),
+  tr:nth-child(4n-1) td:not(:first-child) {
     background-color: #fafafa;
   }
 }
