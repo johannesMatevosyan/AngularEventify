@@ -3,8 +3,8 @@
   <app-calendar-header
     [weekStart]="weekStart"
     [weekEnd]="weekEnd"
-    [year]="year"
-    [monthName]="monthName"
+    [year]="this.timeFrame.year"
+    [monthName]="this.timeFrame.month"
     (onToday)="getToday()"
     (onWeekCHange)="getWeekChange($event)"
     (onGetFirstOrLastWeek)="getFirstOrLastWeek($event)"
@@ -13,336 +13,46 @@
   <div class="outer">
 
   <table>
-  <thead>
-    <tr>
-      <th class="headcol"></th>
-      <ng-container *ngFor="let singleDate of weekDates; let i = index; let isLast = last">
-        <th *ngIf="i !== weekDates.length - 2 && !isLast">{{ singleDate }}</th>
-        <th *ngIf="i === weekDates.length - 2">{{ singleDate }}</th>
-        <th *ngIf="isLast">{{ singleDate }}</th>
-      </ng-container>
-    </tr>
-  </thead>
+    <thead>
+      <tr>
+        <th class="headcol"></th>
+        <ng-container *ngFor="let singleDate of weekDates; let i = index; let isLast = last">
+          <th *ngIf="i !== weekDates.length - 2 && !isLast">{{ singleDate }}</th>
+          <th *ngIf="i === weekDates.length - 2">{{ singleDate }}</th>
+          <th *ngIf="isLast">{{ singleDate }}</th>
+        </ng-container>
+      </tr>
+    </thead>
   </table>
 
 <div class="wrap">
   <table class="offset">
 
   <tbody>
-    <tr>
-      <td class="headcol">
-        <span class="headcol-text">6:00</span>
-      </td>
-      <td></td>
-      <td></td>
-      <td class="past"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td class="headcol"></td>
-      <td></td>
-      <td></td>
-      <td class="past"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td class="headcol">
-        <span class="headcol-text">7:00</span>
-      </td>
-      <td></td>
-      <td></td>
-      <td class="past"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td class="headcol"></td>
-      <td></td>
-      <td></td>
-      <td class="now"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td class="headcol">
-        <span class="headcol-text">8:00</span>
-      </td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td class="headcol"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td>
-        <app-event eventName="Hot Yoga" start="8:30" end="9:30"></app-event>
-      </td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td class="headcol">
-        <span class="headcol-text">9:00</span>
-      </td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td class="headcol"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td class="headcol">
-        <span class="headcol-text">10:00</span>
-      </td>
-      <td></td>
-      <td></td>
-      <td>
-        <app-event [eventName]="'Meeting with Melanie'" start="10:00" end="11:00"></app-event>
-      </td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td class="headcol"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td class="headcol"><span class="headcol-text">11:00</span></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td class="headcol"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td class="headcol"><span class="headcol-text">12:00</span></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td class="headcol"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td class="headcol"><span class="headcol-text">13:00</span></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td class="headcol"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td class="headcol"><span class="headcol-text">14:00</span></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td class="headcol"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td class="headcol"><span class="headcol-text">15:00</span></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td class="headcol"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td class="headcol"><span class="headcol-text">16:00</span></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td class="headcol"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td class="headcol"><span class="headcol-text">17:00</span></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td class="headcol"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td class="headcol"><span class="headcol-text">18:00</span></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td class="headcol"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td class="headcol"><span class="headcol-text">19:00</span></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td class="headcol"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td class="headcol"><span class="headcol-text">20:00</span></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td class="headcol"></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
+    <ng-container *ngFor="let time of timeSlots">
+      <tr>
+        <td class="headcol">
+          <span class="headcol-text">{{ time }}</span>
+        </td>
+        <td></td>
+        <td></td>
+        <td class="past"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td class="headcol"></td>
+        <td></td>
+        <td></td>
+        <td class="past"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+    </ng-container>
   </tbody>
 </table>
 </div>
