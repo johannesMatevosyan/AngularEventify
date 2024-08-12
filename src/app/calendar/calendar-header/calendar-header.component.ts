@@ -11,7 +11,7 @@ export class CalendarHeaderComponent {
   @Input() weekStart: string = '';
   @Input() weekEnd: string = '';
   @Output() onToday = new EventEmitter<void>();
-  @Output() onWeekCHange = new EventEmitter<string>();
+  @Output() onWeekCHange = new EventEmitter<'previous'|'next'>();
   @Output() onGetFirstOrLastWeek = new EventEmitter<'first'|'last'>();
 
   getToday(): void {
