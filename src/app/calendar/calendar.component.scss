@@ -126,12 +126,19 @@ td:hover:after {
   font-weight: 100;
   color: rgba(0, 0, 0, 0.5);
   position: absolute;
+
+}
+td:first-child:hover:after {
+  content: none;
 }
 
 tbody {
   tr:nth-child(4n) td:not(:first-child),
   tr:nth-child(4n-1) td:not(:first-child) {
     background-color: #fafafa;
+  }
+  tr td:first-child {
+    cursor: default;
   }
 }
 
