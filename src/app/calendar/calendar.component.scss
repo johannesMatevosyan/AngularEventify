@@ -131,6 +131,9 @@ td:hover:after {
 td:first-child:hover:after {
   content: none;
 }
+td:hover:after .event-box {
+  content: none;
+}
 
 tbody {
   tr:nth-child(4n) td:not(:first-child),
@@ -139,6 +142,21 @@ tbody {
   }
   tr td:first-child {
     cursor: default;
+  }
+
+}
+
+.event-box {
+  background-color: #0000EE;
+  color: #ffffff;
+  font-size: 13px;
+  height: calc(100% - 0.25rem);
+  padding: 0.25rem 0.5rem;
+  border-radius: 3px;
+  border: 1px solid #0000EE;
+  cursor: pointer;
+  &:hover {
+    background-color: #0036B1
   }
 }
 
