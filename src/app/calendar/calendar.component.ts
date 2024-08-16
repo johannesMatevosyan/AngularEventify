@@ -2,6 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { DateTime } from "luxon";
 import { EventService, IEvent } from '../event.service';
 
+export interface IWeekDay {
+  day: string;
+  date: string;
+  isToday? : boolean
+}
+
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
@@ -18,9 +24,9 @@ export class CalendarComponent implements OnInit {
     year: this.now.year
   }
   timeSlots: string[] = [];
-  weekDays: { day: string; date: string; }[] = [];
+  weekDays: IWeekDay[] = [];
   startTime = 6; // 06:00 AM
-  endTime = 19;  // 07:00 PM
+  endTime = 18;  // 07:00 PM
   eventGrid: any = [];
   eventsList: IEvent[] = [];
   constructor(private eventService: EventService) {
@@ -32,8 +38,7 @@ export class CalendarComponent implements OnInit {
 
     this.eventService.getAllEvents().subscribe(events => {
       this.eventsList = events;
-      this.eventGrid = this.generateEventGrid();
-      console.log(this.eventGrid);
+      this.eventGrid = this.generateEventGrid(this.weekDays);
     });
   }
   getToday(): void {
@@ -46,6 +51,7 @@ export class CalendarComponent implements OnInit {
     this.timeFrame.month = this.startOfWeek.monthLong;
     // Create an array of dates for the first week of the year
     this.weekDays = this.getWeekDays(this.startOfWeek);
+    this.eventGrid = this.generateEventGrid(this.weekDays);
   }
   getWeekChange(event$: 'previous'|'next'): void {
     this.startOfWeek = this.detectWeekChange(event$);
@@ -58,6 +64,7 @@ export class CalendarComponent implements OnInit {
     this.weekEnd = this.endOfWeek.toFormat("ccc, dd");
     // Create an array of dates for the first week of the year
     this.weekDays = this.getWeekDays(this.startOfWeek);
+    this.eventGrid = this.generateEventGrid(this.weekDays);
   }
   detectWeekChange(event$: 'previous'|'next'): DateTime<true> {
     return event$ === 'previous' ? this.startOfWeek.minus({ weeks: 1 }) : this.startOfWeek.plus({ weeks: 1 });
@@ -76,10 +83,11 @@ export class CalendarComponent implements OnInit {
     this.weekEnd = this.endOfWeek.toFormat("ccc, dd");
     // Create an array of dates for the first week of the year
     this.weekDays = this.getWeekDays(this.startOfWeek);
+    this.eventGrid = this.generateEventGrid(this.weekDays);
   }
 
-  getWeekDays(data: DateTime<true>): { day: string; date: string; }[] {
-    return this.weekDays = Array.from({ length: 7 }, (_, i) =>
+  getWeekDays(data: DateTime<true>): IWeekDay[] {
+      const weekDays: IWeekDay[] =  Array.from({ length: 7 }, (_, i) =>
       {
         const date = data.plus({ days: i });
         return {
@@ -88,6 +96,13 @@ export class CalendarComponent implements OnInit {
         };
       }
     );
+    const today: string = this.now.toFormat("yyyy-MM-dd");
+    weekDays.forEach(dayObj => {
+      if (dayObj.date === today) {
+        dayObj.isToday = true;
+      }
+    })
+    return weekDays;
   }
   checkMonth(value: string): string{
     return this.timeFrame.month === value ? this.timeFrame.month : value;
@@ -113,9 +128,9 @@ export class CalendarComponent implements OnInit {
   }
 
 
-  generateEventGrid(): any {
+  generateEventGrid(weekDays: IWeekDay[]): any {
     const schedule: any = [];
-    this.weekDays.forEach(day => {
+    weekDays.forEach(day => {
       const daySchedule = this.timeSlots.map(time => {
         const event = this.eventsList.find(e => e.date === day.date && e.time === time);
         return { time, event }; // If no event, event will be undefined

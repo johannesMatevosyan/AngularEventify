@@ -17,11 +17,11 @@
     <thead>
       <tr>
         <th class="headcol"></th>
-        <ng-container *ngFor="let singleDate of weekDays; let i = index; let isLast = last">
-          <th *ngIf="i !== weekDays.length - 2 && !isLast">{{ singleDate.day }}</th>
-          <th *ngIf="i === weekDays.length - 2">{{ singleDate.day }}</th>
-          <th *ngIf="isLast">{{ singleDate.day }}</th>
-        </ng-container>
+        <th *ngFor="let dayInWeek of weekDays; let i = index; let isLast = last" [ngClass]="{'is-today' : dayInWeek.isToday}">
+          <span *ngIf="i !== weekDays.length - 2 && !isLast">{{ dayInWeek.day }}</span>
+          <span *ngIf="i === weekDays.length - 2">{{ dayInWeek.day }}</span>
+          <span *ngIf="isLast">{{ dayInWeek.day }}</span>
+        </th>
       </tr>
     </thead>
   <tbody>
@@ -34,7 +34,7 @@
 
           <div
             *ngIf="findEvent(day, slot)?.event; else noEvent"
-            [style.height]="'calc(' + getEventSpan(day.date, slot) + '% - 0.25rem)' || null"
+            [style.height]="'calc(' + getEventSpan(day.date, slot) + '% - 3px)' || null"
             class="event-box absolute"
             >
             <span class="event-box__title">{{ findEvent(day, slot).event?.title }}</span>
