@@ -11,43 +11,20 @@ body {
   background: #fafafa;
   box-sizing: border-box;
   height: 100vh;
-
 }
-
 .outer {
   position:relative;
 }
-
 .calendar {
-    margin: 0 auto;
-  max-width: 1280px;
+  margin: 0 auto;
   min-width: 500px;
-
-  box-shadow: 0px 30px 50px rgba(0, 0, 0, 0.2) ,0px 3px 7px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
 }
 .wrap {
   overflow-x: hidden;
   overflow-y: scroll;
-  max-width: 1280px;
-  height: calc(100vh - 120px);
+  height: calc(100vh - 70px);
   border-radius: 8px;
-}
-
-thead {
-    box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.2);
-}
-
-thead th {
-
-  text-align: center;
-  width: 100%;
-
-}
-
-tbody {
-  position: relative;
-  top: 45px;
 }
 table {
   background: #fff;
@@ -55,6 +32,10 @@ table {
   height: 100%;
   border-collapse: collapse;
   table-layout: fixed;
+  tbody {
+    position: relative;
+    top: 45px;
+  }
 }
 
 .headcol {
@@ -75,24 +56,18 @@ table {
   }
 }
 
-thead th {
-  font-size: 1rem;
-  font-weight: bold;
-  color: rgba(0, 0, 0, 0.9);
-  padding: 1rem;
-}
-
 thead {
+  th {
+    font-size: 1rem;
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.9);
+    padding: 1rem;
+    border-bottom: 2px solid #ddd;
+    text-align: center;
+    width: 100%;
+  }
   z-index: 2;
   background: white;
-  border-bottom: 2px solid #ddd;
-}
-
-tr, tr td {
-  height: 20px;
-}
-td {
-  text-align: center;
 }
 tr:nth-child(odd) td:not(.headcol) {
   border-bottom: 1px solid #e8e8e8;
@@ -102,37 +77,17 @@ tr:nth-child(even) td:not(.headcol) {
   border-bottom: 1px solid #eee;
 }
 
-tr td {
-  border-right: 1px solid #eee;
-  padding: 0;
-  white-space: none;
-  word-wrap: nowrap;
-}
-
 tbody tr td {
   position: relative;
   vertical-align: top;
   height: 40px;
   padding: 0.25rem 0.25rem 0 0.25rem;
   width: auto;
-
-}
-
-
-td:hover:after {
-  content: "+";
-  vertical-align: middle;
-  font-size: 1.875rem;
-  font-weight: 100;
-  color: rgba(0, 0, 0, 0.5);
-  position: absolute;
-
-}
-td:first-child:hover:after {
-  content: none;
-}
-td:hover:after .event-box {
-  content: none;
+  border-right: 1px solid #eee;
+  padding: 0;
+  white-space: none;
+  word-wrap: nowrap;
+  text-align: center;
 }
 
 tbody {
@@ -143,7 +98,6 @@ tbody {
   tr td:first-child {
     cursor: default;
   }
-
 }
 
 .event-box {
@@ -155,8 +109,16 @@ tbody {
   border-radius: 3px;
   border: 1px solid #0000EE;
   cursor: pointer;
+  z-index: 10000;
   &:hover {
     background-color: #0036B1
+  }
+  &.absolute {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    margin: auto;
+    width: calc(100% - 0.5rem);
   }
 }
 
@@ -165,8 +127,6 @@ tbody {
     color: red;
   }
 }
-
-
 .now {
   box-shadow: 0px -1px 0px 0px red;
 }
