@@ -51,14 +51,14 @@ table {
   .headcol-text {
     position: absolute;
     top: -10px;
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 500;
   }
 }
 
 thead {
   th {
-    font-size: 1rem;
+    font-size: 1.1rem;
     font-weight: bold;
     color: rgba(0, 0, 0, 0.9);
     padding: 1rem;
@@ -104,7 +104,7 @@ tbody {
   background-color: #0000EE;
   color: #ffffff;
   font-size: 13px;
-  height: calc(100% - 0.25rem);
+  height: calc(100% - 3px);
   padding: 0.25rem 0.5rem;
   border-radius: 3px;
   border: 1px solid #0000EE;
@@ -120,13 +120,4 @@ tbody {
     margin: auto;
     width: calc(100% - 0.5rem);
   }
-}
-
-.calendar {
-  .today {
-    color: red;
-  }
-}
-.now {
-  box-shadow: 0px -1px 0px 0px red;
 }
