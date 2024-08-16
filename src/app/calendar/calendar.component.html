@@ -12,45 +12,35 @@
 
   <div class="outer">
 
-  <table>
+<div class="wrap">
+  <table class="offset">
     <thead>
       <tr>
         <th class="headcol"></th>
-        <ng-container *ngFor="let singleDate of weekDates; let i = index; let isLast = last">
-          <th *ngIf="i !== weekDates.length - 2 && !isLast">{{ singleDate }}</th>
-          <th *ngIf="i === weekDates.length - 2">{{ singleDate }}</th>
-          <th *ngIf="isLast">{{ singleDate }}</th>
+        <ng-container *ngFor="let singleDate of weekDays; let i = index; let isLast = last">
+          <th *ngIf="i !== weekDays.length - 2 && !isLast">{{ singleDate.day }}</th>
+          <th *ngIf="i === weekDays.length - 2">{{ singleDate.day }}</th>
+          <th *ngIf="isLast">{{ singleDate.day }}</th>
         </ng-container>
       </tr>
     </thead>
-  </table>
-
-<div class="wrap">
-  <table class="offset">
-
   <tbody>
-    <ng-container *ngFor="let time of timeSlots">
-      <tr [attr.data-time]="'time-' + (time | removeZeros)">
+    <ng-container *ngFor="let slot of timeSlots; even as isEven;">
+      <tr [attr.data-time]="slot">
         <td class="headcol">
-          <span class="headcol-text">{{ time }}</span>
+          <span *ngIf="isEven" class="headcol-text">{{ slot }}</span>
         </td>
-        <td></td>
-        <td></td>
-        <td class="past"></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
-      <tr [attr.data-time]="'time-' + (time | removeZeros) + '-30'">
-        <td class="headcol"></td>
-        <td></td>
-        <td></td>
-        <td class="past"></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+        <td *ngFor="let day of eventGrid">
+
+          <div
+            *ngIf="findEvent(day, slot)?.event; else noEvent"
+            [style.height]="'calc(' + getEventSpan(day.date, slot) + '% - 0.25rem)' || null"
+            class="event-box absolute"
+            >
+            <span class="event-box__title">{{ findEvent(day, slot).event?.title }}</span>
+            <span class="event-box__description">{{ findEvent(day, slot).event?.description }}</span>
+          </div>
+        </td>
       </tr>
     </ng-container>
   </tbody>
@@ -59,3 +49,6 @@
 </div>
 </div>
 
+<ng-template #noEvent>
+  <!-- Placeholder or empty cell -->
+</ng-template>

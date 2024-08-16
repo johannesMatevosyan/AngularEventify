@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DateTime } from "luxon";
+import { EventService, IEvent } from '../event.service';
 
 @Component({
   selector: 'app-calendar',
@@ -17,12 +18,23 @@ export class CalendarComponent implements OnInit {
     year: this.now.year
   }
   timeSlots: string[] = [];
-  weekDates: string[] = [];
-  startHour = 6; // 06:00 AM
-  endHour = 19;  // 07:00 PM
+  weekDays: { day: string; date: string; }[] = [];
+  startTime = 6; // 06:00 AM
+  endTime = 19;  // 07:00 PM
+  eventGrid: any = [];
+  eventsList: IEvent[] = [];
+  constructor(private eventService: EventService) {
+
+  }
   ngOnInit(): void {
-    this.weekDates = this.getWeekDates(this.startOfWeek);
-    this.timeSlots = this.incrementDailyTime(this.startHour, this.endHour);
+    this.weekDays = this.getWeekDays(this.startOfWeek);
+    this.timeSlots = this.generateTimeSlots(this.startTime, this.endTime);
+
+    this.eventService.getAllEvents().subscribe(events => {
+      this.eventsList = events;
+      this.eventGrid = this.generateEventGrid();
+      console.log(this.eventGrid);
+    });
   }
   getToday(): void {
     this.startOfWeek = this.now.startOf('week');
@@ -33,7 +45,7 @@ export class CalendarComponent implements OnInit {
     this.timeFrame.year = this.now.year;
     this.timeFrame.month = this.startOfWeek.monthLong;
     // Create an array of dates for the first week of the year
-    this.weekDates = this.getWeekDates(this.startOfWeek);
+    this.weekDays = this.getWeekDays(this.startOfWeek);
   }
   getWeekChange(event$: 'previous'|'next'): void {
     this.startOfWeek = this.detectWeekChange(event$);
@@ -45,7 +57,7 @@ export class CalendarComponent implements OnInit {
     this.weekStart = this.startOfWeek.toFormat("ccc, dd");
     this.weekEnd = this.endOfWeek.toFormat("ccc, dd");
     // Create an array of dates for the first week of the year
-    this.weekDates = this.getWeekDates(this.startOfWeek);
+    this.weekDays = this.getWeekDays(this.startOfWeek);
   }
   detectWeekChange(event$: 'previous'|'next'): DateTime<true> {
     return event$ === 'previous' ? this.startOfWeek.minus({ weeks: 1 }) : this.startOfWeek.plus({ weeks: 1 });
@@ -63,12 +75,18 @@ export class CalendarComponent implements OnInit {
     this.endOfWeek = this.startOfWeek.endOf('week');
     this.weekEnd = this.endOfWeek.toFormat("ccc, dd");
     // Create an array of dates for the first week of the year
-    this.weekDates = this.getWeekDates(this.startOfWeek);
+    this.weekDays = this.getWeekDays(this.startOfWeek);
   }
 
-  getWeekDates(data: DateTime<true>): string[] {
-    return this.weekDates = Array.from({ length: 7 }, (_, i) =>
-      data.plus({ days: i }).toFormat('ccc, dd') // Format as desired
+  getWeekDays(data: DateTime<true>): { day: string; date: string; }[] {
+    return this.weekDays = Array.from({ length: 7 }, (_, i) =>
+      {
+        const date = data.plus({ days: i });
+        return {
+          day: date.toFormat('ccc, dd'),
+          date: date.toFormat('yyyy-MM-dd')
+        };
+      }
     );
   }
   checkMonth(value: string): string{
@@ -77,23 +95,54 @@ export class CalendarComponent implements OnInit {
   checkYear(value: number): number {
     return this.timeFrame.year === value ? this.timeFrame.year : value;
   }
-  incrementDailyTime(startHour: number, endHour: number): string[] {
+  generateTimeSlots(startTime: number, endTime: number): string[] {
     // Initialize the starting time (06:00 AM)
-    let currentTime = new Date();
-    currentTime.setHours(startHour, 0, 0, 0); // Set hours, minutes, seconds, and milliseconds
-
-    const times = [];
-
-    // Loop until the end hour is reached
-    while (currentTime.getHours() <= endHour) {
+    let currentTime = DateTime.now();
+    currentTime = currentTime.set({ hour: startTime, minute: 0, second: 0 });
+    const times: string[] = [];
+    while (currentTime.hour <= endTime) {
       // Format the current time as HH:mm
-      const formattedTime = currentTime.toTimeString().slice(0, 5);
-      times.push(formattedTime);
+      const formattedTime = currentTime.toFormat('HH:mm').slice(0, 5);
 
+      times.push(formattedTime);
       // Increment the time by one hour
-      currentTime.setHours(currentTime.getHours() + 1);
+      currentTime = currentTime.plus({ minutes: 30 });
     }
 
     return times;
+  }
+
+
+  generateEventGrid(): any {
+    const schedule: any = [];
+    this.weekDays.forEach(day => {
+      const daySchedule = this.timeSlots.map(time => {
+        const event = this.eventsList.find(e => e.date === day.date && e.time === time);
+        return { time, event }; // If no event, event will be undefined
+      });
+
+      schedule.push({ date: day.date, slots: daySchedule });
+    });
+
+    return schedule;
+  }
+
+  findEvent(day: any, slot: string): any {
+    const foundSlot = day?.slots.find((s: any) => s.time === slot);
+    return foundSlot ? foundSlot : [];
+  }
+
+  getEventSpan(date: string, time: string): number {
+    const event = this.eventsList.find(e => e.date === date && e.time === time);
+    if (!event) {
+      return 1; // No event at this time, so the cell spans only one row
+    }
+
+    // Calculate how many 30-minute slots the event spans
+    const startTime = DateTime.fromFormat(`${event.date} ${event.time}`, 'yyyy-MM-dd HH:mm');
+    const endTime = DateTime.fromFormat(`${event.date} ${event.endTime}`, 'yyyy-MM-dd HH:mm'); // Assume event has an endTime property
+
+    const duration = endTime.diff(startTime, 'minutes').minutes;
+    return Math.ceil(duration / 30)  * 100; // Number of 30-minute slots the event spans multiplayed by 100%
   }
 }
