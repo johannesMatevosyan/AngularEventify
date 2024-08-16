@@ -12,6 +12,20 @@ export interface IEvent {
 
 export const EVENTS: IEvent[] = [
   {
+    title: "Starting New Year",
+    time: "10:00",
+    endTime: "19:00",
+    date: "2024-01-04",
+    desciption: "Preparation for Christmas.",
+  },
+  {
+    title: "First Week of the Year",
+    time: "06:00",
+    endTime: "19:00",
+    date: "2024-01-10",
+    desciption: "First Week of the Year",
+  },
+  {
     title: "Celebrity Meeting",
     time: "15:30",
     endTime: "16:30",
@@ -87,6 +101,20 @@ export const EVENTS: IEvent[] = [
     endTime: "14:00",
     date: "2024-08-22",
     desciption: "Hollyday is a day of festivity or recreation when no work is done.",
+  },
+  {
+    title: "Preparation for Christmas",
+    time: "10:00",
+    endTime: "14:00",
+    date: "2024-12-23",
+    desciption: "Preparation for Christmas.",
+  },
+  {
+    title: "Summarize the Year",
+    time: "10:00",
+    endTime: "14:00",
+    date: "2024-12-31",
+    desciption: "Summarize the Year",
   }
 ];
 
