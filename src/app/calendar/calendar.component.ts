@@ -138,7 +138,7 @@ export class CalendarComponent implements OnInit {
     const schedule: ISchedule[] = [];
     weekDays.forEach(day => {
       const daySchedule: IScheduleItem[] = this.timeSlots.map(time => {
-        const event = this.eventsList.find(e => e.date === day.date && e.time === time);
+        const event = this.eventsList.find(e => e.date === day.date && e.startTime === time);
         return { time, event }; // If no event, event will be undefined
       });
 
@@ -153,13 +153,13 @@ export class CalendarComponent implements OnInit {
   }
 
   getEventSpan(date: string, time: string): number {
-    const event = this.eventsList.find(e => e.date === date && e.time === time);
+    const event = this.eventsList.find(e => e.date === date && e.startTime === time);
     if (!event) {
       return 1; // No event at this time, so the cell spans only one row
     }
 
     // Calculate how many 30-minute slots the event spans
-    const startTime = DateTime.fromFormat(`${event.date} ${event.time}`, 'yyyy-MM-dd HH:mm');
+    const startTime = DateTime.fromFormat(`${event.date} ${event.startTime}`, 'yyyy-MM-dd HH:mm');
     const endTime = DateTime.fromFormat(`${event.date} ${event.endTime}`, 'yyyy-MM-dd HH:mm'); // Assume event has an endTime property
 
     const duration = endTime.diff(startTime, 'minutes').minutes;
