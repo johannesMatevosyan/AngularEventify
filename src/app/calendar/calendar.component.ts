@@ -8,6 +8,16 @@ export interface IWeekDay {
   isToday? : boolean
 }
 
+export interface IScheduleItem {
+  event: IEvent | undefined,
+  time: string
+}
+
+export interface ISchedule {
+  date: string,
+  slots: IScheduleItem[]
+}
+
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
@@ -27,7 +37,7 @@ export class CalendarComponent implements OnInit {
   weekDays: IWeekDay[] = [];
   startTime = 6; // 06:00 AM
   endTime = 18;  // 07:00 PM
-  eventGrid: any = [];
+  eventGrid: ISchedule[] = [];
   eventsList: IEvent[] = [];
   constructor(private eventService: EventService) {
 
@@ -128,17 +138,16 @@ export class CalendarComponent implements OnInit {
   }
 
 
-  generateEventGrid(weekDays: IWeekDay[]): any {
-    const schedule: any = [];
+  generateEventGrid(weekDays: IWeekDay[]): ISchedule[] {
+    const schedule: ISchedule[] = [];
     weekDays.forEach(day => {
-      const daySchedule = this.timeSlots.map(time => {
+      const daySchedule: IScheduleItem[] = this.timeSlots.map(time => {
         const event = this.eventsList.find(e => e.date === day.date && e.time === time);
         return { time, event }; // If no event, event will be undefined
       });
 
       schedule.push({ date: day.date, slots: daySchedule });
     });
-
     return schedule;
   }
 
