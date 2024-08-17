@@ -17,10 +17,9 @@
     <thead>
       <tr>
         <th class="headcol"></th>
-        <th *ngFor="let dayInWeek of weekDays; let i = index; let isLast = last" [ngClass]="{'is-today' : dayInWeek.isToday}">
-          <span *ngIf="i !== weekDays.length - 2 && !isLast">{{ dayInWeek.day }}</span>
-          <span *ngIf="i === weekDays.length - 2">{{ dayInWeek.day }}</span>
-          <span *ngIf="isLast">{{ dayInWeek.day }}</span>
+        <th *ngFor="let dayInWeek of weekDays;"
+          [ngClass]="{'is-today' : dayInWeek.date === today.split(' ')[0]}">
+            {{ dayInWeek.day }}
         </th>
       </tr>
     </thead>
@@ -30,15 +29,20 @@
         <td class="headcol">
           <span *ngIf="isEven" class="headcol-text">{{ slot }}</span>
         </td>
-        <td *ngFor="let day of eventGrid">
+        <td *ngFor="let day of eventGrid"  [ngClass]="{'is-today' : day.date === today}">
+
+          <span
+            *ngIf="day.date === today.split(' ')[0] &&  isCurrentTimeInSlot(slot)"
+            [style.top.%]="calculateCurrentTimePosition(slot)"
+            class="current-time-indicator"></span>
 
           <div
             *ngIf="findEvent(day, slot)?.event; else noEvent"
-            [style.height]="'calc(' + getEventSpan(day.date, slot) + '% - 3px)' || null"
+            [style.height.%]="getEventSpan(day.date, slot) || null"
             class="event-box absolute"
             >
-            <span class="event-box__title">{{ findEvent(day, slot).event?.title }}</span>
-            <span class="event-box__description">{{ findEvent(day, slot).event?.description }}</span>
+            <span class="event-box__title">{{ findEvent(day, slot)?.event?.title }}</span>
+            <span class="event-box__description">{{ findEvent(day, slot)?.event?.description }}</span>
           </div>
         </td>
       </tr>

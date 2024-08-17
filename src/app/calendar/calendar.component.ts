@@ -39,11 +39,14 @@ export class CalendarComponent implements OnInit {
   endTime = 18;  // 07:00 PM
   eventGrid: ISchedule[] = [];
   eventsList: IEvent[] = [];
+  isToday = false;
+  today: string = this.now.toFormat("yyyy-MM-dd HH:mm");
   constructor(private eventService: EventService) {
 
   }
   ngOnInit(): void {
     this.weekDays = this.getWeekDays(this.startOfWeek);
+
     this.timeSlots = this.generateTimeSlots(this.startTime, this.endTime);
 
     this.eventService.getAllEvents().subscribe(events => {
@@ -97,7 +100,7 @@ export class CalendarComponent implements OnInit {
   }
 
   getWeekDays(data: DateTime<true>): IWeekDay[] {
-      const weekDays: IWeekDay[] =  Array.from({ length: 7 }, (_, i) =>
+    return Array.from({ length: 7 }, (_, i) =>
       {
         const date = data.plus({ days: i });
         return {
@@ -106,13 +109,6 @@ export class CalendarComponent implements OnInit {
         };
       }
     );
-    const today: string = this.now.toFormat("yyyy-MM-dd");
-    weekDays.forEach(dayObj => {
-      if (dayObj.date === today) {
-        dayObj.isToday = true;
-      }
-    })
-    return weekDays;
   }
   checkMonth(value: string): string{
     return this.timeFrame.month === value ? this.timeFrame.month : value;
@@ -151,9 +147,9 @@ export class CalendarComponent implements OnInit {
     return schedule;
   }
 
-  findEvent(day: any, slot: string): any {
-    const foundSlot = day?.slots.find((s: any) => s.time === slot);
-    return foundSlot ? foundSlot : [];
+  findEvent(day: ISchedule, slot: string): IScheduleItem | null {
+    const foundSlot: IScheduleItem | undefined = day?.slots.find((s: IScheduleItem) => s.time === slot);
+    return foundSlot ? foundSlot : null;
   }
 
   getEventSpan(date: string, time: string): number {
@@ -168,5 +164,29 @@ export class CalendarComponent implements OnInit {
 
     const duration = endTime.diff(startTime, 'minutes').minutes;
     return Math.ceil(duration / 30)  * 100; // Number of 30-minute slots the event spans multiplayed by 100%
+  }
+  // Check if the current time is within a given time slot
+  isCurrentTimeInSlot(slot: string): boolean {
+    const currentTime = DateTime.now();
+    const [slotHour, slotMinute] = slot.split(':').map(Number);
+
+    const slotStartTime = DateTime.now().set({ hour: slotHour, minute: slotMinute });
+    const nextSlotTime = slotStartTime.plus({ minutes: 30 });
+
+    return currentTime >= slotStartTime && currentTime < nextSlotTime;
+  }
+  // Calculate the current position of the current time within a given time slot
+  calculateCurrentTimePosition(slot: string): number {
+    const currentTime = DateTime.now();
+    const [slotHour, slotMinute] = slot.split(':').map(Number);
+
+    const slotStartTime = DateTime.now().set({ hour: slotHour, minute: slotMinute });
+    const nextSlotTime = slotStartTime.plus({ minutes: 30 });
+
+    const totalMinutesInSlot = nextSlotTime.diff(slotStartTime, 'minutes').minutes;
+    const minutesSinceSlotStart = currentTime.diff(slotStartTime, 'minutes').minutes;
+
+    const positionPercentage = (minutesSinceSlotStart / totalMinutesInSlot) * 100;
+    return Math.min(Math.max(positionPercentage, 0), 100); // Ensure it stays within bounds
   }
 }
