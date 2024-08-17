@@ -95,7 +95,7 @@ tbody {
       word-wrap: nowrap;
       text-align: center;
       &:hover {
-        background: #e3f2fd;
+        background: #e3f2fd !important;
       }
       &:first-child {
         cursor: default;
