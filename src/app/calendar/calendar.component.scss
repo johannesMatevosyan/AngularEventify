@@ -109,8 +109,6 @@ tbody {
 
 .event-box {
   background-color: #1a73e8;
-  color: #ffffff;
-  font-size: 13px;
   height: calc(100% - 3px);
   padding: 0.25rem 0.5rem;
   border-radius: 3px;
@@ -125,6 +123,21 @@ tbody {
     top: 3px;
     left: 3px;
     margin: auto;
-    width: calc(100% - 0.5rem);
+    width: calc(100% - 0.7rem);
+  }
+  .event-box__title {
+    display: block;
+    margin-bottom: 2px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    line-height: 1.1;
+    color: #fff;
+  }
+  .event-box__description {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 400;
+    line-height: 1.1;
+    color: #fff;
   }
 }
