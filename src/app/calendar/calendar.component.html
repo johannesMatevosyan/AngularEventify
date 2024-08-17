@@ -24,29 +24,28 @@
       </tr>
     </thead>
   <tbody>
-    <ng-container *ngFor="let slot of timeSlots; even as isEven;">
-      <tr [attr.data-time]="slot">
-        <td class="headcol">
-          <span *ngIf="isEven" class="headcol-text">{{ slot }}</span>
-        </td>
-        <td *ngFor="let day of eventGrid"  [ngClass]="{'is-today' : day.date === today}">
 
-          <span
-            *ngIf="day.date === today.split(' ')[0] &&  isCurrentTimeInSlot(slot)"
-            [style.top.%]="calculateCurrentTimePosition(slot)"
-            class="current-time-indicator"></span>
+    <tr *ngFor="let slot of timeSlots; even as isEven;" [attr.data-time]="slot">
+      <td class="headcol">
+        <span *ngIf="isEven" class="headcol-text">{{ slot }}</span>
+      </td>
+      <td *ngFor="let day of eventGrid"  [ngClass]="{'is-today' : day.date === today}">
 
-          <div
-            *ngIf="findEvent(day, slot)?.event; else noEvent"
-            [style.height.%]="getEventSpan(day.date, slot) || null"
-            class="event-box absolute"
-            >
-            <span class="event-box__title">{{ findEvent(day, slot)?.event?.title }}</span>
-            <span class="event-box__description">{{ findEvent(day, slot)?.event?.description }}</span>
-          </div>
-        </td>
-      </tr>
-    </ng-container>
+        <span
+          *ngIf="day.date === today.split(' ')[0] &&  isCurrentTimeInSlot(slot)"
+          [style.top.%]="calculateCurrentTimePosition(slot)"
+          class="current-time-indicator"></span>
+
+        <app-event
+          *ngIf="findEvent(day, slot)?.event; else noEvent"
+          [eventSpan]="getEventSpan(day.date, slot) || null"
+          [title]="findEvent(day, slot)?.event?.title || ''"
+          [description]="findEvent(day, slot)?.event?.description || ''"
+          >
+        </app-event>
+      </td>
+    </tr>
+
   </tbody>
 </table>
 </div>

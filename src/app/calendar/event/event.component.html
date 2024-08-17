@@ -1,5 +1,3 @@
-<div class="event double">
-  <input id="check" type="checkbox" class="checkbox" />
-  <label for="check"></label>{{start}}–{{end}}
-  <span class="event-name">{{ eventName }}</span>
+<div [style.height.%]="eventSpan" class="event-box absolute">
+  <span class="event-box__title">{{ title }}</span>
 </div>

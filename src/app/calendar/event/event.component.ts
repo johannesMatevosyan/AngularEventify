@@ -6,15 +6,24 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./event.component.scss']
 })
 export class EventComponent {
-  @Input() start: string = '';
-  @Input() end: string = '';
-  _eventName: string = '';
+  @Input() eventSpan: number | null = null;
+  _title: string = '';
+  _description: string = '';
 
   @Input()
-  get eventName(): string {
-    return this._eventName;
+  get title(): string {
+    return this._title;
   }
-  set eventName(val: string) {
-    this._eventName = val;
+  set title(val: string) {
+    this._title = val;
+  }
+
+  @Input()
+  get description(): string {
+    return this._description;
+  }
+  set description(val: string) {
+    this._description = val;
   }
 }
+

@@ -1,47 +1,28 @@
 
-.checkbox {
-  display: none;
-}
-
-.checkbox + label {
-   border: 0;
-   outline: 0;
-   width: 100px;
-   height: 100px;
-   background: white;
-   color: transparent;
-   display:block;
- display: none;
-}
-
-.checkbox:checked + label {
-   border: 0;
-   outline: 0;
-   width: 100%;
-   height: 100%;
-   background: red;
-   color: transparent;
-   display: inline-block;
-}
-
-.event {
- background: #00B4FC;
- color: white;
- border-radius: 2px;
- text-align: left;
- font-size: 0.875rem;
- z-index: 2;
- padding: 0.5rem;
- overflow-x: hidden;
- transition: all 0.2s;
- cursor: pointer;
-}
-
-.event:hover {
- box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
- background: #00B4FC;
-}
-
-.event.double {
- height: 200%;
+.event-box {
+  background-color: #1a73e8;
+  height: calc(100% - 3px);
+  padding: 0.25rem 0.5rem;
+  border-radius: 3px;
+  border: 1px solid #1a73e8;
+  cursor: pointer;
+  z-index: 10000;
+  &:hover {
+    background-color: #4285f4
+  }
+  &.absolute {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    margin: auto;
+    width: calc(100% - 0.7rem);
+  }
+  .event-box__title {
+    display: block;
+    margin-bottom: 2px;
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.1;
+    color: #fff;
+  }
 }
