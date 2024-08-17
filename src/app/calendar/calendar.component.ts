@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DateTime } from "luxon";
-import { EventService, IEvent } from '../event.service';
+import { EventService, IEvent } from '../service/event.service';
 
 export interface IWeekDay {
   day: string;
