@@ -1,0 +1,57 @@
+<div class="calendar">
+
+  <app-calendar-header
+    [weekStart]="weekStart"
+    [weekEnd]="weekEnd"
+    [year]="this.timeFrame.year"
+    [monthName]="this.timeFrame.month"
+    (onToday)="getToday()"
+    (onWeekCHange)="getWeekChange($event)"
+    (onGetFirstOrLastWeek)="getFirstOrLastWeek($event)"
+    ></app-calendar-header>
+
+  <div class="outer">
+
+<div class="wrap">
+  <table class="offset">
+    <thead>
+      <tr>
+        <th class="headcol"></th>
+        <th *ngFor="let dayInWeek of weekDays;"
+          [ngClass]="{'is-today' : dayInWeek.date === today.split(' ')[0]}">
+            {{ dayInWeek.day }}
+        </th>
+      </tr>
+    </thead>
+  <tbody>
+
+    <tr *ngFor="let slot of timeSlots; even as isEven;" [attr.data-time]="slot">
+      <td class="headcol">
+        <span *ngIf="isEven" class="headcol-text">{{ slot }}</span>
+      </td>
+      <td *ngFor="let day of eventGrid"  [ngClass]="{'is-today' : day.date === today}">
+
+        <span
+          *ngIf="day.date === today.split(' ')[0] &&  isCurrentTimeInSlot(slot)"
+          [style.top.%]="calculateCurrentTimePosition(slot)"
+          class="current-time-indicator"></span>
+
+        <app-event
+          *ngIf="findEvent(day, slot)?.event; else noEvent"
+          [eventSpan]="getEventSpan(day.date, slot) || null"
+          [title]="findEvent(day, slot)?.event?.title || ''"
+          [description]="findEvent(day, slot)?.event?.description || ''"
+          >
+        </app-event>
+      </td>
+    </tr>
+
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+
+<ng-template #noEvent>
+  <!-- Placeholder or empty cell -->
+</ng-template>
