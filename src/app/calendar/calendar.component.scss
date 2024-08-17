@@ -77,41 +77,48 @@ tr:nth-child(even) td:not(.headcol) {
   border-bottom: 1px solid #eee;
 }
 
-tbody tr td {
-  position: relative;
-  vertical-align: top;
-  height: 40px;
-  padding: 0.25rem 0.25rem 0 0.25rem;
-  width: auto;
-  border-right: 1px solid #eee;
-  padding: 0;
-  white-space: none;
-  word-wrap: nowrap;
-  text-align: center;
-}
-
 tbody {
   tr:nth-child(4n) td:not(:first-child),
   tr:nth-child(4n-1) td:not(:first-child) {
     background-color: #fafafa;
   }
-  tr td:first-child {
-    cursor: default;
+  tr {
+    td {
+      position: relative;
+      vertical-align: top;
+      height: 40px;
+      padding: 0.25rem 0.25rem 0 0.25rem;
+      width: auto;
+      border-right: 1px solid #eee;
+      padding: 0;
+      white-space: none;
+      word-wrap: nowrap;
+      text-align: center;
+      &:hover {
+        background: #e3f2fd;
+      }
+      &:first-child {
+        cursor: default;
+        &:hover {
+          background: transparent;
+        }
+      }
+    }
   }
 }
 
 .event-box {
-  background-color: #0000EE;
+  background-color: #1a73e8;
   color: #ffffff;
   font-size: 13px;
   height: calc(100% - 3px);
   padding: 0.25rem 0.5rem;
   border-radius: 3px;
-  border: 1px solid #0000EE;
+  border: 1px solid #1a73e8;
   cursor: pointer;
   z-index: 10000;
   &:hover {
-    background-color: #0036B1
+    background-color: #4285f4
   }
   &.absolute {
     position: absolute;
