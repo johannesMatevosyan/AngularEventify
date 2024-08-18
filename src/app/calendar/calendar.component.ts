@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { DateTime } from "luxon";
 import { EventService, IEvent } from '../service/event.service';
+import { ModalComponent } from '../modal/modal.component';
 
 export interface IWeekDay {
   day: string;
@@ -24,6 +25,7 @@ export interface ISchedule {
   styleUrls: ['./calendar.component.scss']
 })
 export class CalendarComponent implements OnInit {
+  @ViewChild('myModal') myModal!: ModalComponent;
   now = DateTime.now();
   startOfWeek = this.now.startOf('week');
   endOfWeek = this.now.endOf('week');
@@ -189,4 +191,10 @@ export class CalendarComponent implements OnInit {
     const positionPercentage = (minutesSinceSlotStart / totalMinutesInSlot) * 100;
     return Math.min(Math.max(positionPercentage, 0), 100); // Ensure it stays within bounds
   }
+
+
+  openModal() {
+    this.myModal.open();
+  }
+
 }

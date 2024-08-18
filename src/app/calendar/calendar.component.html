@@ -38,6 +38,7 @@
 
         <app-event
           *ngIf="findEvent(day, slot)?.event; else noEvent"
+          (click)="openModal()"
           [eventSpan]="getEventSpan(day.date, slot) || null"
           [title]="findEvent(day, slot)?.event?.title || ''"
           [description]="findEvent(day, slot)?.event?.description || ''"
@@ -55,3 +56,7 @@
 <ng-template #noEvent>
   <!-- Placeholder or empty cell -->
 </ng-template>
+
+<app-modal #myModal title="My Dynamic Modal">
+  <p>This is the content of the modal.</p>
+</app-modal>
