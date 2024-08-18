@@ -1,9 +1,13 @@
-
-<div class="ae-modal-wrapper">
-  <section class="modal" #modal>
-    <!--  Content will be projected here    -->
+<div class="ae-modal-backdrop" *ngIf="isVisible" (click)="close()"></div>
+<div class="ae-modal-content" *ngIf="isVisible">
+  <div class="modal-header">
+    <h4>{{ title }}</h4>
+    <button (click)="close()">X</button>
+  </div>
+  <div class="ae-modal-body">
     <ng-content></ng-content>
-  </section>
-
-  <div class="ae-modal-overlay" #overlay (click)="onClose()"></div>
+  </div>
+  <div class="ae-modal-footer">
+    <button (click)="close()">Close</button>
+  </div>
 </div>

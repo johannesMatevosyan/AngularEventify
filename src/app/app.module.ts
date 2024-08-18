@@ -7,6 +7,7 @@ import { CalendarComponent } from './calendar/calendar.component';
 import { CalendarHeaderComponent } from './calendar/calendar-header/calendar-header.component';
 import { EventComponent } from './calendar/event/event.component';
 import { removeZerosPipe } from './pipes/remove-leading-zero.pipe';
+import { ModalComponent } from './modal/modal.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { removeZerosPipe } from './pipes/remove-leading-zero.pipe';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ModalComponent
   ],
   providers: [],
   bootstrap: [AppComponent]
