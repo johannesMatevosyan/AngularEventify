@@ -13,18 +13,82 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: #fff;
-  padding: 20px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   z-index: 10000;
+  background-color: #ffffff; /* White background */
+  padding: 20px; /* Padding inside the modal */
+  border-radius: 8px; /* Rounded corners */
+  width: 90%; /* Responsive width */
+  max-width: 500px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  z-index: 10000;
+}
+.ae-modal-body {
+  margin: 15px 0;
 }
 
-.ae-modal-header, .ae-modal-footer {
+/* Modal Header */
+.ae-modal-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 15px; /* Space below header */
 }
 
+/* Modal Title */
+.ae-modal-title {
+  font-size: 18px; /* Font size for the title */
+  font-weight: 600; /* Bold font for emphasis */
+  color: #333;
+  margin: 0;
+}
+
+/* Close Button */
+.ae-modal-close {
+  background: none; /* No background */
+  border: none; /* No border */
+  font-size: 18px;
+  color: #888;
+  cursor: pointer;
+}
+
+/* Close Button Hover State */
+.ae-modal-close:hover {
+  color: #555; /* Darker gray on hover */
+}
+
+/* Modal Body */
 .ae-modal-body {
-  margin: 15px 0;
+  margin-bottom: 15px; /* Space below body content */
+}
+
+/* Modal Footer */
+.ae-modal-footer {
+  display: flex;
+  justify-content: flex-end; /* Align buttons to the right */
+}
+
+/* Button Styles */
+.ae-modal-footer button {
+  background-color: #007bff; /* Primary blue color */
+  color: white; /* White text */
+  border: none; /* No border */
+  padding: 8px 16px; /* Padding inside the buttons */
+  border-radius: 4px; /* Rounded corners */
+  cursor: pointer;
+  font-size: 14px;
+  margin-left: 10px;
+  min-width: 90px;
+}
+
+/* Button Hover State */
+.ae-modal-footer button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .ae-modal-content {
+    width: 95%; /* Full width on smaller screens */
+  }
 }
