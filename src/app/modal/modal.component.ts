@@ -16,6 +16,9 @@ export class ModalComponent {
     this.isVisible = true;
   }
 
+  save(): void {
+  }
+
   close(): void {
     this.isVisible = false;
   }
