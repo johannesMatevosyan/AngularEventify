@@ -25,7 +25,7 @@ export interface ISchedule {
   styleUrls: ['./calendar.component.scss']
 })
 export class CalendarComponent implements OnInit {
-  @ViewChild('myModal') myModal!: ModalComponent;
+  @ViewChild('eventModal') eventModal!: ModalComponent;
   now = DateTime.now();
   startOfWeek = this.now.startOf('week');
   endOfWeek = this.now.endOf('week');
@@ -43,6 +43,7 @@ export class CalendarComponent implements OnInit {
   eventsList: IEvent[] = [];
   isToday = false;
   today: string = this.now.toFormat("yyyy-MM-dd HH:mm");
+  dialogTitle: string  = ''
   constructor(private eventService: EventService) {
 
   }
@@ -193,8 +194,11 @@ export class CalendarComponent implements OnInit {
   }
 
 
-  openModal() {
-    this.myModal.open();
+  openModal(ev: Event, id = ''): void {
+    ev.preventDefault();
+    ev.stopPropagation();
+    id ? this.dialogTitle = 'Edit Event' : this.dialogTitle = 'Add Event';
+    this.eventModal.open();
   }
 
 }
