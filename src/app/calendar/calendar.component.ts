@@ -178,21 +178,6 @@ export class CalendarComponent implements OnInit {
 
     return currentTime >= slotStartTime && currentTime < nextSlotTime;
   }
-  // Calculate the current position of the current time within a given time slot
-  calculateCurrentTimePosition(slot: string): number {
-    const currentTime = DateTime.now();
-    const [slotHour, slotMinute] = slot.split(':').map(Number);
-
-    const slotStartTime = DateTime.now().set({ hour: slotHour, minute: slotMinute });
-    const nextSlotTime = slotStartTime.plus({ minutes: 30 });
-
-    const totalMinutesInSlot = nextSlotTime.diff(slotStartTime, 'minutes').minutes;
-    const minutesSinceSlotStart = currentTime.diff(slotStartTime, 'minutes').minutes;
-
-    const positionPercentage = (minutesSinceSlotStart / totalMinutesInSlot) * 100;
-    return Math.min(Math.max(positionPercentage, 0), 100); // Ensure it stays within bounds
-  }
-
 
   openModal(ev: Event, id = ''): void {
     ev.preventDefault();

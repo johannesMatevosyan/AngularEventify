@@ -33,10 +33,9 @@
         [ngClass]="{'is-today' : day.date === today}"
         (click)="findEvent(day, slot) ? openModal($event, '') : null;">
 
-        <span
-          *ngIf="day.date === today.split(' ')[0] &&  isCurrentTimeInSlot(slot)"
-          [style.top.%]="calculateCurrentTimePosition(slot)"
-          class="current-time-indicator"></span>
+        <app-current-time-indicator
+          *ngIf="day.date === today.split(' ')[0] && isCurrentTimeInSlot(slot)"
+          [currentTime]="slot"></app-current-time-indicator>
 
         <app-event
           *ngIf="findEvent(day, slot)?.event; else noEvent"
@@ -57,6 +56,19 @@
 
 <ng-template #noEvent>
   <!-- Placeholder or empty cell -->
+</ng-template>
+
+ <!-- ng-template for the modal form -->
+ <ng-template #eventForm let-event="event">
+  <form>
+    <label for="eventName">Event Name:</label>
+    <input id="eventName" [name]="'title'" name="eventName" />
+
+    <label for="eventDescription">Description:</label>
+    <textarea id="eventDescription" [name]="'description'" name="eventDescription"></textarea>
+
+    <!-- Add more form fields as needed -->
+  </form>
 </ng-template>
 
 <app-modal #eventModal [title]="dialogTitle" [hideOnEsc]='true'>

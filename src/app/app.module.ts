@@ -8,6 +8,7 @@ import { CalendarHeaderComponent } from './calendar/calendar-header/calendar-hea
 import { EventComponent } from './calendar/event/event.component';
 import { removeZerosPipe } from './pipes/remove-leading-zero.pipe';
 import { ModalComponent } from './modal/modal.component';
+import { CurrentTimeIndicatorComponent } from './calendar/current-time-indicator/current-time-indicator.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { ModalComponent } from './modal/modal.component';
     CalendarComponent,
     CalendarHeaderComponent,
     EventComponent,
-    removeZerosPipe
+    removeZerosPipe,
+    CurrentTimeIndicatorComponent
   ],
   imports: [
     BrowserModule,
