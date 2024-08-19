@@ -86,7 +86,7 @@ export const EVENTS: IEvent[] = [
   },
   {
     id: "10",
-    title: "Board Meeting ",
+    title: "Board meeting ",
     startTime: "13:00",
     endTime: "14:00",
     date: "2024-08-16",
@@ -126,6 +126,22 @@ export const EVENTS: IEvent[] = [
   },
   {
     id: "15",
+    title: "long evning",
+    startTime: "18:00",
+    endTime: "19:00",
+    date: "2024-08-22",
+    description: "Long evning to work.",
+  },
+  {
+    id: "16",
+    title: "day lunch",
+    startTime: "14:00",
+    endTime: "14:30",
+    date: "2024-08-21",
+    description: "day lunch to rest.",
+  },
+  {
+    id: "17",
     title: "Preparation for Christmas",
     startTime: "10:00",
     endTime: "14:00",
@@ -133,7 +149,7 @@ export const EVENTS: IEvent[] = [
     description: "Preparation for Christmas.",
   },
   {
-    id: "16",
+    id: "18",
     title: "Summarize the Year",
     startTime: "10:00",
     endTime: "14:00",

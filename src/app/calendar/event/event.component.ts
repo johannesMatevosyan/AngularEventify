@@ -14,16 +14,16 @@ export class EventComponent {
   get title(): string {
     return this._title;
   }
-  set title(val: string) {
-    this._title = val;
+  set title(name: string) {
+    this._title = name[0].toUpperCase() + name.slice(1);
   }
 
   @Input()
   get description(): string {
     return this._description;
   }
-  set description(val: string) {
-    this._description = val;
+  set description(text: string) {
+    this._description = text;
   }
 }
 
