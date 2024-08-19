@@ -112,3 +112,22 @@ tbody {
   }
 }
 
+.event-form-lebel {
+  display: block;
+  font-size: 1rem;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.75);
+  margin-bottom: 0.25rem;
+  text-align: left;
+}
+.event-form-input {
+  display: block;
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #e8e8e8;
+  border-radius: 4px;
+  outline: none;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  color: rgba(0, 0, 0, 0.75);
+}

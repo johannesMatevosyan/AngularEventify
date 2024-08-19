@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { DateTime } from "luxon";
 import { EventService, IEvent } from '../service/event.service';
 import { ModalComponent } from '../modal/modal.component';
+import { DATE_FORMATS } from '../shared/constants';
 
 export interface IWeekDay {
   day: string;
@@ -29,8 +30,8 @@ export class CalendarComponent implements OnInit {
   now = DateTime.now();
   startOfWeek = this.now.startOf('week');
   endOfWeek = this.now.endOf('week');
-  weekStart = this.startOfWeek.toFormat("ccc, dd");
-  weekEnd = this.endOfWeek.toFormat("ccc, dd");
+  weekStart = this.startOfWeek.toFormat(DATE_FORMATS.WEEKDAY_FORMAT);
+  weekEnd = this.endOfWeek.toFormat(DATE_FORMATS.WEEKDAY_FORMAT);
   timeFrame = {
     month: this.startOfWeek.monthLong,
     year: this.now.year
@@ -42,14 +43,14 @@ export class CalendarComponent implements OnInit {
   eventGrid: ISchedule[] = [];
   eventsList: IEvent[] = [];
   isToday = false;
-  today: string = this.now.toFormat("yyyy-MM-dd HH:mm");
+  today: string = this.now.toFormat(DATE_FORMATS.FULL_DATE);
   dialogTitle: string  = ''
+  currentEvent = {} as IEvent;
   constructor(private eventService: EventService) {
 
   }
   ngOnInit(): void {
     this.weekDays = this.getWeekDays(this.startOfWeek);
-
     this.timeSlots = this.generateTimeSlots(this.startTime, this.endTime);
 
     this.eventService.getAllEvents().subscribe(events => {
@@ -60,8 +61,8 @@ export class CalendarComponent implements OnInit {
   getToday(): void {
     this.startOfWeek = this.now.startOf('week');
     this.endOfWeek = this.now.endOf('week');
-    this.weekStart = this.startOfWeek.toFormat("ccc, dd");
-    this.weekEnd = this.endOfWeek.toFormat("ccc, dd");
+    this.weekStart = this.startOfWeek.toFormat(DATE_FORMATS.WEEKDAY_FORMAT);
+    this.weekEnd = this.endOfWeek.toFormat(DATE_FORMATS.WEEKDAY_FORMAT);
     // get month name of the current year
     this.timeFrame.year = this.now.year;
     this.timeFrame.month = this.startOfWeek.monthLong;
@@ -76,8 +77,8 @@ export class CalendarComponent implements OnInit {
     this.timeFrame.year = this.checkYear(this.startOfWeek.year);
 
     this.endOfWeek = this.startOfWeek.endOf('week');
-    this.weekStart = this.startOfWeek.toFormat("ccc, dd");
-    this.weekEnd = this.endOfWeek.toFormat("ccc, dd");
+    this.weekStart = this.startOfWeek.toFormat(DATE_FORMATS.WEEKDAY_FORMAT);
+    this.weekEnd = this.endOfWeek.toFormat(DATE_FORMATS.WEEKDAY_FORMAT);
     // Create an array of dates for the first week of the year
     this.weekDays = this.getWeekDays(this.startOfWeek);
     this.eventGrid = this.generateEventGrid(this.weekDays);
@@ -94,9 +95,9 @@ export class CalendarComponent implements OnInit {
 
     // Get the first or last month name of the the year
     this.timeFrame.month = this.startOfWeek.monthLong;
-    this.weekStart = this.startOfWeek.toFormat("ccc, dd");
+    this.weekStart = this.startOfWeek.toFormat(DATE_FORMATS.WEEKDAY_FORMAT);
     this.endOfWeek = this.startOfWeek.endOf('week');
-    this.weekEnd = this.endOfWeek.toFormat("ccc, dd");
+    this.weekEnd = this.endOfWeek.toFormat(DATE_FORMATS.WEEKDAY_FORMAT);
     // Create an array of dates for the first week of the year
     this.weekDays = this.getWeekDays(this.startOfWeek);
     this.eventGrid = this.generateEventGrid(this.weekDays);
@@ -107,8 +108,8 @@ export class CalendarComponent implements OnInit {
       {
         const date = data.plus({ days: i });
         return {
-          day: date.toFormat('ccc, dd'),
-          date: date.toFormat('yyyy-MM-dd')
+          day: date.toFormat(DATE_FORMATS.WEEKDAY_FORMAT),
+          date: date.toFormat(DATE_FORMATS.DEFAULT),
         };
       }
     );
@@ -162,8 +163,8 @@ export class CalendarComponent implements OnInit {
     }
 
     // Calculate how many 30-minute slots the event spans
-    const startTime = DateTime.fromFormat(`${event.date} ${event.startTime}`, 'yyyy-MM-dd HH:mm');
-    const endTime = DateTime.fromFormat(`${event.date} ${event.endTime}`, 'yyyy-MM-dd HH:mm'); // Assume event has an endTime property
+    const startTime = DateTime.fromFormat(`${event.date} ${event.startTime}`, DATE_FORMATS.FULL_DATE);
+    const endTime = DateTime.fromFormat(`${event.date} ${event.endTime}`, DATE_FORMATS.FULL_DATE); // Assume event has an endTime property
 
     const duration = endTime.diff(startTime, 'minutes').minutes;
     return Math.ceil(duration / 30)  * 100; // Number of 30-minute slots the event spans multiplayed by 100%
@@ -179,10 +180,16 @@ export class CalendarComponent implements OnInit {
     return currentTime >= slotStartTime && currentTime < nextSlotTime;
   }
 
-  openModal(ev: Event, id = ''): void {
+  openModal(ev: Event, event: IEvent | null | undefined): void {
     ev.preventDefault();
     ev.stopPropagation();
-    id ? this.dialogTitle = 'Edit Event' : this.dialogTitle = 'Add Event';
+    if (event && event.id) {
+      this.dialogTitle = 'Edit Event'
+      this.currentEvent = event;
+    } else {
+      this.dialogTitle = 'Add Event';
+      this.currentEvent = {} as IEvent;
+    }
     this.eventModal.open();
   }
 

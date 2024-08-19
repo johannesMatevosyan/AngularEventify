@@ -31,7 +31,7 @@
       </td>
       <td *ngFor="let day of eventGrid"
         [ngClass]="{'is-today' : day.date === today}"
-        (click)="findEvent(day, slot) ? openModal($event, '') : null;">
+        (click)="findEvent(day, slot) ? openModal($event, null) : null;">
 
         <app-current-time-indicator
           *ngIf="day.date === today.split(' ')[0] && isCurrentTimeInSlot(slot)"
@@ -39,12 +39,13 @@
 
         <app-event
           *ngIf="findEvent(day, slot)?.event; else noEvent"
-          (click)="openModal($event, findEvent(day, slot)?.event?.id)"
+          (click)="openModal($event, findEvent(day, slot)?.event)"
           [eventSpan]="getEventSpan(day.date, slot) || null"
           [title]="findEvent(day, slot)?.event?.title || ''"
           [description]="findEvent(day, slot)?.event?.description || ''"
           >
         </app-event>
+
       </td>
     </tr>
 
@@ -58,19 +59,18 @@
   <!-- Placeholder or empty cell -->
 </ng-template>
 
- <!-- ng-template for the modal form -->
- <ng-template #eventForm let-event="event">
+<!-- ng-template for the modal form -->
+<ng-template #eventForm let-event="event">
   <form>
-    <label for="eventName">Event Name:</label>
-    <input id="eventName" [name]="'title'" name="eventName" />
+    <label for="eventName" class="event-form-lebel">Event Name:</label>
+    <input id="eventName" name="eventName" class="event-form-input" [value]="event?.title || ''" />
 
-    <label for="eventDescription">Description:</label>
-    <textarea id="eventDescription" [name]="'description'" name="eventDescription"></textarea>
+    <label for="eventDescription" class="event-form-lebel">Description:</label>
+    <textarea id="eventDescription" class="event-form-input" name="eventDescription">{{ event?.description || ''}}</textarea>
 
-    <!-- Add more form fields as needed -->
   </form>
 </ng-template>
 
 <app-modal #eventModal [title]="dialogTitle" [hideOnEsc]='true'>
-  <p>This is the content of the modal.</p>
+  <ng-container *ngTemplateOutlet="eventForm; context: { event: currentEvent }"></ng-container>
 </app-modal>
