@@ -65,6 +65,9 @@ thead {
     border-bottom: 2px solid #ddd;
     text-align: center;
     width: 100%;
+    &:first-child {
+      width: 120px;
+    }
   }
   z-index: 2;
   background: white;
@@ -107,3 +110,4 @@ tbody {
     }
   }
 }
+
