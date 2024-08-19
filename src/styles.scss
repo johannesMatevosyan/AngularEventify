@@ -57,3 +57,7 @@ table {
   color: red !important;
 }
 
+textarea {
+  resize: none;
+  min-height: 120px;
+}
