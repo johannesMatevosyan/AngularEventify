@@ -61,3 +61,14 @@ textarea {
   resize: none;
   min-height: 120px;
 }
+.event-form-input, .event-form-time-picker input {
+  display: block;
+  width: 100%;
+  padding: 0.5rem !important;
+  border: 1px solid #e8e8e8 !important;
+  border-radius: 4px;
+  outline: none;
+  font-size: 1rem !important;
+  margin-bottom: 0.5rem;
+  color: rgba(0, 0, 0, 0.75) !important;
+}
