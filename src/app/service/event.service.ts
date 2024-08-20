@@ -142,6 +142,86 @@ export const EVENTS: IEvent[] = [
   },
   {
     id: "17",
+    title: 'Team Standup Meeting',
+    description: 'Daily standup with the team to discuss project progress.',
+    date: '2024-08-27',
+    startTime: '09:00',
+    endTime: '09:30'
+  },
+  {
+    id: "18",
+    title: 'Client Presentation',
+    description: 'Present the project deliverables to the client.',
+    date: '2024-08-28',
+    startTime: '14:00',
+    endTime: '15:00'
+  },
+  {
+    id: "19",
+    title: 'Design Review',
+    description: 'Review the design with the UI/UX team.',
+    date: '2024-09-03',
+    startTime: '11:00',
+    endTime: '12:00'
+  },
+  {
+    id: "20",
+    title: 'Marketing Strategy Meeting',
+    description: 'Plan the marketing strategy for the upcoming quarter.',
+    date: '2024-09-10',
+    startTime: '10:00',
+    endTime: '11:30'
+  },
+  {
+    id:  "21",
+    title: 'Development Sprint Planning',
+    description: 'Plan the tasks for the upcoming development sprint.',
+    date: '2024-09-15',
+    startTime: '13:00',
+    endTime: '14:30'
+  },
+  {
+    id:  "22",
+    title: 'Code Review Session',
+    description: 'Review the code changes with the development team.',
+    date: '2024-09-22',
+    startTime: '15:00',
+    endTime: '16:30'
+  },
+  {
+    id: "23",
+    title: 'Project Retrospective',
+    description: 'Reflect on the last sprint and identify areas for improvement.',
+    date: '2024-09-30',
+    startTime: '10:00',
+    endTime: '11:00'
+  },
+  {
+    id: "24",
+    title: 'Product Launch Meeting',
+    description: 'Discuss the launch plan for the new product.',
+    date: '2024-10-05',
+    startTime: '14:00',
+    endTime: '15:00'
+  },
+  {
+    id: "25",
+    title: 'Customer Feedback Session',
+    description: 'Gather feedback from customers about the recent release.',
+    date: '2024-10-12',
+    startTime: '11:00',
+    endTime: '12:00'
+  },
+  {
+    id: "26",
+    title: 'End-of-Quarter Review',
+    description: 'Review the achievements and challenges faced during the quarter.',
+    date: '2024-10-20',
+    startTime: '09:30',
+    endTime: '11:00'
+  },
+  {
+    id: "27",
     title: "Preparation for Christmas",
     startTime: "10:00",
     endTime: "14:00",
@@ -149,7 +229,7 @@ export const EVENTS: IEvent[] = [
     description: "Preparation for Christmas.",
   },
   {
-    id: "18",
+    id: "28",
     title: "Summarize the Year",
     startTime: "10:00",
     endTime: "14:00",
