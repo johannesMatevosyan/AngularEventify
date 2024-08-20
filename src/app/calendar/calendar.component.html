@@ -61,14 +61,9 @@
 
 <!-- ng-template for the modal form -->
 <ng-template #eventForm let-event="event">
-  <form>
-    <label for="eventName" class="event-form-lebel">Event Name:</label>
-    <input id="eventName" name="eventName" class="event-form-input" [value]="event?.title || ''" />
 
-    <label for="eventDescription" class="event-form-lebel">Description:</label>
-    <textarea id="eventDescription" class="event-form-input" name="eventDescription">{{ event?.description || ''}}</textarea>
+  <app-event-form></app-event-form>
 
-  </form>
 </ng-template>
 
 <app-modal #eventModal [title]="dialogTitle" [hideOnEsc]='true'>
