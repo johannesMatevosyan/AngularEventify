@@ -1,6 +1,5 @@
-import { Component, Input, OnInit, Renderer2 } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { EventManager } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-modal',
@@ -10,6 +9,7 @@ import { EventManager } from '@angular/platform-browser';
   styleUrls: ['./modal.component.scss']
 })
 export class ModalComponent implements OnInit {
+  @ViewChild('datePickerInput') datePickerInput!: ElementRef;
   @Input() hideOnEsc: boolean = true;
   @Input() title: string = '';
   isVisible: boolean = false;
@@ -28,8 +28,7 @@ export class ModalComponent implements OnInit {
     this.isVisible = true;
   }
 
-  save(): void {
-  }
+  save(): void {}
 
   close(): void {
     this.isVisible = false;

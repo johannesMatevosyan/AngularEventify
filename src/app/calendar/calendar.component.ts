@@ -3,7 +3,6 @@ import { DateTime } from "luxon";
 import { EventService, IEvent } from '../service/event.service';
 import { ModalComponent } from '../modal/modal.component';
 import { DATE_FORMATS } from '../shared/constants';
-
 export interface IWeekDay {
   day: string;
   date: string;
@@ -27,6 +26,7 @@ export interface ISchedule {
 })
 export class CalendarComponent implements OnInit {
   @ViewChild('eventModal') eventModal!: ModalComponent;
+
   now = DateTime.now();
   startOfWeek = this.now.startOf('week');
   endOfWeek = this.now.endOf('week');
@@ -57,6 +57,7 @@ export class CalendarComponent implements OnInit {
       this.eventsList = events;
       this.eventGrid = this.generateEventGrid(this.weekDays);
     });
+
   }
   getToday(): void {
     this.startOfWeek = this.now.startOf('week');
@@ -190,7 +191,11 @@ export class CalendarComponent implements OnInit {
       this.dialogTitle = 'Add Event';
       this.currentEvent = {} as IEvent;
     }
-    this.eventModal.open();
+
+    if (this.eventModal) {
+      this.eventModal.open();
+    }
+
   }
 
 }
