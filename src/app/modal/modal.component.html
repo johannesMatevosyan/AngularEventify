@@ -1,0 +1,14 @@
+<div class="ae-modal-backdrop" *ngIf="isVisible" (click)="close()"></div>
+<div class="ae-modal-content" *ngIf="isVisible">
+  <div class="ae-modal-header">
+    <h4 class="ae-modal-title">{{ title }}</h4>
+    <button class="ae-modal-close" (click)="close()">×</button>
+  </div>
+  <div class="ae-modal-body">
+    <ng-content></ng-content> <!-- Placeholder for dynamic content -->
+  </div>
+  <div class="ae-modal-footer">
+    <button (click)="close()">Cancel</button>
+    <button (click)="save()">Save</button>
+  </div>
+</div>

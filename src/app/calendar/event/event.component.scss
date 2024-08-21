@@ -6,21 +6,21 @@
   border-radius: 3px;
   border: 1px solid #1a73e8;
   cursor: pointer;
-  z-index: 10000;
+  z-index: 999;
   &:hover {
     background-color: #4285f4
   }
   &.absolute {
     position: absolute;
-    top: 3px;
-    left: 3px;
+    top: 0px;
+    left: 1px;
     margin: auto;
-    width: calc(100% - 0.7rem);
+    width: calc(100% - 2px);
   }
   .event-box__title {
     display: block;
     margin-bottom: 2px;
-    font-size: 1rem;
+    font-size: 1.1rem;
     font-weight: 500;
     line-height: 1.1;
     color: #fff;

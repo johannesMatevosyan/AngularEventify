@@ -1,0 +1,19 @@
+:host {
+  display: block;
+  width: 100%;
+}
+.event-form-label {
+  display: block;
+  font-size: 1rem;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.75);
+  margin-bottom: 0.25rem;
+  text-align: left;
+}
+.event-form-time {
+  display: flex;
+  justify-content: space-between;
+  .event-form-time-picker {
+    width: 48%;
+  }
+}
