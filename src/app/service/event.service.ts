@@ -116,6 +116,14 @@ export const EVENTS: IEvent[] = [
     description: "Hollyday is a day of festivity or recreation when no work is done.",
   },
   {
+    id: "141",
+    title: "Overlapping Meeting",
+    startTime: "13:00",
+    endTime: "15:00",
+    date: "2024-08-22",
+    description: "Overlapping Meeting",
+  },
+  {
     id: "15",
     title: "long evning",
     startTime: "18:00",
