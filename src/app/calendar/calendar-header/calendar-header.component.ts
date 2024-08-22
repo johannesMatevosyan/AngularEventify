@@ -1,4 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { WeekChange } from '../../shared/enums/week-change.enum';
+import { FistLastWeek } from 'src/app/shared/enums/first-last-week.enum';
 
 @Component({
   selector: 'app-calendar-header',
@@ -11,22 +13,22 @@ export class CalendarHeaderComponent {
   @Input() weekStart: string = '';
   @Input() weekEnd: string = '';
   @Output() onToday = new EventEmitter<void>();
-  @Output() onWeekCHange = new EventEmitter<'previous'|'next'>();
-  @Output() onGetFirstOrLastWeek = new EventEmitter<'first'|'last'>();
+  @Output() onWeekCHange = new EventEmitter<WeekChange>();
+  @Output() onGetFirstOrLastWeek = new EventEmitter<FistLastWeek>();
 
   getToday(): void {
     this.onToday.emit();
   }
 
   toPreviousWeek(): void {
-    this.onWeekCHange.emit('previous');
+    this.onWeekCHange.emit(WeekChange.PREVOUS);
   }
 
   toNextWeek(): void {
-    this.onWeekCHange.emit('next');
+    this.onWeekCHange.emit(WeekChange.NEXT);
   }
 
-  getFirstOrLastWeek(value: 'first'|'last'): void {
+  getFirstOrLastWeek(value: FistLastWeek): void {
     this.onGetFirstOrLastWeek.emit(value);
   }
 }

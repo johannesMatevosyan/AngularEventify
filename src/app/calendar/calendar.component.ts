@@ -1,8 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { DateTime } from "luxon";
 import { EventService, IEvent } from '../service/event.service';
 import { ModalComponent } from '../modal/modal.component';
 import { DATE_FORMATS } from '../shared/constants';
+import { WeekChange } from '../shared/enums/week-change.enum';
+import { FistLastWeek } from '../shared/enums/first-last-week.enum';
+
 export interface IWeekDay {
   day: string;
   date: string;
@@ -26,6 +29,13 @@ export interface ISchedule {
 })
 export class CalendarComponent implements OnInit {
   @ViewChild('eventModal') eventModal!: ModalComponent;
+  @Input() schedulerBackColor: string = '#ffffff';
+  @Input() schedulerFontColor: string = '#000000e5';
+  @Input() eventBackColor: string = '#1a73e8';
+  @Input() eventBorderColor: string = '#1a73e8';
+  @Input() eventFontColor: string = '#ffffff';
+  @Input() currentDayColor: string = '#ff0000';
+  @Input() cssClass: string = '';
 
   now = DateTime.now();
   startOfWeek = this.now.startOf('week');
@@ -71,7 +81,7 @@ export class CalendarComponent implements OnInit {
     this.weekDays = this.getWeekDays(this.startOfWeek);
     this.eventGrid = this.generateEventGrid(this.weekDays);
   }
-  getWeekChange(event$: 'previous'|'next'): void {
+  getWeekChange(event$: WeekChange): void {
     this.startOfWeek = this.detectWeekChange(event$);
     // get month name of the current year
     this.timeFrame.month = this.checkMonth(this.startOfWeek.monthLong);
@@ -84,12 +94,12 @@ export class CalendarComponent implements OnInit {
     this.weekDays = this.getWeekDays(this.startOfWeek);
     this.eventGrid = this.generateEventGrid(this.weekDays);
   }
-  detectWeekChange(event$: 'previous'|'next'): DateTime<true> {
-    return event$ === 'previous' ? this.startOfWeek.minus({ weeks: 1 }) : this.startOfWeek.plus({ weeks: 1 });
+  detectWeekChange(event$: WeekChange): DateTime<true> {
+    return event$ === WeekChange.PREVOUS ? this.startOfWeek.minus({ weeks: 1 }) : this.startOfWeek.plus({ weeks: 1 });
   }
-  getFirstOrLastWeek(event$: 'first'|'last'): void {
+  getFirstOrLastWeek(event$: FistLastWeek): void {
     // Get the first or last day of the current year
-    const resultWeek = event$ === 'last' ? this.now.endOf('year'): this.now.startOf('year');
+    const resultWeek = event$ === FistLastWeek.LAST? this.now.endOf('year'): this.now.startOf('year');
 
     // Get the start of the first week that contains the first day of the year
     this.startOfWeek = resultWeek.startOf('week');
