@@ -18,10 +18,13 @@ export class CalendarComponent implements OnInit {
   @Input() schedulerBackColor: string = '#ffffff';
   @Input() schedulerFontColor: string = '#000000e5';
   @Input() eventBackColor: string = '#1a73e8';
+  @Input() eventHoverColor: string = '#4285f4';
   @Input() eventBorderColor: string = '#1a73e8';
   @Input() eventFontColor: string = '#ffffff';
+  @Input() titleColor: string = '#ffffff';
   @Input() currentDayColor: string = '#ff0000';
-  @Input() cssClass: string = '';
+  @Input() currentTimeBarColor: string = '#ff0000';
+  @Input() customClass: string = '';
 
   now = DateTime.now();
   startOfWeek = this.now.startOf('week');
