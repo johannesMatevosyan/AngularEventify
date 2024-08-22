@@ -18,14 +18,14 @@ body {
 .calendar {
   margin: 0 auto;
   min-width: 500px;
-  border-radius: 8px;
+  border-radius: 0;
   background-color: #ffffff;
 }
 .wrap {
   overflow-x: hidden;
   overflow-y: scroll;
   height: calc(100vh - 70px);
-  border-radius: 8px;
+  border-radius: 0;
   outline: none;
 }
 table {
