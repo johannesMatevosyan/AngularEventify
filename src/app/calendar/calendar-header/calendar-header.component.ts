@@ -16,6 +16,8 @@ export class CalendarHeaderComponent {
   @Output() onWeekCHange = new EventEmitter<WeekChange>();
   @Output() onGetFirstOrLastWeek = new EventEmitter<FistLastWeek>();
 
+  FLWeek = FistLastWeek;
+
   getToday(): void {
     this.onToday.emit();
   }

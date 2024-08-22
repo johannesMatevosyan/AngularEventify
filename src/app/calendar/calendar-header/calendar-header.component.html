@@ -1,7 +1,7 @@
 <header>
   <button class="today secondary" (click)="getToday()">Today</button>
   <div class="calendar-title">
-    <div class="icon secondary chevron chevron-left" (click)="getFirstOrLastWeek('first')">
+    <div class="icon secondary chevron chevron-left" (click)="getFirstOrLastWeek(FLWeek.FIRST)">
       <button>&#171;</button>
     </div>
     <div class="icon secondary chevron chevron-left" (click)="toPreviousWeek()">
@@ -11,7 +11,7 @@
     <div class="icon secondary chevron chevron-right" (click)="toNextWeek()">
       <button>&rsaquo;</button>
     </div>
-    <div class="icon secondary chevron chevron-right" (click)="getFirstOrLastWeek('last')">
+    <div class="icon secondary chevron chevron-right" (click)="getFirstOrLastWeek(FLWeek.LAST)">
       <button>&#187;</button>
     </div>
   </div>
