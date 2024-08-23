@@ -1,6 +1,7 @@
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import flatpickr from 'flatpickr';
+import confirmDatePlugin from 'flatpickr/dist/plugins/confirmDate/confirmDate';
 
 @Component({
   selector: 'app-event-form',
@@ -24,7 +25,13 @@ export class EventFormComponent implements AfterViewInit {
       dateFormat: 'Y-m-d H:i',
       minTime: "06:00",
       maxTime: "18:30",
-      time_24hr: true // 24-hour Time Picker
+      time_24hr: true, // 24-hour Time Picker
+      minuteIncrement: 15,
+      plugins: [  confirmDatePlugin({
+        confirmIcon: "",
+        showAlways: true,                         // Show the confirm button all the time
+        theme: "light"                             // Theme: 'light' or 'dark'
+      })]
     }
 
     if (this.startDate) {
