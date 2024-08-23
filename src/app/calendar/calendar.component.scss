@@ -94,9 +94,6 @@ tbody {
       word-wrap: nowrap;
       text-align: center;
       cursor: pointer;
-      &:hover {
-        background: #e3f2fd !important;
-      }
       &:first-child {
         cursor: default;
         &:hover {
