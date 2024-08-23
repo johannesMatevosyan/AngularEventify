@@ -7,6 +7,8 @@ import { Component, Input } from '@angular/core';
 })
 export class EventComponent {
   @Input() eventSpan: number | null = null;
+  @Input() eventBackColor: string = '';
+  @Input() eventHoverColor: string = '';
   _title: string = '';
   _description: string = '';
 
