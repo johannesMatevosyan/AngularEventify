@@ -5,7 +5,7 @@ import { IEvent } from '../shared/interfaces/event.interface';
 export const EVENTS: IEvent[] = [
   {
     id: "1",
-    title: "Starting New Year",
+    name: "Starting New Year",
     startTime: "10:00",
     endTime: "19:00",
     date: "2024-01-04",
@@ -13,7 +13,7 @@ export const EVENTS: IEvent[] = [
   },
   {
     id: "2",
-    title: "First Week of the Year",
+    name: "First Week of the Year",
     startTime: "06:00",
     endTime: "19:00",
     date: "2024-01-10",
@@ -21,7 +21,7 @@ export const EVENTS: IEvent[] = [
   },
   {
     id: "3",
-    title: "Celebrity Meeting",
+    name: "Celebrity Meeting",
     startTime: "15:30",
     endTime: "16:30",
     date: "2024-07-16",
@@ -29,7 +29,7 @@ export const EVENTS: IEvent[] = [
   },
   {
     id: "4",
-    title: "Staff Meeting",
+    name: "Staff Meeting",
     startTime: "13:30",
     endTime: "14:00",
     date: "2024-07-27",
@@ -37,7 +37,7 @@ export const EVENTS: IEvent[] = [
   },
   {
     id: "5",
-    title: "Group Meeting",
+    name: "Group Meeting",
     startTime: "13:30",
     endTime: "14:00",
     date: "2024-07-29",
@@ -45,7 +45,7 @@ export const EVENTS: IEvent[] = [
   },
   {
     id: "6",
-    title: "Breakfast",
+    name: "Breakfast",
     startTime: "08:00",
     endTime: "10:00",
     date: "2024-08-12",
@@ -53,7 +53,7 @@ export const EVENTS: IEvent[] = [
   },
   {
     id: "7",
-    title: "Hot Yoga",
+    name: "Hot Yoga",
     startTime: "08:00",
     endTime: "09:30",
     date: "2024-08-13",
@@ -61,7 +61,7 @@ export const EVENTS: IEvent[] = [
   },
   {
     id: "8",
-    title: "Acro Yoga",
+    name: "Acro Yoga",
     startTime: "15:00",
     endTime: "18:00",
     date: "2024-08-14",
@@ -69,7 +69,7 @@ export const EVENTS: IEvent[] = [
   },
   {
     id: "9",
-    title: "exercises",
+    name: "exercises",
     startTime: "16:00",
     endTime: "16:30",
     date: "2024-08-15",
@@ -77,7 +77,7 @@ export const EVENTS: IEvent[] = [
   },
   {
     id: "10",
-    title: "Board meeting ",
+    name: "Board meeting ",
     startTime: "13:00",
     endTime: "14:00",
     date: "2024-08-16",
@@ -85,7 +85,7 @@ export const EVENTS: IEvent[] = [
   },
   {
     id: "11",
-    title: "Coding practice",
+    name: "Coding practice",
     startTime: "13:00",
     endTime: "14:00",
     date: "2024-08-16",
@@ -93,7 +93,7 @@ export const EVENTS: IEvent[] = [
   },
   {
     id: "12",
-    title: "Sunday fun",
+    name: "Sunday fun",
     startTime: "08:00",
     endTime: "09:30",
     date: "2024-08-18",
@@ -101,7 +101,7 @@ export const EVENTS: IEvent[] = [
   },
   {
     id: "13",
-    title: "Sunday fun",
+    name: "Sunday fun",
     startTime: "18:30",
     endTime: "19:00",
     date: "2024-08-18",
@@ -109,7 +109,7 @@ export const EVENTS: IEvent[] = [
   },
   {
     id: "14",
-    title: "Hollyday",
+    name: "Hollyday",
     startTime: "12:00",
     endTime: "14:00",
     date: "2024-08-22",
@@ -117,7 +117,7 @@ export const EVENTS: IEvent[] = [
   },
   {
     id: "141",
-    title: "Overlapping Meeting",
+    name: "Overlapping Meeting",
     startTime: "13:00",
     endTime: "15:00",
     date: "2024-08-22",
@@ -125,7 +125,7 @@ export const EVENTS: IEvent[] = [
   },
   {
     id: "15",
-    title: "long evning",
+    name: "long evning",
     startTime: "18:00",
     endTime: "19:00",
     date: "2024-08-22",
@@ -133,7 +133,7 @@ export const EVENTS: IEvent[] = [
   },
   {
     id: "151",
-    title: "15 minute meeting",
+    name: "15 minute meeting",
     startTime: "12:00",
     endTime: "12:15",
     date: "2024-08-23",
@@ -141,7 +141,7 @@ export const EVENTS: IEvent[] = [
   },
   {
     id: "152",
-    title: "15 minute meeting",
+    name: "15 minute meeting",
     startTime: "14:00",
     endTime: "14:15",
     date: "2024-08-23",
@@ -149,7 +149,7 @@ export const EVENTS: IEvent[] = [
   },
   {
     id: "16",
-    title: "day lunch",
+    name: "day lunch",
     startTime: "14:00",
     endTime: "14:30",
     date: "2024-08-21",
@@ -157,7 +157,7 @@ export const EVENTS: IEvent[] = [
   },
   {
     id: "17",
-    title: 'Team Standup Meeting',
+    name: 'Team Standup Meeting',
     description: 'Daily standup with the team to discuss project progress.',
     date: '2024-08-27',
     startTime: '09:00',
@@ -165,7 +165,7 @@ export const EVENTS: IEvent[] = [
   },
   {
     id: "18",
-    title: 'Client Presentation',
+    name: 'Client Presentation',
     description: 'Present the project deliverables to the client.',
     date: '2024-08-28',
     startTime: '14:00',
@@ -173,7 +173,7 @@ export const EVENTS: IEvent[] = [
   },
   {
     id: "19",
-    title: 'Design Review',
+    name: 'Design Review',
     description: 'Review the design with the UI/UX team.',
     date: '2024-09-03',
     startTime: '11:00',
@@ -181,7 +181,7 @@ export const EVENTS: IEvent[] = [
   },
   {
     id: "20",
-    title: 'Marketing Strategy Meeting',
+    name: 'Marketing Strategy Meeting',
     description: 'Plan the marketing strategy for the upcoming quarter.',
     date: '2024-09-10',
     startTime: '10:00',
@@ -189,7 +189,7 @@ export const EVENTS: IEvent[] = [
   },
   {
     id:  "21",
-    title: 'Development Sprint Planning',
+    name: 'Development Sprint Planning',
     description: 'Plan the tasks for the upcoming development sprint.',
     date: '2024-09-15',
     startTime: '13:00',
@@ -197,7 +197,7 @@ export const EVENTS: IEvent[] = [
   },
   {
     id:  "22",
-    title: 'Code Review Session',
+    name: 'Code Review Session',
     description: 'Review the code changes with the development team.',
     date: '2024-09-22',
     startTime: '15:00',
@@ -205,7 +205,7 @@ export const EVENTS: IEvent[] = [
   },
   {
     id: "23",
-    title: 'Project Retrospective',
+    name: 'Project Retrospective',
     description: 'Reflect on the last sprint and identify areas for improvement.',
     date: '2024-09-30',
     startTime: '10:00',
@@ -213,7 +213,7 @@ export const EVENTS: IEvent[] = [
   },
   {
     id: "24",
-    title: 'Product Launch Meeting',
+    name: 'Product Launch Meeting',
     description: 'Discuss the launch plan for the new product.',
     date: '2024-10-05',
     startTime: '14:00',
@@ -221,7 +221,7 @@ export const EVENTS: IEvent[] = [
   },
   {
     id: "25",
-    title: 'Customer Feedback Session',
+    name: 'Customer Feedback Session',
     description: 'Gather feedback from customers about the recent release.',
     date: '2024-10-12',
     startTime: '11:00',
@@ -229,7 +229,7 @@ export const EVENTS: IEvent[] = [
   },
   {
     id: "26",
-    title: 'End-of-Quarter Review',
+    name: 'End-of-Quarter Review',
     description: 'Review the achievements and challenges faced during the quarter.',
     date: '2024-10-20',
     startTime: '09:30',
@@ -237,7 +237,7 @@ export const EVENTS: IEvent[] = [
   },
   {
     id: "27",
-    title: "Preparation for Christmas",
+    name: "Preparation for Christmas",
     startTime: "10:00",
     endTime: "14:00",
     date: "2024-12-23",
@@ -245,7 +245,7 @@ export const EVENTS: IEvent[] = [
   },
   {
     id: "28",
-    title: "Summarize the Year",
+    name: "Summarize the Year",
     startTime: "10:00",
     endTime: "14:00",
     date: "2024-12-31",

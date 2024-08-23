@@ -16,9 +16,10 @@ export interface ISchedule {
 
 export interface IEvent {
   id?: string;
-  title: string;
+  name: string;
   startTime: string;
   endTime: string;
   date: string;
   description: string;
 }
+

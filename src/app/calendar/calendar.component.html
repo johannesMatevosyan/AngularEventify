@@ -49,7 +49,7 @@
           *ngIf="findEvent(day, slot)?.event; else noEvent"
           (click)="openModal($event, findEvent(day, slot)?.event)"
           [eventSpan]="getEventSpan(day.date, slot) || null"
-          [title]="findEvent(day, slot)?.event?.title || ''"
+          [title]="findEvent(day, slot)?.event?.name || ''"
           [eventBackColor]="eventBackColor"
           [eventHoverColor]="eventHoverColor"
           [eventBorderColor]="eventBorderColor"
@@ -71,13 +71,9 @@
   <!-- Placeholder or empty cell -->
 </ng-template>
 
-<!-- ng-template for the modal form -->
-<ng-template #eventForm let-event="event">
-
-  <app-event-form></app-event-form>
-
-</ng-template>
-
-<app-modal #eventModal [title]="dialogTitle" [hideOnEsc]='true'>
-  <ng-container *ngTemplateOutlet="eventForm; context: { event: currentEvent }"></ng-container>
-</app-modal>
+<app-modal-dialog
+  #eventModal
+  [title]="dialogTitle"
+  [data]="currentEvent"
+  [hideOnEsc]='true'>
+</app-modal-dialog>
