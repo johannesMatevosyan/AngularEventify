@@ -132,6 +132,22 @@ export const EVENTS: IEvent[] = [
     description: "Long evning to work.",
   },
   {
+    id: "151",
+    title: "15 minute meeting",
+    startTime: "12:00",
+    endTime: "12:15",
+    date: "2024-08-23",
+    description: "15 minute meeting",
+  },
+  {
+    id: "152",
+    title: "15 minute meeting",
+    startTime: "14:00",
+    endTime: "14:15",
+    date: "2024-08-23",
+    description: "15 minute meeting",
+  },
+  {
     id: "16",
     title: "day lunch",
     startTime: "14:00",

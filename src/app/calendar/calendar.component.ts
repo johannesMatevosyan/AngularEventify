@@ -167,7 +167,8 @@ export class CalendarComponent implements OnInit {
     const endTime = DateTime.fromFormat(`${event.date} ${event.endTime}`, DATE_FORMATS.FULL_DATE); // Assume event has an endTime property
 
     const duration = endTime.diff(startTime, 'minutes').minutes;
-    return Math.ceil(duration / 30)  * 100; // Number of 30-minute slots the event spans multiplayed by 100%
+    const min30Slot = Math.ceil(duration / 30);
+    return duration >= 30 ? min30Slot  * 100 : min30Slot * 50; // Number of 30-minute slots the event spans multiplayed by 100%
   }
   // Check if the current time is within a given time slot
   isCurrentTimeInSlot(slot: string): boolean {
