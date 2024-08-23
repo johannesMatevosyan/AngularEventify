@@ -31,10 +31,14 @@
             ],
             "styles": [
               "node_modules/flatpickr/dist/flatpickr.min.css",
+              "node_modules/flatpickr/dist/plugins/confirmDate/confirmDate.css",
               "src/styles.scss"
             ],
             "scripts": [
               "node_modules/flatpickr/dist/flatpickr.min.js"
+            ],
+            "allowedCommonJsDependencies": [
+              "flatpickr/dist/plugins/confirmDate/confirmDate"
             ]
           },
           "configurations": {
