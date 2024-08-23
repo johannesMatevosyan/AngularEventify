@@ -17,10 +17,10 @@ export class CalendarComponent implements OnInit {
   @ViewChild('eventModal') eventModal!: ModalComponent;
   @Input() schedulerBackColor: string = '#ffffff';
   @Input() schedulerFontColor: string = '#000000e5';
-  @Input() eventBackColor: string = '#1a73e8';
-  @Input() eventHoverColor: string = '#4285f4';
-  @Input() eventBorderColor: string = '#1a73e8';
-  @Input() eventFontColor: string = '#ffffff';
+  @Input() eventBackColor: string = '';
+  @Input() eventHoverColor: string = '';
+  @Input() eventBorderColor: string = '';
+  @Input() eventFontColor: string = '';
   @Input() titleColor: string = '#ffffff';
   @Input() currentDayColor: string = '#ff0000';
   @Input() currentTimeBarColor: string = '#ff0000';

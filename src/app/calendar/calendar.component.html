@@ -50,6 +50,10 @@
           (click)="openModal($event, findEvent(day, slot)?.event)"
           [eventSpan]="getEventSpan(day.date, slot) || null"
           [title]="findEvent(day, slot)?.event?.title || ''"
+          [eventBackColor]="eventBackColor"
+          [eventHoverColor]="eventHoverColor"
+          [eventBorderColor]="eventBorderColor"
+          [eventFontColor]="eventFontColor"
           [description]="findEvent(day, slot)?.event?.description || ''"
           >
         </app-event>
