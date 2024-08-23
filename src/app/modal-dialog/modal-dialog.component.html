@@ -1,0 +1,59 @@
+<div class="ae-modal-backdrop" *ngIf="isVisible" (click)="close()"></div>
+<div class="ae-modal-content" *ngIf="isVisible">
+  <form [formGroup]="eventForm" (ngSubmit)="onSubmit()">
+    <div class="ae-modal-header">
+      <h4 class="ae-modal-title">{{ title }}</h4>
+      <button class="ae-modal-close" (click)="close()">×</button>
+    </div>
+    <div class="ae-modal-body">
+
+
+        <label for="eventName" class="event-form-label">Event Name:</label>
+        <input
+          id="eventName"
+          name="eventName"
+          formControlName="name"
+          class="event-form-input"
+          [value]="''" />
+
+        <div class="event-form-time">
+          <div class="event-form-time-picker">
+            <label for="eventStartDate" class="event-form-label">Start Date:</label>
+            <input
+              id="startDate"
+              type="text"
+              name="endDate"
+              formControlName="startDate"
+              class="event-form-input"
+              #startDate />
+          </div>
+
+          <div class="event-form-time-picker">
+            <label for="eventEndDate" class="event-form-label">End Date:</label>
+            <input
+              id="endDate"
+              type="text"
+              name="endDate"
+              formControlName="endDate"
+              class="event-form-input"
+              #endDate
+              />
+          </div>
+        </div>
+
+        <label for="eventDescription" class="event-form-label">Description:</label>
+        <textarea
+          id="eventDescription"
+          class="event-form-input"
+          name="eventDescription"
+          formControlName="description"
+          >{{''}}</textarea>
+
+    </div>
+
+    <div class="ae-modal-footer">
+      <button (click)="close()">Cancel</button>
+      <button  type="submit" [disabled]="!eventForm.valid">Save</button>
+    </div>
+  </form>
+</div>

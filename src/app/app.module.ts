@@ -7,9 +7,8 @@ import { CalendarComponent } from './calendar/calendar.component';
 import { CalendarHeaderComponent } from './calendar/calendar-header/calendar-header.component';
 import { EventComponent } from './calendar/event/event.component';
 import { removeZerosPipe } from './pipes/remove-leading-zero.pipe';
-import { ModalComponent } from './modal/modal.component';
+import { ModalDialogComponent } from './modal-dialog/modal-dialog.component';
 import { CurrentTimeIndicatorComponent } from './calendar/current-time-indicator/current-time-indicator.component';
-import { EventFormComponent } from './modal/event-form/event-form.component';
 
 @NgModule({
   declarations: [
@@ -23,8 +22,7 @@ import { EventFormComponent } from './modal/event-form/event-form.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    ModalComponent,
-    EventFormComponent
+    ModalDialogComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

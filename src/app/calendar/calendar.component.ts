@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { DateTime } from "luxon";
 import { EventService } from '../service/event.service';
-import { ModalComponent } from '../modal/modal.component';
+import { ModalDialogComponent } from '../modal-dialog/modal-dialog.component';
 import { DATE_FORMATS } from '../shared/constants';
 import { WeekChange } from '../shared/enums/week-change.enum';
 import { FistLastWeek } from '../shared/enums/first-last-week.enum';
@@ -14,7 +14,7 @@ import { IEvent, ISchedule, IScheduleItem, IWeekDay } from '../shared/interfaces
   styleUrls: ['./calendar.component.scss']
 })
 export class CalendarComponent implements OnInit {
-  @ViewChild('eventModal') eventModal!: ModalComponent;
+  @ViewChild('eventModal') eventModal!: ModalDialogComponent;
   @Input() schedulerBackColor: string = '#ffffff';
   @Input() schedulerFontColor: string = '#000000e5';
   @Input() eventBackColor: string = '';
@@ -45,6 +45,7 @@ export class CalendarComponent implements OnInit {
   today: string = this.now.toFormat(DATE_FORMATS.FULL_DATE);
   dialogTitle: string  = ''
   currentEvent = {} as IEvent;
+  isModalOpen = false;
   constructor(private eventService: EventService) {
 
   }
@@ -167,7 +168,8 @@ export class CalendarComponent implements OnInit {
     const endTime = DateTime.fromFormat(`${event.date} ${event.endTime}`, DATE_FORMATS.FULL_DATE); // Assume event has an endTime property
 
     const duration = endTime.diff(startTime, 'minutes').minutes;
-    return Math.ceil(duration / 30)  * 100; // Number of 30-minute slots the event spans multiplayed by 100%
+    const min30Slot = Math.ceil(duration / 30);
+    return duration >= 30 ? min30Slot  * 100 : min30Slot * 50; // Number of 30-minute slots the event spans multiplayed by 100%
   }
   // Check if the current time is within a given time slot
   isCurrentTimeInSlot(slot: string): boolean {
@@ -194,7 +196,6 @@ export class CalendarComponent implements OnInit {
     if (this.eventModal) {
       this.eventModal.open();
     }
-
   }
 
 }
