@@ -8,6 +8,7 @@ import { DateTime } from 'luxon';
 })
 export class CurrentTimeIndicatorComponent {
   @Input() currentTime: string = '';
+  @Input() barColor: string = '#ff0000';
   @Input() dateTime: DateTime<true> = DateTime.now();
 
     // Calculate the current position of the current time within a given time slot
