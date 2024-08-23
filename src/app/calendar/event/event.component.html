@@ -1,3 +1,11 @@
-<div [style.height.%]="eventSpan" class="event-box absolute">
-  <span class="event-box__title">{{ title }}</span>
+<div
+  [style.height.%]="eventSpan ? eventSpan * 0.98 : null"
+  [ngStyle]="{
+    'background-color': isHovered ? eventHoverColor : eventBackColor,
+    'border-color': eventBorderColor
+    }"
+  (mouseover)="isHovered = true"
+  (mouseleave)="isHovered = false"
+  class="event-box absolute">
+  <span class="event-box__title" [style.color]="eventFontColor">{{ title }}</span>
 </div>

@@ -7,6 +7,11 @@ import { Component, Input } from '@angular/core';
 })
 export class EventComponent {
   @Input() eventSpan: number | null = null;
+  @Input() eventBackColor: string = '#1a73e8';
+  @Input() eventHoverColor: string = '#4285f4';
+  @Input() eventFontColor: string = '#ffffff';
+  @Input() eventBorderColor: string = '#ffffff';
+  isHovered = false;
   _title: string = '';
   _description: string = '';
 

@@ -1,15 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-
-
-export interface IEvent {
-  id?: string;
-  title: string;
-  startTime: string;
-  endTime: string;
-  date: string;
-  description: string;
-}
+import { IEvent } from '../shared/interfaces/event.interface';
 
 export const EVENTS: IEvent[] = [
   {
@@ -123,6 +114,14 @@ export const EVENTS: IEvent[] = [
     endTime: "14:00",
     date: "2024-08-22",
     description: "Hollyday is a day of festivity or recreation when no work is done.",
+  },
+  {
+    id: "141",
+    title: "Overlapping Meeting",
+    startTime: "13:00",
+    endTime: "15:00",
+    date: "2024-08-22",
+    description: "Overlapping Meeting",
   },
   {
     id: "15",

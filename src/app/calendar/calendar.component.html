@@ -1,10 +1,16 @@
-<div class="calendar">
+<div class="calendar"
+  [style]="{
+    'background-color': schedulerBackColor,
+    'color': schedulerFontColor,
+  }"
+  [ngClass]="customClass">
 
   <app-calendar-header
     [weekStart]="weekStart"
     [weekEnd]="weekEnd"
     [year]="this.timeFrame.year"
     [monthName]="this.timeFrame.month"
+    [titleColor]="titleColor"
     (onToday)="getToday()"
     (onWeekCHange)="getWeekChange($event)"
     (onGetFirstOrLastWeek)="getFirstOrLastWeek($event)"
@@ -35,13 +41,19 @@
 
         <app-current-time-indicator
           *ngIf="day.date === today.split(' ')[0] && isCurrentTimeInSlot(slot)"
-          [currentTime]="slot"></app-current-time-indicator>
+          [currentTime]="slot"
+          [barColor]="currentTimeBarColor"
+          ></app-current-time-indicator>
 
         <app-event
           *ngIf="findEvent(day, slot)?.event; else noEvent"
           (click)="openModal($event, findEvent(day, slot)?.event)"
           [eventSpan]="getEventSpan(day.date, slot) || null"
           [title]="findEvent(day, slot)?.event?.title || ''"
+          [eventBackColor]="eventBackColor"
+          [eventHoverColor]="eventHoverColor"
+          [eventBorderColor]="eventBorderColor"
+          [eventFontColor]="eventFontColor"
           [description]="findEvent(day, slot)?.event?.description || ''"
           >
         </app-event>

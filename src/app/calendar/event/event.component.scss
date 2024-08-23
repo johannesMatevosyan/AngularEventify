@@ -1,21 +1,21 @@
 
 .event-box {
   background-color: #1a73e8;
-  height: calc(100% - 3px);
+  height: 97%;
   padding: 0.25rem 0.5rem;
   border-radius: 3px;
-  border: 1px solid #1a73e8;
+  border: 1px solid #ddd;
   cursor: pointer;
   z-index: 999;
-  &:hover {
-    background-color: #4285f4
+  &:hover{
+    background-color: #0d6efd;
   }
   &.absolute {
     position: absolute;
-    top: 0px;
+    top: 1px;
     left: 1px;
     margin: auto;
-    width: calc(100% - 2px);
+    width: calc(100% - 8px);
   }
   .event-box__title {
     display: block;
