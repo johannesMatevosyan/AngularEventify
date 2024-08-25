@@ -1,6 +1,6 @@
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, Input, OnChanges, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import flatpickr from 'flatpickr';
 import confirmDatePlugin from 'flatpickr/dist/plugins/confirmDate/confirmDate';
 import { IEvent } from '../shared/interfaces/event.interface';
@@ -38,9 +38,9 @@ export class ModalDialogComponent implements OnInit, AfterViewInit, OnChanges {
     })]
   }
   eventForm = new FormGroup({
-    name: new FormControl(''),
-    startTime: new FormControl(''),
-    endTime: new FormControl(''),
+    name: new FormControl('', Validators.required),
+    startTime: new FormControl('', Validators.required),
+    endTime: new FormControl('', Validators.required),
     date: new FormControl(''),
     description: new FormControl(''),
   });
@@ -53,7 +53,8 @@ export class ModalDialogComponent implements OnInit, AfterViewInit, OnChanges {
   };
   @Input() hideOnEsc: boolean = true;
   @Input() title: string = '';
-  isVisible: boolean = false;
+  isVisible = false;
+  submitted = false;
   constructor(private renderer: Renderer2, private cdr: ChangeDetectorRef, private eventService: EventService) { }
 
   ngOnInit(): void {
@@ -63,6 +64,11 @@ export class ModalDialogComponent implements OnInit, AfterViewInit, OnChanges {
       if (this.hideOnEsc) {
         this.close();
       }
+    });
+
+    // Subscribe to form value changes to check for errors
+    this.eventForm.valueChanges.subscribe(() => {
+      this.checkForErrors();
     });
   }
 
@@ -100,28 +106,60 @@ export class ModalDialogComponent implements OnInit, AfterViewInit, OnChanges {
     this.cdr.detectChanges(); // Ensure that changes are detected
   }
 
+  get eventFormControl() {
+    return this.eventForm.controls;
+  }
+
+  // Function to check for errors in all controls
+  checkForErrors(): void {
+    Object.keys(this.eventForm.controls).forEach(key => {
+      const control = this.eventForm.get(key);
+      if (control && control.invalid && control.touched) {
+        console.log(`${key} has error: ${JSON.stringify(control.errors)}`);
+      }
+    });
+    this.submitted = false;
+  }
+
+  // Method to check if a control has a specific error
+  hasError(controlName: string, errorName: string): boolean | undefined {
+    const control = this.eventForm.get(controlName);
+    return control?.hasError(errorName) && control.touched;
+  }
+
+  resetForm(): void {
+    this.eventForm.reset();
+  }
+
   open(): void {
     this.isVisible = true;
     this.cdr.detectChanges();
   }
 
   close(): void {
+    this.resetForm();
     this.isVisible = false;
   }
+
 
   getValidString(value: string | null | undefined, defaultValue: string): string {
     return value ? value : defaultValue;
   }
 
   onSubmit(): void {
+    this.submitted = true;
+
+    if (this.eventForm.invalid) {
+      return;
+    }
 
     const data = {... this.eventForm.value};
     data.date = this.eventForm.value.startTime?.split(' ')[0];
     const name = this.getValidString(data.name, 'Default Name');
     const startTime = this.getValidString(data.startTime, '18:30');  // set current time if not provided
-    const endTime = this.getValidString(data.endTime, '18:45');     // set current time + 15 minutes if not provided
-    const date = this.getValidString(data.date, this.getCurrentDate());           // set current date if not provided
-    const description = this.getValidString(data.description, '');
+    const endTime = this.getValidString(data.endTime, '18:45');      // set current time + 15 minutes if not provided
+    const date = this.getValidString(data.date, this.getCurrentDate());    // set current date if not provided
+    const description = this.getValidString(data.description, '');   // set empty string if not provided
 
     const validObj = {
       name,
@@ -145,7 +183,6 @@ export class ModalDialogComponent implements OnInit, AfterViewInit, OnChanges {
 
   getCurrentDate(): string {
     // Get the current date and time
-    const currentDate = DateTime.now().toISODate();
-    return currentDate;
+    return DateTime.now().toISODate();
   }
 }

@@ -8,16 +8,23 @@
     <div class="ae-modal-body">
 
 
-        <label for="eventName" class="event-form-label">Event Name:</label>
-        <input
-          id="eventName"
-          name="eventName"
-          formControlName="name"
-          class="event-form-input"
-          [value]="''" />
+        <div class="relative">
+          <label for="eventName" class="event-form-label">Event Name:</label>
+          <input
+            id="eventName"
+            name="eventName"
+            formControlName="name"
+            class="event-form-input"
+            [value]="''" />
+
+          <span class="error absolute"
+              *ngIf="hasError('name', 'required')">
+              Name is required
+          </span>
+        </div>
 
         <div class="event-form-time">
-          <div class="event-form-time-picker">
+          <div class="event-form-time-picker relative">
             <label for="eventStartDate" class="event-form-label">Start Date:</label>
             <input
               id="startDate"
@@ -27,9 +34,13 @@
               class="event-form-input"
               #start
               />
+              <span class="error absolute"
+                *ngIf="hasError('startTime', 'required')">
+                Start Time is required
+              </span>
           </div>
 
-          <div class="event-form-time-picker">
+          <div class="event-form-time-picker relative">
             <label for="eventEndDate" class="event-form-label">End Date:</label>
             <input
               id="endDate"
@@ -39,6 +50,10 @@
               class="event-form-input"
               #end
               />
+              <span class="error absolute"
+                *ngIf="hasError('endTime', 'required')">
+                End Time is required
+              </span>
           </div>
         </div>
 
@@ -54,7 +69,7 @@
 
     <div class="ae-modal-footer">
       <button (click)="close()">Cancel</button>
-      <button  type="submit" [disabled]="!eventForm.valid">Save</button>
+      <button  type="submit" [disabled]="submitted">Save</button>
     </div>
   </form>
 </div>
