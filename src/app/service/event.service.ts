@@ -263,4 +263,9 @@ export class EventService {
   getAllEvents(): Observable<IEvent[]> {
     return of(EVENTS);
   }
+
+  addEvent(event: IEvent): Observable<IEvent> {
+    EVENTS.push(event);
+    return of(event);
+  }
 }
