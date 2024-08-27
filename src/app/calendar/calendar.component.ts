@@ -221,11 +221,11 @@ export class CalendarComponent implements OnInit {
     }
   }
 
-  trackByTimeSlot(index: number, slot: any): string {
-    return slot.time; // Assuming each slot has a unique 'time' property
+  trackByTimeSlot(index: number, slot: string): string {
+    return slot.split(':')[0].trim() + index + Math.floor(Math.random() * 100); // Assuming each slot has a unique 'time' property
   }
 
-  trackByEvent(day:string): number {
-    return parseInt(day.trim(), 10) + Math.floor(Math.random() * 7); // Assuming each event has a unique 'id' property
+  trackByEvent(index: number, data:ISchedule): number {
+    return parseInt(data.date.trim(), 10) + index + Math.min(Math.max(1000, 0), 100); // Assuming each event has a unique 'id' property
   }
 }

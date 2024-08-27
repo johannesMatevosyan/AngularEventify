@@ -35,7 +35,7 @@
       <td class="headcol">
         <span *ngIf="isEven" class="headcol-text">{{ slot }}</span>
       </td>
-      <td *ngFor="let day of eventGrid;"
+      <td *ngFor="let day of eventGrid; trackBy: trackByEvent"
         [ngClass]="{'is-today' : day.date === today}"
         (click)="findEvent(day, slot) ? addEvent($event, day.date, slot) : null;">
 
