@@ -118,9 +118,11 @@ export class CalendarComponent implements OnInit {
   checkMonth(value: string): string{
     return this.timeFrame.month === value ? this.timeFrame.month : value;
   }
+
   checkYear(value: number): number {
     return this.timeFrame.year === value ? this.timeFrame.year : value;
   }
+
   generateTimeSlots(startTime: number, endTime: number): string[] {
     // Initialize the starting time (06:00 AM)
     let currentTime = DateTime.now();
@@ -182,15 +184,13 @@ export class CalendarComponent implements OnInit {
     return currentTime >= slotStartTime && currentTime < nextSlotTime;
   }
 
-  openModal(ev: Event, event: IEvent | null | undefined): void {
+  openEvent(ev: Event, event: IEvent | null | undefined): void {
     ev.preventDefault();
     ev.stopPropagation();
+    this.dialogTitle = 'Edit Event'
     if (event && event.id) {
       this.dialogTitle = 'Edit Event'
       this.currentEvent = event;
-    } else {
-      this.dialogTitle = 'Add Event';
-      this.currentEvent = {} as IEvent;
     }
 
     if (this.eventModal) {
@@ -198,4 +198,19 @@ export class CalendarComponent implements OnInit {
     }
   }
 
+  addEvent(ev: Event, date: string, time: string): void {
+    ev.preventDefault();
+    ev.stopPropagation();
+    this.dialogTitle = 'Add Event';
+    this.currentEvent = {
+      date,
+      startTime: time,
+      endTime: '',
+      name: '',
+      description: ''
+    }
+    if (this.eventModal) {
+      this.eventModal.open();
+    }
+  }
 }

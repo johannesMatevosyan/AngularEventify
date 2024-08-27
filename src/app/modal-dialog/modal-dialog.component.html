@@ -6,8 +6,6 @@
       <button class="ae-modal-close" (click)="close()">×</button>
     </div>
     <div class="ae-modal-body">
-
-
         <div class="relative">
           <label for="eventName" class="event-form-label">Event Name:</label>
           <input
@@ -23,7 +21,7 @@
           </span>
         </div>
 
-        <div class="event-form-time">
+        <div class="event-form-time relative">
           <div class="event-form-time-picker relative">
             <label for="eventStartDate" class="event-form-label">Start Date:</label>
             <input
@@ -38,6 +36,7 @@
                 *ngIf="hasError('startTime', 'required')">
                 Start Time is required
               </span>
+
           </div>
 
           <div class="event-form-time-picker relative">
@@ -55,6 +54,12 @@
                 End Time is required
               </span>
           </div>
+
+          <span class="error absolute"
+            *ngIf="submitted && eventForm.hasError('startDateBeforeEndDate')">
+            Start date and time must be before the end date and time.
+          </span>
+
         </div>
 
         <label for="eventDescription" class="event-form-label">Description:</label>

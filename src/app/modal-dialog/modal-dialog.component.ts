@@ -1,6 +1,6 @@
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, Input, OnChanges, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import flatpickr from 'flatpickr';
 import confirmDatePlugin from 'flatpickr/dist/plugins/confirmDate/confirmDate';
 import { IEvent } from '../shared/interfaces/event.interface';
@@ -17,8 +17,8 @@ import { DATE_FORMATS, END_TIME, START_TIME } from '../shared/constants';
   styleUrls: ['./modal-dialog.component.scss']
 })
 export class ModalDialogComponent implements OnInit, AfterViewInit, OnChanges {
-  private flatpickrInstance!: Instance;
-  @ViewChild('datePickerInput') datePickerInput!: ElementRef;
+  private flatpickrInstance1!: Instance;
+  private flatpickrInstance2!: Instance;
   @ViewChild('start') eventStart!: ElementRef;
   @ViewChild('end') eventEnd!: ElementRef;
 
@@ -26,24 +26,24 @@ export class ModalDialogComponent implements OnInit, AfterViewInit, OnChanges {
     altInput: true,
     altFormat: "F j, Y H:i",
     enableTime: true,
-    dateFormat: 'Y-m-d H:i',
+    dateFormat: DATE_FORMATS.YEAR_MONTH_DAY_TIME,
     minTime: START_TIME,
     maxTime: END_TIME,
     time_24hr: true, // 24-hour Time Picker
     minuteIncrement: 15,
     plugins: [  confirmDatePlugin({
       confirmIcon: "",
-      showAlways: true,                         // Show the confirm button all the time
-      theme: "light"                             // Theme: 'light' or 'dark'
+      showAlways: true, // Show the confirm button all the time
+      theme: "light"
     })]
   }
   eventForm = new FormGroup({
     name: new FormControl('', Validators.required),
     startTime: new FormControl('', Validators.required),
-    endTime: new FormControl('', Validators.required),
+    endTime: new FormControl('', [Validators.required]),
     date: new FormControl(''),
     description: new FormControl(''),
-  });
+  }, { validators: this.startDateBeforeEndDateValidator() });
   @Input() data: IEvent = {
       name: '',
       startTime: '',
@@ -67,7 +67,7 @@ export class ModalDialogComponent implements OnInit, AfterViewInit, OnChanges {
     });
 
     // Subscribe to form value changes to check for errors
-    this.eventForm.valueChanges.subscribe(() => {
+    this.eventForm.valueChanges.subscribe((v) => {
       this.checkForErrors();
     });
   }
@@ -78,32 +78,66 @@ export class ModalDialogComponent implements OnInit, AfterViewInit, OnChanges {
 
   setFormData(): void {
     this.cdr.detectChanges();
-    this.eventForm.get('name')?.setValue(this.data.name?? null);
-    this.eventForm.get('date')?.setValue(this.data.date?? null);
-    this.eventForm.get('description')?.setValue(this.data.description?? null);
 
-    const startTime = this.data.startTime ? DateTime.fromFormat(this.data.startTime, DATE_FORMATS.FULL_DATE) : 0;
+    this.eventForm.patchValue({
+      name: this.data.name?? '',
+      date: this.data.date ? this.data.date : '',
+      description: this.data.description?? '',
+    });
+
+    const startTime = this.data.startTime ? DateTime.fromFormat('17:00', DATE_FORMATS.FULL_DATE) : 0;
     const endTime = this.data.endTime ? DateTime.fromFormat(this.data.endTime, DATE_FORMATS.FULL_DATE) : 0;
 
-    if (!this.eventStart || !this.eventEnd || endTime < startTime ) {
+    if (!this.eventStart || !this.eventEnd || endTime < startTime || !this.data.date) {
       return;
     }
-
-    this.setDateTime(this.eventStart.nativeElement, this.data.startTime);
-
-    this.setDateTime(this.eventEnd.nativeElement, this.data.endTime);
-  }
-
-  setDateTime(nativeElement: HTMLElement, time: string): void {
-    this.flatpickrInstance = flatpickr(nativeElement, this.configs);
-    if (this.flatpickrInstance &&  this.data.date && time) {
-      const dateToSet = this.data.date + ' ' + time;
-      this.flatpickrInstance.setDate(dateToSet);
+    this.initializeFlatpickr();
+    // set date and time into date picker component
+    const dateStr1 = `${this.data.date + ' ' + this.data.startTime}`
+    const dateStr2 = `${this.data.date + ' ' + this.data.endTime}`
+    if (this.flatpickrInstance1 && this.data.startTime) {
+      this.eventForm.patchValue({ startTime: dateStr1 });
+      this.flatpickrInstance1.setDate(dateStr1);
+    }
+    if (this.flatpickrInstance2 && this.data.endTime) {
+      this.eventForm.patchValue({ endTime: dateStr2 });
+      this.flatpickrInstance2.setDate(dateStr2);
     }
   }
 
   ngAfterViewInit(): void {
+    this.initializeFlatpickr();
+    this.detectPickerOnChange();
     this.cdr.detectChanges(); // Ensure that changes are detected
+  }
+
+  initializeFlatpickr(): void {
+    if (!this.eventStart || !this.eventEnd) {
+      return;
+    }
+    this.flatpickrInstance1 = flatpickr(this.eventStart.nativeElement, this.configs);
+    this.flatpickrInstance2 = flatpickr(this.eventEnd.nativeElement, this.configs);
+  }
+
+  detectPickerOnChange(): void{
+    flatpickr('#startDate', {
+      enableTime: true,
+      onChange: (selectedDates, dateStr: string | undefined, instance) => {
+        if (dateStr) {
+          this.eventForm.get('startDate')?.setValue(dateStr as never); // TODO fix this
+          const endDatePicker = flatpickr('#endDate') as flatpickr.Instance;
+          const minDate = new Date(dateStr); // Convert string to Date object
+          endDatePicker.set('minDate', minDate);
+        }
+      }
+    });
+
+    flatpickr('#endDate', {
+      enableTime: true,
+      onChange: (selectedDates, dateStr, instance) => {
+        this.eventForm.get('endDate')?.setValue(dateStr as never); // TODO fix this
+      }
+    });
   }
 
   get eventFormControl() {
@@ -133,6 +167,9 @@ export class ModalDialogComponent implements OnInit, AfterViewInit, OnChanges {
 
   open(): void {
     this.isVisible = true;
+    if (!this.flatpickrInstance1 || !this.flatpickrInstance2) {
+      this.initializeFlatpickr();
+    }
     this.cdr.detectChanges();
   }
 
@@ -148,8 +185,8 @@ export class ModalDialogComponent implements OnInit, AfterViewInit, OnChanges {
 
   onSubmit(): void {
     this.submitted = true;
-
     if (this.eventForm.invalid) {
+      this.eventForm.markAllAsTouched();
       return;
     }
 
@@ -180,9 +217,19 @@ export class ModalDialogComponent implements OnInit, AfterViewInit, OnChanges {
       }
     });
   }
-
+  // Get the current date and time
   getCurrentDate(): string {
-    // Get the current date and time
     return DateTime.now().toISODate();
+  }
+
+  startDateBeforeEndDateValidator(): ValidatorFn {
+    return (group: AbstractControl): ValidationErrors | null => {
+      const startTime = group.get('startTime')?.value;
+      const endTime = group.get('endTime')?.value;
+      if (startTime && endTime && startTime >= endTime) {
+        return { startDateBeforeEndDate: true }; // Error key
+      }
+      return null; // No error
+    };
   }
 }

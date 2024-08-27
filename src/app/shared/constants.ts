@@ -3,6 +3,7 @@ export const DATE_FORMATS = {
   FULL_DATE: 'yyyy-MM-dd HH:mm',
   SHORT_DATE: 'MM/dd/yyyy',
   WEEKDAY_FORMAT: 'ccc, dd',  // Format for "Mon, 14"
+  YEAR_MONTH_DAY_TIME: 'Y-m-d H:i',
 };
 
 export const START_TIME = '06:00';
