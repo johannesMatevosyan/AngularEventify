@@ -31,11 +31,11 @@
     </thead>
   <tbody>
 
-    <tr *ngFor="let slot of timeSlots; even as isEven;" [attr.data-time]="slot">
+    <tr *ngFor="let slot of timeSlots; even as isEven; trackBy: trackByTimeSlot" [attr.data-time]="slot">
       <td class="headcol">
         <span *ngIf="isEven" class="headcol-text">{{ slot }}</span>
       </td>
-      <td *ngFor="let day of eventGrid"
+      <td *ngFor="let day of eventGrid;"
         [ngClass]="{'is-today' : day.date === today}"
         (click)="findEvent(day, slot) ? addEvent($event, day.date, slot) : null;">
 

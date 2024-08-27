@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { DateTime } from "luxon";
 import { EventService } from '../service/event.service';
 import { ModalDialogComponent } from '../modal-dialog/modal-dialog.component';
@@ -46,9 +46,8 @@ export class CalendarComponent implements OnInit {
   dialogTitle: string  = ''
   currentEvent = {} as IEvent;
   isModalOpen = false;
-  constructor(private eventService: EventService) {
+  constructor(private eventService: EventService, private cdr: ChangeDetectorRef) {}
 
-  }
   ngOnInit(): void {
     this.weekDays = this.getWeekDays(this.startOfWeek);
     this.timeSlots = this.generateTimeSlots(this.startTime, this.endTime);
@@ -56,6 +55,15 @@ export class CalendarComponent implements OnInit {
     this.eventService.getAllEvents().subscribe(events => {
       this.eventsList = events;
       this.eventGrid = this.generateEventGrid(this.weekDays);
+      this.cdr.detectChanges();
+    });
+
+    this.eventService.eventAdded$.subscribe(event => {
+      if(!event) {
+        return;
+      }
+      this.eventGrid = this.generateEventGrid(this.weekDays);
+      this.cdr.detectChanges();
     });
 
   }
@@ -131,7 +139,6 @@ export class CalendarComponent implements OnInit {
     while (currentTime.hour <= endTime) {
       // Format the current time as HH:mm
       const formattedTime = currentTime.toFormat('HH:mm').slice(0, 5);
-
       times.push(formattedTime);
       // Increment the time by one hour
       currentTime = currentTime.plus({ minutes: 30 });
@@ -145,7 +152,7 @@ export class CalendarComponent implements OnInit {
     const schedule: ISchedule[] = [];
     weekDays.forEach(day => {
       const daySchedule: IScheduleItem[] = this.timeSlots.map(time => {
-        const event = this.eventsList.find(e => e.date === day.date && e.startTime === time);
+        const event = this.eventsList.find(e => e.date === day.date && e.startTime.trim().normalize() === time.trim().normalize())
         return { time, event }; // If no event, event will be undefined
       });
 
@@ -212,5 +219,13 @@ export class CalendarComponent implements OnInit {
     if (this.eventModal) {
       this.eventModal.open();
     }
+  }
+
+  trackByTimeSlot(index: number, slot: any): string {
+    return slot.time; // Assuming each slot has a unique 'time' property
+  }
+
+  trackByEvent(day:string): number {
+    return parseInt(day.trim(), 10) + Math.floor(Math.random() * 7); // Assuming each event has a unique 'id' property
   }
 }
