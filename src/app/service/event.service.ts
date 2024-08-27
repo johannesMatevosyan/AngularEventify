@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { IEvent } from '../shared/interfaces/event.interface';
 
 export const EVENTS: IEvent[] = [
@@ -289,15 +289,23 @@ export const EVENTS: IEvent[] = [
   providedIn: 'root'
 })
 export class EventService {
-
+  private isEventAddedSubject = new BehaviorSubject<boolean>(false);
+  eventAdded$: Observable<boolean> = this.isEventAddedSubject.asObservable();
+  private eventsSubject = new BehaviorSubject<IEvent[]>(EVENTS);
+  events$: Observable<IEvent[]> = this.eventsSubject.asObservable();
   constructor() { }
-
+  // get the list of all available events
   getAllEvents(): Observable<IEvent[]> {
-    return of(EVENTS);
+    return this.events$;
   }
 
-  addEvent(event: IEvent): Observable<IEvent> {
-    EVENTS.push(event);
-    return of(event);
+  addEvent(newEvent: IEvent): Observable<boolean> {
+    if (!newEvent || !newEvent.name || !newEvent.startTime || !newEvent.endTime || !newEvent.date) {
+      return of(false);
+    }
+    const currentEvents = this.eventsSubject.value;
+    this.eventsSubject.next([...currentEvents, newEvent]);
+    this.isEventAddedSubject.next(true);
+    return of(true);
   }
 }
