@@ -191,11 +191,10 @@ export class ModalDialogComponent implements OnInit, AfterViewInit, OnChanges {
     }
 
     const data = {... this.eventForm.value};
-    data.date = this.eventForm.value.startTime?.split(' ')[0];
     const name = this.getValidString(data.name, 'Default Name');
-    const startTime = this.getValidString(data.startTime, '18:30');  // set current time if not provided
-    const endTime = this.getValidString(data.endTime, '18:45');      // set current time + 15 minutes if not provided
-    const date = this.getValidString(data.date, this.getCurrentDate());    // set current date if not provided
+    const startTime = this.getValidString(data.startTime?.split(' ')[1], '18:30');  // set current time if not provided
+    const endTime = this.getValidString(data.endTime?.split(' ')[1], '18:45');      // set current time + 15 minutes if not provided
+    const date = this.getValidString(data.startTime?.split(' ')[0], this.getCurrentDate());    // set current date if not provided
     const description = this.getValidString(data.description, '');   // set empty string if not provided
 
     const validObj = {
