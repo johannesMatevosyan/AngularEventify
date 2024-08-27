@@ -3,7 +3,8 @@
   <form [formGroup]="eventForm" (ngSubmit)="onSubmit()">
     <div class="ae-modal-header">
       <h4 class="ae-modal-title">{{ title }}</h4>
-      <button class="ae-modal-close" (click)="close()">×</button>
+
+      <button class="ae-modal-close" type="button" (click)="close()">×</button>
     </div>
     <div class="ae-modal-body">
         <div class="relative">
@@ -73,8 +74,12 @@
     </div>
 
     <div class="ae-modal-footer">
-      <button (click)="close()">Cancel</button>
-      <button  type="submit" [disabled]="submitted">Save</button>
+      <button class="delete-button" type="button" (click)="deleteEvent($event, data.id)">Remove</button>
+
+      <div>
+        <button (click)="close()" type="button" class="warning-button">Cancel</button>
+        <button  type="submit" [disabled]="submitted" class="save-button">Save</button>
+      </div>
     </div>
   </form>
 </div>

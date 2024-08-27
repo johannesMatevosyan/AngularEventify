@@ -308,4 +308,13 @@ export class EventService {
     this.isEventAddedSubject.next(true);
     return of(true);
   }
+  deleteEvent(eventId: string): Observable<boolean> {
+    if (!eventId) {
+      return of(false);
+    }
+    const currentEvents = this.eventsSubject.value;
+    const updatedEvents = currentEvents.filter(event => event.id !== eventId);
+    this.eventsSubject.next(updatedEvents);
+    return of(true);
+  }
 }

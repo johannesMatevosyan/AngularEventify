@@ -70,25 +70,42 @@
 /* Modal Footer */
 .ae-modal-footer {
   display: flex;
-  justify-content: flex-end; /* Align buttons to the right */
+  justify-content: space-between;
 }
 
 /* Button Styles */
 .ae-modal-footer button {
-  background-color: #007bff; /* Primary blue color */
   color: white; /* White text */
   border: none; /* No border */
   padding: 8px 16px; /* Padding inside the buttons */
   border-radius: 4px; /* Rounded corners */
   cursor: pointer;
   font-size: 14px;
-  margin-left: 10px;
   min-width: 90px;
+  &:last-child {
+    margin-left: 10px;
+  }
 }
-
+.ae-modal-footer .save-button {
+  background-color: #007bff; /* Primary blue color */
+}
 /* Button Hover State */
 .ae-modal-footer button:hover {
   background-color: #0056b3; /* Darker blue on hover */
+}
+.ae-modal-footer .warning-button {
+  background-color: #f0ad4e; /* Primary blue color */
+}
+/* Button Hover State */
+.ae-modal-footer .warning-button:hover {
+  background-color: #ffc107; /* Darker blue on hover */
+}
+.ae-modal-footer .delete-button {
+  background-color: #dc3545; /* Primary blue color */
+}
+/* Button Hover State */
+.ae-modal-footer .delete-button:hover {
+  background-color: #ff0000; /* Darker blue on hover */
 }
 
 .event-form-label {

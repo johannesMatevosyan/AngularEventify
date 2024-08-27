@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { DateTime } from "luxon";
 import { EventService } from '../service/event.service';
 import { ModalDialogComponent } from '../modal-dialog/modal-dialog.component';
@@ -6,6 +6,7 @@ import { DATE_FORMATS } from '../shared/constants';
 import { WeekChange } from '../shared/enums/week-change.enum';
 import { FistLastWeek } from '../shared/enums/first-last-week.enum';
 import { IEvent, ISchedule, IScheduleItem, IWeekDay } from '../shared/interfaces/event.interface';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -13,7 +14,7 @@ import { IEvent, ISchedule, IScheduleItem, IWeekDay } from '../shared/interfaces
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.scss']
 })
-export class CalendarComponent implements OnInit {
+export class CalendarComponent implements OnInit, OnDestroy {
   @ViewChild('eventModal') eventModal!: ModalDialogComponent;
   @Input() schedulerBackColor: string = '#ffffff';
   @Input() schedulerFontColor: string = '#000000e5';
@@ -46,13 +47,14 @@ export class CalendarComponent implements OnInit {
   dialogTitle: string  = ''
   currentEvent = {} as IEvent;
   isModalOpen = false;
+  private subscription: Subscription = new Subscription();
   constructor(private eventService: EventService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.weekDays = this.getWeekDays(this.startOfWeek);
     this.timeSlots = this.generateTimeSlots(this.startTime, this.endTime);
 
-    this.eventService.getAllEvents().subscribe(events => {
+    this.subscription = this.eventService.getAllEvents().subscribe(events => {
       this.eventsList = events;
       this.eventGrid = this.generateEventGrid(this.weekDays);
       this.cdr.detectChanges();
@@ -221,11 +223,15 @@ export class CalendarComponent implements OnInit {
     }
   }
 
-  trackByTimeSlot(index: number, slot: string): string {
-    return slot.split(':')[0].trim() + index + Math.floor(Math.random() * 100); // Assuming each slot has a unique 'time' property
+  trackByTimeSlot(index: number, slot: string): number {
+    return index + Math.floor(Math.random() * 100); // Assuming each slot has a unique 'time' property
   }
 
   trackByEvent(index: number, data:ISchedule): number {
-    return parseInt(data.date.trim(), 10) + index + Math.min(Math.max(1000, 0), 100); // Assuming each event has a unique 'id' property
+    return index + Math.min(Math.max(1000, 0), 100); // Assuming each event has a unique 'id' property
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe(); // Clean up subscription
   }
 }

@@ -45,6 +45,7 @@ export class ModalDialogComponent implements OnInit, AfterViewInit, OnChanges {
     description: new FormControl(''),
   }, { validators: this.startDateBeforeEndDateValidator() });
   @Input() data: IEvent = {
+      id: '',
       name: '',
       startTime: '',
       endTime: '',
@@ -53,6 +54,7 @@ export class ModalDialogComponent implements OnInit, AfterViewInit, OnChanges {
   };
   @Input() hideOnEsc: boolean = true;
   @Input() title: string = '';
+
   isVisible = false;
   submitted = false;
   constructor(private renderer: Renderer2, private cdr: ChangeDetectorRef, private eventService: EventService) { }
@@ -230,5 +232,17 @@ export class ModalDialogComponent implements OnInit, AfterViewInit, OnChanges {
       }
       return null; // No error
     };
+  }
+
+
+  deleteEvent(ev: Event, id: string | undefined): void {
+    if(!id) {
+      return;
+    }
+    this.eventService.deleteEvent(id).subscribe((res) => {
+      if(res) {
+        this.close();
+      }
+    });
   }
 }
