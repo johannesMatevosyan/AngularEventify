@@ -172,12 +172,44 @@ export const EVENTS: IEvent[] = [
     endTime: '15:00'
   },
   {
+    id: "181",
+    name: 'Human design',
+    description: 'Human design for the client.',
+    date: '2024-08-29',
+    startTime: '11:00',
+    endTime: '13:00'
+  },
+  {
+    id: "182",
+    name: 'UX meeting',
+    description: 'UX meeting.',
+    date: '2024-08-31',
+    startTime: '16:00',
+    endTime: '17:00'
+  },
+  {
     id: "19",
     name: 'Design Review',
     description: 'Review the design with the UI/UX team.',
     date: '2024-09-03',
     startTime: '11:00',
     endTime: '12:00'
+  },
+  {
+    id: "191",
+    name: 'Design Review',
+    description: 'Review the design with the UI/UX team.',
+    date: '2024-09-05',
+    startTime: '11:30',
+    endTime: '12:30'
+  },
+  {
+    id: "192",
+    name: 'UI meetup',
+    description: 'UI meetup',
+    date: '2024-09-06',
+    startTime: '08:30',
+    endTime: '11:30'
   },
   {
     id: "20",
