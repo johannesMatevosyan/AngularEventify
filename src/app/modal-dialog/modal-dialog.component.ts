@@ -217,7 +217,7 @@ export class ModalDialogComponent implements OnInit, AfterViewInit, OnChanges {
     const date = this.getValidString(data.startTime?.split(' ')[0], this.getCurrentDate());    // set current date if not provided
     const description = this.getValidString(data.description, '');   // set empty string if not provided
 
-    const validObj = {
+    const validObj: IEvent = {
       name,
       startTime,
       endTime,
@@ -230,11 +230,16 @@ export class ModalDialogComponent implements OnInit, AfterViewInit, OnChanges {
       return;
     }
 
-    this.eventService.addEvent(validObj).subscribe((res) => {
-      if(res) {
-        this.close();
-      }
-    });
+    if(this.data.id) {
+      validObj.id = this.data.id;
+      this.eventService.updateEvent(validObj).subscribe((res) => {
+        if(res) { this.close();}
+      });
+    } else {
+      this.eventService.addEvent(validObj).subscribe((res) => {
+        if(res) { this.close();}
+      });
+    }
   }
   // Get the current date and time
   getCurrentDate(): string {
