@@ -8,15 +8,17 @@ import { EventService } from '../service/event.service';
 import { Instance } from 'flatpickr/dist/types/instance';
 import { DateTime } from 'luxon';
 import { DATE_FORMATS, END_TIME, START_TIME } from '../shared/constants';
+import { DeletePopupComponent } from '../delete-popup/delete-popup.component';
 
 @Component({
   selector: 'app-modal-dialog',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, DeletePopupComponent],
   templateUrl: './modal-dialog.component.html',
-  styleUrls: ['./modal-dialog.component.scss']
+  styleUrls: ['./modal-dialog.component.scss'],
 })
 export class ModalDialogComponent implements OnInit, AfterViewInit, OnChanges {
+  @ViewChild('deletePopupModal') deletePopupModal!: DeletePopupComponent;
   private flatpickrInstance1!: Instance;
   private flatpickrInstance2!: Instance;
   @ViewChild('start') eventStart!: ElementRef;
@@ -180,6 +182,22 @@ export class ModalDialogComponent implements OnInit, AfterViewInit, OnChanges {
     this.isVisible = false;
   }
 
+  openDeletePopup(id: string): void {
+    if (this.deletePopupModal) {
+      this.deletePopupModal.open();
+    }
+  }
+
+  confirmEventDelete(eventId: string): void {
+    if (!eventId) {
+      return;
+    }
+    this.eventService.deleteEvent(eventId).subscribe((res) => {
+      if(res) {
+        this.close();
+      }
+    });
+  }
 
   getValidString(value: string | null | undefined, defaultValue: string): string {
     return value ? value : defaultValue;
@@ -235,14 +253,11 @@ export class ModalDialogComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
 
-  deleteEvent(ev: Event, id: string | undefined): void {
+  deleteEvent(id: string | undefined): void {
     if(!id) {
       return;
     }
-    this.eventService.deleteEvent(id).subscribe((res) => {
-      if(res) {
-        this.close();
-      }
-    });
+    this.openDeletePopup(id);
+
   }
 }

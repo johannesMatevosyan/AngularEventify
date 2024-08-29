@@ -196,12 +196,12 @@ export class CalendarComponent implements OnInit, OnDestroy {
   openEvent(ev: Event, event: IEvent | null | undefined): void {
     ev.preventDefault();
     ev.stopPropagation();
+
     this.dialogTitle = 'Edit Event'
     if (event && event.id) {
       this.dialogTitle = 'Edit Event'
       this.currentEvent = event;
     }
-
     if (this.eventModal) {
       this.eventModal.open();
     }

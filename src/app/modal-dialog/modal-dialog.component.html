@@ -74,12 +74,21 @@
     </div>
 
     <div class="ae-modal-footer">
-      <button class="delete-button" type="button" (click)="deleteEvent($event, data.id)">Remove</button>
+      <button type="button" class="ae-button delete-button" (click)="deleteEvent(data.id)">Remove</button>
 
       <div>
-        <button (click)="close()" type="button" class="warning-button">Cancel</button>
-        <button  type="submit" [disabled]="submitted" class="save-button">Save</button>
+        <button type="button" class="ae-button cancel-button" (click)="close()">Cancel</button>
+        <button  type="submit" [disabled]="submitted" class="ae-button save-button">Save</button>
       </div>
     </div>
   </form>
 </div>
+
+
+<app-delete-popup
+  #deletePopupModal
+  [id]="data && data.id ? data.id : ''"
+  [name]="data && data.name ? data.name : ''"
+  (confirmEventDelete)="confirmEventDelete($event)"
+  >
+</app-delete-popup>
