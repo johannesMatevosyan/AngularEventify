@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { IEvent } from '../shared/interfaces/event.interface';
 
 export const EVENTS: IEvent[] = [
@@ -172,12 +172,44 @@ export const EVENTS: IEvent[] = [
     endTime: '15:00'
   },
   {
+    id: "181",
+    name: 'Human design',
+    description: 'Human design for the client.',
+    date: '2024-08-29',
+    startTime: '11:00',
+    endTime: '13:00'
+  },
+  {
+    id: "182",
+    name: 'UX meeting',
+    description: 'UX meeting.',
+    date: '2024-08-31',
+    startTime: '16:00',
+    endTime: '17:00'
+  },
+  {
     id: "19",
     name: 'Design Review',
     description: 'Review the design with the UI/UX team.',
     date: '2024-09-03',
     startTime: '11:00',
     endTime: '12:00'
+  },
+  {
+    id: "191",
+    name: 'Design Review',
+    description: 'Review the design with the UI/UX team.',
+    date: '2024-09-05',
+    startTime: '11:30',
+    endTime: '12:30'
+  },
+  {
+    id: "192",
+    name: 'UI meetup',
+    description: 'UI meetup',
+    date: '2024-09-06',
+    startTime: '08:30',
+    endTime: '11:30'
   },
   {
     id: "20",
@@ -257,15 +289,32 @@ export const EVENTS: IEvent[] = [
   providedIn: 'root'
 })
 export class EventService {
-
+  private isEventAddedSubject = new BehaviorSubject<boolean>(false);
+  eventAdded$: Observable<boolean> = this.isEventAddedSubject.asObservable();
+  private eventsSubject = new BehaviorSubject<IEvent[]>(EVENTS);
+  events$: Observable<IEvent[]> = this.eventsSubject.asObservable();
   constructor() { }
-
+  // get the list of all available events
   getAllEvents(): Observable<IEvent[]> {
-    return of(EVENTS);
+    return this.events$;
   }
 
-  addEvent(event: IEvent): Observable<IEvent> {
-    EVENTS.push(event);
-    return of(event);
+  addEvent(newEvent: IEvent): Observable<boolean> {
+    if (!newEvent || !newEvent.name || !newEvent.startTime || !newEvent.endTime || !newEvent.date) {
+      return of(false);
+    }
+    const currentEvents = this.eventsSubject.value;
+    this.eventsSubject.next([...currentEvents, newEvent]);
+    this.isEventAddedSubject.next(true);
+    return of(true);
+  }
+  deleteEvent(eventId: string): Observable<boolean> {
+    if (!eventId) {
+      return of(false);
+    }
+    const currentEvents = this.eventsSubject.value;
+    const updatedEvents = currentEvents.filter(event => event.id !== eventId);
+    this.eventsSubject.next(updatedEvents);
+    return of(true);
   }
 }

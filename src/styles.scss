@@ -90,3 +90,18 @@ button:disabled {
   pointer-events: none;
   opacity: 0.75;
 }
+
+
+/* Button Styles */
+.ae-button {
+  color: white; /* White text */
+  border: none; /* No border */
+  padding: 8px 16px; /* Padding inside the buttons */
+  border-radius: 4px; /* Rounded corners */
+  cursor: pointer;
+  font-size: 14px;
+  min-width: 90px;
+  &:last-child {
+    margin-left: 10px;
+  }
+}

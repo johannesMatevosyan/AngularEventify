@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { DateTime } from "luxon";
 import { EventService } from '../service/event.service';
 import { ModalDialogComponent } from '../modal-dialog/modal-dialog.component';
@@ -6,6 +6,7 @@ import { DATE_FORMATS } from '../shared/constants';
 import { WeekChange } from '../shared/enums/week-change.enum';
 import { FistLastWeek } from '../shared/enums/first-last-week.enum';
 import { IEvent, ISchedule, IScheduleItem, IWeekDay } from '../shared/interfaces/event.interface';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -13,7 +14,7 @@ import { IEvent, ISchedule, IScheduleItem, IWeekDay } from '../shared/interfaces
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.scss']
 })
-export class CalendarComponent implements OnInit {
+export class CalendarComponent implements OnInit, OnDestroy {
   @ViewChild('eventModal') eventModal!: ModalDialogComponent;
   @Input() schedulerBackColor: string = '#ffffff';
   @Input() schedulerFontColor: string = '#000000e5';
@@ -46,16 +47,25 @@ export class CalendarComponent implements OnInit {
   dialogTitle: string  = ''
   currentEvent = {} as IEvent;
   isModalOpen = false;
-  constructor(private eventService: EventService) {
+  private subscription: Subscription = new Subscription();
+  constructor(private eventService: EventService, private cdr: ChangeDetectorRef) {}
 
-  }
   ngOnInit(): void {
     this.weekDays = this.getWeekDays(this.startOfWeek);
     this.timeSlots = this.generateTimeSlots(this.startTime, this.endTime);
 
-    this.eventService.getAllEvents().subscribe(events => {
+    this.subscription = this.eventService.getAllEvents().subscribe(events => {
       this.eventsList = events;
       this.eventGrid = this.generateEventGrid(this.weekDays);
+      this.cdr.detectChanges();
+    });
+
+    this.eventService.eventAdded$.subscribe(event => {
+      if(!event) {
+        return;
+      }
+      this.eventGrid = this.generateEventGrid(this.weekDays);
+      this.cdr.detectChanges();
     });
 
   }
@@ -131,7 +141,6 @@ export class CalendarComponent implements OnInit {
     while (currentTime.hour <= endTime) {
       // Format the current time as HH:mm
       const formattedTime = currentTime.toFormat('HH:mm').slice(0, 5);
-
       times.push(formattedTime);
       // Increment the time by one hour
       currentTime = currentTime.plus({ minutes: 30 });
@@ -145,7 +154,7 @@ export class CalendarComponent implements OnInit {
     const schedule: ISchedule[] = [];
     weekDays.forEach(day => {
       const daySchedule: IScheduleItem[] = this.timeSlots.map(time => {
-        const event = this.eventsList.find(e => e.date === day.date && e.startTime === time);
+        const event = this.eventsList.find(e => e.date === day.date && e.startTime.trim().normalize() === time.trim().normalize())
         return { time, event }; // If no event, event will be undefined
       });
 
@@ -187,12 +196,12 @@ export class CalendarComponent implements OnInit {
   openEvent(ev: Event, event: IEvent | null | undefined): void {
     ev.preventDefault();
     ev.stopPropagation();
+
     this.dialogTitle = 'Edit Event'
     if (event && event.id) {
       this.dialogTitle = 'Edit Event'
       this.currentEvent = event;
     }
-
     if (this.eventModal) {
       this.eventModal.open();
     }
@@ -212,5 +221,17 @@ export class CalendarComponent implements OnInit {
     if (this.eventModal) {
       this.eventModal.open();
     }
+  }
+
+  trackByTimeSlot(index: number, slot: string): number {
+    return index + Math.floor(Math.random() * 100); // Assuming each slot has a unique 'time' property
+  }
+
+  trackByEvent(index: number, data:ISchedule): number {
+    return index + Math.min(Math.max(1000, 0), 100); // Assuming each event has a unique 'id' property
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe(); // Clean up subscription
   }
 }

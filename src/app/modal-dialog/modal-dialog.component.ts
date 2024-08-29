@@ -8,15 +8,17 @@ import { EventService } from '../service/event.service';
 import { Instance } from 'flatpickr/dist/types/instance';
 import { DateTime } from 'luxon';
 import { DATE_FORMATS, END_TIME, START_TIME } from '../shared/constants';
+import { DeletePopupComponent } from '../delete-popup/delete-popup.component';
 
 @Component({
   selector: 'app-modal-dialog',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, DeletePopupComponent],
   templateUrl: './modal-dialog.component.html',
-  styleUrls: ['./modal-dialog.component.scss']
+  styleUrls: ['./modal-dialog.component.scss'],
 })
 export class ModalDialogComponent implements OnInit, AfterViewInit, OnChanges {
+  @ViewChild('deletePopupModal') deletePopupModal!: DeletePopupComponent;
   private flatpickrInstance1!: Instance;
   private flatpickrInstance2!: Instance;
   @ViewChild('start') eventStart!: ElementRef;
@@ -45,6 +47,7 @@ export class ModalDialogComponent implements OnInit, AfterViewInit, OnChanges {
     description: new FormControl(''),
   }, { validators: this.startDateBeforeEndDateValidator() });
   @Input() data: IEvent = {
+      id: '',
       name: '',
       startTime: '',
       endTime: '',
@@ -53,6 +56,7 @@ export class ModalDialogComponent implements OnInit, AfterViewInit, OnChanges {
   };
   @Input() hideOnEsc: boolean = true;
   @Input() title: string = '';
+
   isVisible = false;
   submitted = false;
   constructor(private renderer: Renderer2, private cdr: ChangeDetectorRef, private eventService: EventService) { }
@@ -178,6 +182,22 @@ export class ModalDialogComponent implements OnInit, AfterViewInit, OnChanges {
     this.isVisible = false;
   }
 
+  openDeletePopup(id: string): void {
+    if (this.deletePopupModal) {
+      this.deletePopupModal.open();
+    }
+  }
+
+  confirmEventDelete(eventId: string): void {
+    if (!eventId) {
+      return;
+    }
+    this.eventService.deleteEvent(eventId).subscribe((res) => {
+      if(res) {
+        this.close();
+      }
+    });
+  }
 
   getValidString(value: string | null | undefined, defaultValue: string): string {
     return value ? value : defaultValue;
@@ -191,11 +211,10 @@ export class ModalDialogComponent implements OnInit, AfterViewInit, OnChanges {
     }
 
     const data = {... this.eventForm.value};
-    data.date = this.eventForm.value.startTime?.split(' ')[0];
     const name = this.getValidString(data.name, 'Default Name');
-    const startTime = this.getValidString(data.startTime, '18:30');  // set current time if not provided
-    const endTime = this.getValidString(data.endTime, '18:45');      // set current time + 15 minutes if not provided
-    const date = this.getValidString(data.date, this.getCurrentDate());    // set current date if not provided
+    const startTime = this.getValidString(data.startTime?.split(' ')[1], '18:30');  // set current time if not provided
+    const endTime = this.getValidString(data.endTime?.split(' ')[1], '18:45');      // set current time + 15 minutes if not provided
+    const date = this.getValidString(data.startTime?.split(' ')[0], this.getCurrentDate());    // set current date if not provided
     const description = this.getValidString(data.description, '');   // set empty string if not provided
 
     const validObj = {
@@ -231,5 +250,14 @@ export class ModalDialogComponent implements OnInit, AfterViewInit, OnChanges {
       }
       return null; // No error
     };
+  }
+
+
+  deleteEvent(id: string | undefined): void {
+    if(!id) {
+      return;
+    }
+    this.openDeletePopup(id);
+
   }
 }

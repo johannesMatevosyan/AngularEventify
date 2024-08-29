@@ -11,6 +11,10 @@
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
   z-index: 9999;
+  &.delete-popup-backdrop {
+    z-index: 10005;
+    background: rgba(0, 0, 0, 0.3);
+  }
 }
 
 .ae-modal-content {
@@ -18,8 +22,6 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  z-index: 10000;
   background-color: #ffffff;
   padding: 20px; /* Padding inside the modal */
   border-radius: 8px; /* Rounded corners */
@@ -52,9 +54,13 @@
 .ae-modal-close {
   background: none; /* No background */
   border: none; /* No border */
-  font-size: 18px;
+  font-size: 20px;
   color: #888;
   cursor: pointer;
+  padding: 3px;
+  &:hover {
+    color: #333;
+  }
 }
 
 /* Close Button Hover State */
@@ -70,25 +76,31 @@
 /* Modal Footer */
 .ae-modal-footer {
   display: flex;
-  justify-content: flex-end; /* Align buttons to the right */
+  justify-content: space-between;
 }
-
-/* Button Styles */
-.ae-modal-footer button {
+.save-button {
   background-color: #007bff; /* Primary blue color */
-  color: white; /* White text */
-  border: none; /* No border */
-  padding: 8px 16px; /* Padding inside the buttons */
-  border-radius: 4px; /* Rounded corners */
-  cursor: pointer;
-  font-size: 14px;
-  margin-left: 10px;
-  min-width: 90px;
 }
-
 /* Button Hover State */
-.ae-modal-footer button:hover {
+.save-button:hover {
   background-color: #0056b3; /* Darker blue on hover */
+}
+.cancel-button {
+  background-color: #9FA6B2; /* Primary blue color */
+}
+/* Button Hover State */
+.cancel-button:hover {
+  background-color: #63676d; /* Darker blue on hover */
+}
+.delete-button {
+  background-color: #dc3545; /* Primary blue color */
+}
+/* Button Hover State */
+.delete-button:hover {
+  background-color: #ff0000; /* Darker blue on hover */
+}
+.delete-button:hover {
+  background-color: #ff0000; /* Darker blue on hover */
 }
 
 .event-form-label {
