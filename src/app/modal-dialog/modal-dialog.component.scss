@@ -108,9 +108,15 @@
 .event-form-time {
   display: flex;
   justify-content: space-between;
+  width: 100%;
 }
 .event-form-time .event-form-time-picker{
   width: 48%;
+}
+.move-to-end {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
 }
 
 /* Responsive Design */

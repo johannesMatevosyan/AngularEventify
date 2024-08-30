@@ -60,10 +60,12 @@ export class ModalDialogComponent implements OnInit, AfterViewInit, OnChanges, O
   isVisible = false;
   submitted = false;
   showErrors = false;
+  showRemoveButton = false;
   constructor(private renderer: Renderer2, private cdr: ChangeDetectorRef, private eventService: EventService) { }
 
   ngOnInit(): void {
     this.cdr.detectChanges();
+
     // detect if ESC key button was pressed
     this.renderer.listen('window', 'keyup.esc', () => {
       if (this.hideOnEsc) {
@@ -75,10 +77,21 @@ export class ModalDialogComponent implements OnInit, AfterViewInit, OnChanges, O
     this.eventForm.valueChanges.subscribe((v) => {
       this.checkForErrors();
     });
+
   }
 
   ngOnChanges(): void {
+    this.toggleRemoveButton();
     this.setFormData();
+  }
+
+  toggleRemoveButton(): void {
+    if(this.data.id) {
+      this.showRemoveButton = true;
+    } else {
+      this.showRemoveButton = false;
+    }
+    this.cdr.detectChanges();
   }
 
   setFormData(): void {
@@ -271,6 +284,7 @@ export class ModalDialogComponent implements OnInit, AfterViewInit, OnChanges, O
 
   ngOnDestroy(): void {
     this.showErrors = false;
+    this.showRemoveButton = false;
     this.markControlsAsUntouched(this.eventForm); // This will reset the form and remove the `.touched` state
   }
 
