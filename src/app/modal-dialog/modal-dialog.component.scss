@@ -11,12 +11,11 @@
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
   z-index: 9999;
-  &.delete-popup-backdrop {
-    z-index: 10005;
-    background: rgba(0, 0, 0, 0.3);
-  }
 }
-
+.ae-modal-backdrop.delete-popup-backdrop {
+  z-index: 10005;
+  background: rgba(0, 0, 0, 0.3);
+}
 .ae-modal-content {
   position: fixed;
   top: 50%;
@@ -58,14 +57,9 @@
   color: #888;
   cursor: pointer;
   padding: 3px;
-  &:hover {
-    color: #333;
-  }
 }
-
-/* Close Button Hover State */
 .ae-modal-close:hover {
-  color: #555; /* Darker gray on hover */
+  color: #333;
 }
 
 /* Modal Body */
@@ -114,9 +108,15 @@
 .event-form-time {
   display: flex;
   justify-content: space-between;
-  .event-form-time-picker {
-    width: 48%;
-  }
+  width: 100%;
+}
+.event-form-time .event-form-time-picker{
+  width: 48%;
+}
+.move-to-end {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
 }
 
 /* Responsive Design */

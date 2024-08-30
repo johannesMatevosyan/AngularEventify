@@ -17,7 +17,7 @@
             [value]="''" />
 
           <span class="error absolute"
-              *ngIf="hasError('name', 'required')">
+              *ngIf="showErrors && hasError('name', 'required')">
               Name is required
           </span>
         </div>
@@ -74,9 +74,13 @@
     </div>
 
     <div class="ae-modal-footer">
-      <button type="button" class="ae-button delete-button" (click)="deleteEvent(data.id)">Remove</button>
+      <button
+        *ngIf="showRemoveButton"
+        type="button"
+        class="ae-button delete-button"
+        (click)="deleteEvent(data.id)">Remove</button>
 
-      <div>
+      <div [ngClass]="{'move-to-end' : !showRemoveButton}">
         <button type="button" class="ae-button cancel-button" (click)="close()">Cancel</button>
         <button  type="submit" [disabled]="submitted" class="ae-button save-button">Save</button>
       </div>

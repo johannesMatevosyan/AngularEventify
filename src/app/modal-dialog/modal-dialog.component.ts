@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, Input, OnChanges, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, Input, OnChanges, OnDestroy, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import flatpickr from 'flatpickr';
@@ -17,7 +17,7 @@ import { DeletePopupComponent } from '../delete-popup/delete-popup.component';
   templateUrl: './modal-dialog.component.html',
   styleUrls: ['./modal-dialog.component.scss'],
 })
-export class ModalDialogComponent implements OnInit, AfterViewInit, OnChanges {
+export class ModalDialogComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy {
   @ViewChild('deletePopupModal') deletePopupModal!: DeletePopupComponent;
   private flatpickrInstance1!: Instance;
   private flatpickrInstance2!: Instance;
@@ -59,10 +59,13 @@ export class ModalDialogComponent implements OnInit, AfterViewInit, OnChanges {
 
   isVisible = false;
   submitted = false;
+  showErrors = false;
+  showRemoveButton = false;
   constructor(private renderer: Renderer2, private cdr: ChangeDetectorRef, private eventService: EventService) { }
 
   ngOnInit(): void {
     this.cdr.detectChanges();
+
     // detect if ESC key button was pressed
     this.renderer.listen('window', 'keyup.esc', () => {
       if (this.hideOnEsc) {
@@ -74,10 +77,21 @@ export class ModalDialogComponent implements OnInit, AfterViewInit, OnChanges {
     this.eventForm.valueChanges.subscribe((v) => {
       this.checkForErrors();
     });
+
   }
 
   ngOnChanges(): void {
+    this.toggleRemoveButton();
     this.setFormData();
+  }
+
+  toggleRemoveButton(): void {
+    if(this.data.id) {
+      this.showRemoveButton = true;
+    } else {
+      this.showRemoveButton = false;
+    }
+    this.cdr.detectChanges();
   }
 
   setFormData(): void {
@@ -167,6 +181,7 @@ export class ModalDialogComponent implements OnInit, AfterViewInit, OnChanges {
 
   resetForm(): void {
     this.eventForm.reset();
+    this.markControlsAsUntouched(this.eventForm);
   }
 
   open(): void {
@@ -180,6 +195,7 @@ export class ModalDialogComponent implements OnInit, AfterViewInit, OnChanges {
   close(): void {
     this.resetForm();
     this.isVisible = false;
+    this.showErrors = false;
   }
 
   openDeletePopup(id: string): void {
@@ -205,6 +221,7 @@ export class ModalDialogComponent implements OnInit, AfterViewInit, OnChanges {
 
   onSubmit(): void {
     this.submitted = true;
+    this.showErrors = true;
     if (this.eventForm.invalid) {
       this.eventForm.markAllAsTouched();
       return;
@@ -217,7 +234,7 @@ export class ModalDialogComponent implements OnInit, AfterViewInit, OnChanges {
     const date = this.getValidString(data.startTime?.split(' ')[0], this.getCurrentDate());    // set current date if not provided
     const description = this.getValidString(data.description, '');   // set empty string if not provided
 
-    const validObj = {
+    const validObj: IEvent = {
       name,
       startTime,
       endTime,
@@ -230,11 +247,16 @@ export class ModalDialogComponent implements OnInit, AfterViewInit, OnChanges {
       return;
     }
 
-    this.eventService.addEvent(validObj).subscribe((res) => {
-      if(res) {
-        this.close();
-      }
-    });
+    if(this.data.id) {
+      validObj.id = this.data.id;
+      this.eventService.updateEvent(validObj).subscribe((res) => {
+        if(res) { this.close();}
+      });
+    } else {
+      this.eventService.addEvent(validObj).subscribe((res) => {
+        if(res) { this.close();}
+      });
+    }
   }
   // Get the current date and time
   getCurrentDate(): string {
@@ -258,6 +280,18 @@ export class ModalDialogComponent implements OnInit, AfterViewInit, OnChanges {
       return;
     }
     this.openDeletePopup(id);
+  }
 
+  ngOnDestroy(): void {
+    this.showErrors = false;
+    this.showRemoveButton = false;
+    this.markControlsAsUntouched(this.eventForm); // This will reset the form and remove the `.touched` state
+  }
+
+  private markControlsAsUntouched(formGroup: FormGroup) {
+    Object.keys(formGroup.controls).forEach(key => {
+      const control = formGroup.get(key);
+      control?.markAsUntouched();
+    });
   }
 }

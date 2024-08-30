@@ -317,4 +317,13 @@ export class EventService {
     this.eventsSubject.next(updatedEvents);
     return of(true);
   }
+  updateEvent(updatedEvent: IEvent): Observable<boolean> {
+    if (!updatedEvent || !updatedEvent.id) {
+      return of(false);
+    }
+    const currentEvents = this.eventsSubject.value;
+    const updatedEvents = currentEvents.map(event => event.id === updatedEvent.id ? updatedEvent : event);
+    this.eventsSubject.next(updatedEvents);
+    return of(true);
+  }
 }
