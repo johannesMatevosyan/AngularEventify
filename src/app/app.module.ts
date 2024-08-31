@@ -9,6 +9,7 @@ import { EventComponent } from './calendar/event/event.component';
 import { removeZerosPipe } from './pipes/remove-leading-zero.pipe';
 import { ModalDialogComponent } from './modal-dialog/modal-dialog.component';
 import { CurrentTimeIndicatorComponent } from './calendar/current-time-indicator/current-time-indicator.component';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,9 @@ import { CurrentTimeIndicatorComponent } from './calendar/current-time-indicator
   imports: [
     BrowserModule,
     AppRoutingModule,
-    ModalDialogComponent
+    ModalDialogComponent,
+
+    DragDropModule
   ],
   providers: [],
   bootstrap: [AppComponent]
