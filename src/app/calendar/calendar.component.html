@@ -24,12 +24,12 @@
       <tr>
         <th class="headcol"
           [style]="{
-            'border-bottom': '2px solid ' + schedulerUI.cellColor
+            'border-bottom': '2px solid ' + schedulerUI.cellColor ? schedulerUI.cellColor : '#dddddd'
           }"></th>
         <th *ngFor="let dayInWeek of weekDays;"
           [style]="{
             'color': schedulerUI.schedulerFontColor,
-            'border-bottom': '2px solid ' + schedulerUI.cellColor
+            'border-bottom': '2px solid ' + schedulerUI.cellColor ? schedulerUI.cellColor : '#dddddd',
           }"
           [ngClass]="{'is-today' : dayInWeek.date === today.split(' ')[0]}">
             {{ dayInWeek.day }}
@@ -41,15 +41,15 @@
     <tr *ngFor="let slot of timeSlots; even as isEven;" [attr.data-time]="slot">
       <td class="headcol" [style]="{
         'color': schedulerUI.schedulerFontColor,
-        'border-right': '1px solid ' + schedulerUI.schedulerFontColor,
+        'border-right': '1px solid ' + schedulerUI.schedulerFontColor ? schedulerUI.cellColor : '#eeeeee',
       }">
         <span *ngIf="isEven" class="headcol-text">{{ slot }}</span>
       </td>
       <td *ngFor="let day of eventGrid;"
         [ngClass]="{'is-today' : day.date === today}"
         [style]="{
-          'border-right': '1px solid ' + schedulerUI.cellColor,
-          'border-bottom': '1px solid ' + schedulerUI.cellColor,
+          'border-right': '1px solid ' + schedulerUI.cellColor ? schedulerUI.cellColor : '#eeeeee',
+          'border-bottom': '1px solid ' + schedulerUI.cellColor ? schedulerUI.cellColor : '#eeeeee',
         }"
         (click)="findEvent(day, slot) ? addEvent($event, day.date, slot) : null;">
 
