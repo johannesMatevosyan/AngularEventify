@@ -38,20 +38,25 @@
     </thead>
   <tbody>
 
-    <tr *ngFor="let slot of timeSlots; even as isEven;" [attr.data-time]="slot">
+    <tr
+      *ngFor="let slot of timeSlots; even as isEven;"
+      [attr.data-time]="slot"
+      >
       <td class="headcol" [style]="{
         'color': schedulerUI.schedulerFontColor,
         'border-right': '1px solid ' + schedulerUI.schedulerFontColor ? schedulerUI.cellColor : '#eeeeee',
       }">
         <span *ngIf="isEven" class="headcol-text">{{ slot }}</span>
       </td>
-      <td *ngFor="let day of eventGrid;"
+      <td
+        *ngFor="let day of eventGrid;"
         [ngClass]="{'is-today' : day.date === today}"
         [style]="{
           'border-right': '1px solid ' + schedulerUI.cellColor ? schedulerUI.cellColor : '#eeeeee',
           'border-bottom': '1px solid ' + schedulerUI.cellColor ? schedulerUI.cellColor : '#eeeeee',
+          'cursor': !clickDisabled ? 'pointer' :  'default',
         }"
-        (click)="findEvent(day, slot) ? addEvent($event, day.date, slot) : null;">
+        (click)="!clickDisabled && findEvent(day, slot) ? addEvent($event, day.date, slot) : null;">
 
         <app-current-time-indicator
           *ngIf="day.date === today.split(' ')[0] && isCurrentTimeInSlot(slot)"
@@ -61,12 +66,13 @@
 
         <app-event
           *ngIf="findEvent(day, slot)?.event; else noEvent"
-          (click)="openEvent($event, findEvent(day, slot)?.event)"
+          (click)="!clickDisabled && openEvent($event, findEvent(day, slot)?.event)"
           [eventSpan]="getEventSpan(day.date, slot) || null"
           [title]="findEvent(day, slot)?.event?.name || ''"
           [id]="findEvent(day, slot)?.event?.id || ''"
           [eventUI]="eventUI"
           [description]="findEvent(day, slot)?.event?.description || ''"
+          [ngClass]="{'is-diabled' : clickDisabled}"
           >
         </app-event>
 

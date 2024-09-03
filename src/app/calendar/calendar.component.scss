@@ -91,7 +91,6 @@ tbody {
       white-space: none;
       word-wrap: nowrap;
       text-align: center;
-      cursor: pointer;
       &:first-child {
         cursor: default;
         &:hover {
@@ -100,4 +99,9 @@ tbody {
       }
     }
   }
+}
+
+.is-diabled {
+  pointer-events: none;
+  cursor: not-allowed;
 }
