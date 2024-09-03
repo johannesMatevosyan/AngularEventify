@@ -5,7 +5,7 @@ import { ModalDialogComponent } from '../modal-dialog/modal-dialog.component';
 import { DATE_FORMATS } from '../shared/constants';
 import { WeekChange } from '../shared/enums/week-change.enum';
 import { FistLastWeek } from '../shared/enums/first-last-week.enum';
-import { IEvent, ISchedule, IScheduleItem, IWeekDay } from '../shared/interfaces/event.interface';
+import { eventUI, IEvent, ISchedule, IScheduleItem, IWeekDay, schedulerUI } from '../shared/interfaces/event.interface';
 import { Subscription } from 'rxjs';
 
 
@@ -16,12 +16,17 @@ import { Subscription } from 'rxjs';
 })
 export class CalendarComponent implements OnInit, OnDestroy {
   @ViewChild('eventModal') eventModal!: ModalDialogComponent;
-  @Input() schedulerBackColor: string = '#ffffff';
-  @Input() schedulerFontColor: string = '#000000e5';
-  @Input() eventBackColor: string = '';
-  @Input() eventHoverColor: string = '';
-  @Input() eventBorderColor: string = '';
-  @Input() eventFontColor: string = '';
+  @Input() schedulerUI: schedulerUI = {
+    schedulerBackColor: '',
+    schedulerFontColor: '',
+    cellColor: ''
+  };
+  @Input() eventUI: eventUI = {
+    eventBackColor: '',
+    eventHoverColor: '',
+    eventBorderColor: '',
+    eventFontColor: '',
+  };
   @Input() titleColor: string = '#ffffff';
   @Input() currentDayColor: string = '#ff0000';
   @Input() currentTimeBarColor: string = '#ff0000';
