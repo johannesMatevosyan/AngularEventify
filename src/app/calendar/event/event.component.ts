@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { eventUI } from 'src/app/shared/interfaces/event.interface';
 
 @Component({
   selector: 'app-event',
@@ -7,10 +8,12 @@ import { Component, Input } from '@angular/core';
 })
 export class EventComponent {
   @Input() eventSpan: number | null = null;
-  @Input() eventBackColor: string = '#1a73e8';
-  @Input() eventHoverColor: string = '#4285f4';
-  @Input() eventFontColor: string = '#ffffff';
-  @Input() eventBorderColor: string = '#ffffff';
+  @Input() eventUI: eventUI = {
+    eventBackColor: '#1a73e8',
+    eventHoverColor: '#4285f4',
+    eventBorderColor: '#ffffff',
+    eventFontColor: '#ffffff',
+  }
   isHovered = false;
   _title: string = '';
   _description: string = '';
