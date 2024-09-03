@@ -23,3 +23,16 @@ export interface IEvent {
   description: string;
 }
 
+export interface eventUI {
+  eventBackColor: string,
+  eventHoverColor: string,
+  eventBorderColor: string,
+  eventFontColor: string,
+}
+
+export interface schedulerUI {
+  schedulerBackColor: string,
+  schedulerFontColor: string
+  cellColor: string
+}
+
