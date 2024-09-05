@@ -53,6 +53,9 @@ table {
     top: -10px;
     font-size: 18px;
     font-weight: 500;
+    &.am-pm {
+      right: 5px;
+    }
   }
 }
 
