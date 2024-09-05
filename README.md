@@ -43,7 +43,7 @@ Import the Event Calendar component into your Angular project:
 
 Include the component in your template:
 ```sh
- <app-event-calendar [events]="events" [theme]="theme"></app-event-calendar>
+ <app-calendar [events]="events" [theme]="theme"></app-calendar>
 ```
 
 Pass in your list of events 
@@ -75,6 +75,28 @@ Pass in your list of events
 - **eventAdded**: Emits an event object when a new event is added.
 - **eventUpdated**: Emits an event object when an event is updated.
 - **eventDeleted**: Emits the event ID when an event is deleted.
+
+## Time Format Switching
+Event calendar provides the flexibility to display time in both continental (24-hour) and 12-hour (AM/PM) formats. 
+This allows users to customize the display according to their preferred time format.
+
+Key Features:
+24-hour format: Display time in the common continental format, e.g., 13:00 for 1:00 PM.
+12-hour format: Switch to AM/PM time format, e.g., 1:00 PM.
+Example Usage:
+You can easily toggle between the time formats via the settings or configuration options by modifying `timeFormat` option:
+
+
+```sh
+  // Example configuration for 24-hour format
+  <app-calendar [timeFormat]="'24-hour'"></app-calendar>
+
+  // Example configuration for 12-hour (AM/PM) format
+  <app-calendar [timeFormat]="'12-hour'"></app-calendar>
+
+```
+
+You can specify the desired time format when initializing the calendar, ensuring the events are displayed in the format that best suits your needs.
 
 ## Development
 To run the project locally:
