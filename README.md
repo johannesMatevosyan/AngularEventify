@@ -77,22 +77,22 @@ Pass in your list of events
 - **eventDeleted**: Emits the event ID when an event is deleted.
 
 ## Time Format Switching
-Event calendar provides the flexibility to display time in both continental (24-hour) and 12-hour (AM/PM) formats. 
-This allows users to customize the display according to their preferred time format.
+Event calendar provides the flexibility to display time in both continental (24-hour) and 12-hour (AM/PM) formats. By default 24-hour system is set event calendar component.
+This allows users to customize the display according to their preferred time format. 
 
 Key Features:
 24-hour format: Display time in the common continental format, e.g., 13:00 for 1:00 PM.
 12-hour format: Switch to AM/PM time format, e.g., 1:00 PM.
 Example Usage:
-You can easily toggle between the time formats via the settings or configuration options by modifying `timeFormat` option:
+You can easily toggle between the time formats via the settings or configuration options by modifying `isAmPmFormat` option:
 
 
 ```sh
   // Example configuration for 24-hour format
-  <app-calendar [isAmPmFormat]="'24-hour'"></app-calendar>
+  <app-calendar [isAmPmFormat]="false"></app-calendar>
 
   // Example configuration for 12-hour (AM/PM) format
-  <app-calendar [isAmPmFormat]="'12-hour'"></app-calendar>
+  <app-calendar [isAmPmFormat]="true"></app-calendar>
 
 ```
 
