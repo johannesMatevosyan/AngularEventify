@@ -43,8 +43,8 @@
         'color': schedulerUI.schedulerFontColor,
         'border-right': '1px solid ' + schedulerUI.schedulerFontColor ? schedulerUI.cellColor : '#eeeeee',
       }">
-        <span *ngIf="isEven" class="headcol-text" [ngClass]="{'am-pm' : isAmPm}">
-          {{ isAmPm ? (slot | timeFormat) : slot }}
+        <span *ngIf="isEven" class="headcol-text" [ngClass]="{'am-pm' : isAmPmFormat}">
+          {{ isAmPmFormat ? (slot | timeFormat) : slot }}
         </span>
       </td>
       <td *ngFor="let day of eventGrid;"

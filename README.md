@@ -89,10 +89,10 @@ You can easily toggle between the time formats via the settings or configuration
 
 ```sh
   // Example configuration for 24-hour format
-  <app-calendar [timeFormat]="'24-hour'"></app-calendar>
+  <app-calendar [isAmPmFormat]="'24-hour'"></app-calendar>
 
   // Example configuration for 12-hour (AM/PM) format
-  <app-calendar [timeFormat]="'12-hour'"></app-calendar>
+  <app-calendar [isAmPmFormat]="'12-hour'"></app-calendar>
 
 ```
 
