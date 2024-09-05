@@ -11,6 +11,7 @@ import { ModalDialogComponent } from './modal-dialog/modal-dialog.component';
 import { CurrentTimeIndicatorComponent } from './calendar/current-time-indicator/current-time-indicator.component';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import { TimeFormatPipe } from './pipes/time-format.pipe';
+import { DisableRightClickDirective } from './directives/disable-right-click.directive';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { TimeFormatPipe } from './pipes/time-format.pipe';
     EventComponent,
     removeZerosPipe,
     CurrentTimeIndicatorComponent,
-    TimeFormatPipe
+    TimeFormatPipe,
+    DisableRightClickDirective
   ],
   imports: [
     BrowserModule,
