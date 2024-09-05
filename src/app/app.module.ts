@@ -9,6 +9,7 @@ import { EventComponent } from './calendar/event/event.component';
 import { removeZerosPipe } from './pipes/remove-leading-zero.pipe';
 import { ModalDialogComponent } from './modal-dialog/modal-dialog.component';
 import { CurrentTimeIndicatorComponent } from './calendar/current-time-indicator/current-time-indicator.component';
+import { TimeFormatPipe } from './pipes/time-format.pipe';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { CurrentTimeIndicatorComponent } from './calendar/current-time-indicator
     CalendarHeaderComponent,
     EventComponent,
     removeZerosPipe,
-    CurrentTimeIndicatorComponent
+    CurrentTimeIndicatorComponent,
+    TimeFormatPipe
   ],
   imports: [
     BrowserModule,
