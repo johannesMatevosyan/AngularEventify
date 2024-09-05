@@ -32,6 +32,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
   @Input() currentTimeBarColor: string = '#ff0000';
   @Input() customClass: string = '';
   @Input() isAmPmFormat: boolean = false;
+  @Input() disableRightClick: boolean = false;
 
   now = DateTime.now();
   startOfWeek = this.now.startOf('week');

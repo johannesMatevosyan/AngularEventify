@@ -63,6 +63,7 @@
 
         <app-event
           *ngIf="findEvent(day, slot)?.event; else noEvent"
+          [appDisableRightClick]="disableRightClick"
           (click)="openEvent($event, findEvent(day, slot)?.event)"
           [eventSpan]="getEventSpan(day.date, slot) || null"
           [title]="findEvent(day, slot)?.event?.name || ''"
