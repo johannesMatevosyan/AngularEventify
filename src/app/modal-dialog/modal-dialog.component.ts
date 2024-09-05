@@ -26,7 +26,7 @@ export class ModalDialogComponent implements OnInit, AfterViewInit, OnChanges, O
 
   configs = {
     altInput: true,
-    altFormat: "F j, Y H:i",
+    altFormat: DATE_FORMATS.CONTINENTAL_TIME,
     enableTime: true,
     dateFormat: DATE_FORMATS.YEAR_MONTH_DAY_TIME,
     minTime: START_TIME,
@@ -56,6 +56,7 @@ export class ModalDialogComponent implements OnInit, AfterViewInit, OnChanges, O
   };
   @Input() hideOnEsc: boolean = true;
   @Input() title: string = '';
+  @Input() isAmPmFormat: boolean = false;
 
   isVisible = false;
   submitted = false;
@@ -133,8 +134,11 @@ export class ModalDialogComponent implements OnInit, AfterViewInit, OnChanges, O
     if (!this.eventStart || !this.eventEnd) {
       return;
     }
-    this.flatpickrInstance1 = flatpickr(this.eventStart.nativeElement, this.configs);
-    this.flatpickrInstance2 = flatpickr(this.eventEnd.nativeElement, this.configs);
+    const configs = {...this.configs};
+    configs.time_24hr = this.isAmPmFormat ? false : true;
+    configs.altFormat = this.isAmPmFormat ? DATE_FORMATS.AMPM_TIME : DATE_FORMATS.CONTINENTAL_TIME;
+    this.flatpickrInstance1 = flatpickr(this.eventStart.nativeElement, configs);
+    this.flatpickrInstance2 = flatpickr(this.eventEnd.nativeElement, configs);
   }
 
   detectPickerOnChange(): void{
@@ -249,13 +253,9 @@ export class ModalDialogComponent implements OnInit, AfterViewInit, OnChanges, O
 
     if(this.data.id) {
       validObj.id = this.data.id;
-      this.eventService.updateEvent(validObj).subscribe((res) => {
-        if(res) { this.close();}
-      });
+      this.eventService.updateEvent(validObj).subscribe((res) => {if(res) { this.close();}});
     } else {
-      this.eventService.addEvent(validObj).subscribe((res) => {
-        if(res) { this.close();}
-      });
+      this.eventService.addEvent(validObj).subscribe((res) => {if(res) { this.close();}});
     }
   }
   // Get the current date and time
