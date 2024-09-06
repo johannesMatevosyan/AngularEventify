@@ -1,12 +1,11 @@
 import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { DateTime } from "luxon";
-import { EventService } from '../service/event.service';
 import { ModalDialogComponent } from '../modal-dialog/modal-dialog.component';
 import { DATE_FORMATS } from '../shared/constants';
 import { WeekChange } from '../shared/enums/week-change.enum';
 import { FistLastWeek } from '../shared/enums/first-last-week.enum';
 import { eventUI, IEvent, ISchedule, IScheduleItem, IWeekDay, schedulerUI } from '../shared/interfaces/event.interface';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 
 @Component({
@@ -33,6 +32,8 @@ export class CalendarComponent implements OnInit, OnDestroy {
   @Input() customClass: string = '';
   @Input() isAmPmFormat: boolean = false;
   @Input() disableRightClick: boolean = false;
+  @Input() eventsList$: Observable<IEvent[]> = new Observable<IEvent[]>();
+  @Input() eventAdded$: Observable<boolean> = new Observable<boolean>();
 
   now = DateTime.now();
   startOfWeek = this.now.startOf('week');
@@ -55,20 +56,20 @@ export class CalendarComponent implements OnInit, OnDestroy {
   currentEvent = {} as IEvent;
   isModalOpen = false;
   private subscription: Subscription = new Subscription();
-  constructor(private eventService: EventService, private cdr: ChangeDetectorRef) {}
+  constructor(private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.weekDays = this.getWeekDays(this.startOfWeek);
     this.timeSlots = this.generateTimeSlots(this.startTime, this.endTime);
 
-    this.subscription = this.eventService.getAllEvents().subscribe(events => {
+    this.subscription = this.eventsList$.subscribe(events => {
       this.eventsList = events;
       this.eventGrid = this.generateEventGrid(this.weekDays);
       this.cdr.detectChanges();
     });
 
-    this.eventService.eventAdded$.subscribe(event => {
-      if(!event) {
+    this.eventAdded$.subscribe(isAdded => {
+      if(!isAdded) {
         return;
       }
       this.eventGrid = this.generateEventGrid(this.weekDays);
