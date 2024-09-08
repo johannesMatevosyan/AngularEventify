@@ -1,4 +1,6 @@
 import { Component, Input } from '@angular/core';
+import { DateTime } from 'luxon';
+import { DATE_FORMATS } from 'src/app/shared/constants';
 import { IEventUI } from 'src/app/shared/interfaces/event.interface';
 
 @Component({
@@ -14,6 +16,11 @@ export class EventComponent {
     eventBorderColor: '#ffffff',
     eventFontColor: '#ffffff',
   }
+  @Input() eventDuration = {
+    startTime: '',
+    endTime: '',
+    date: '',
+  }
   isHovered = false;
   _title: string = '';
   _description: string = '';
@@ -25,13 +32,8 @@ export class EventComponent {
   set title(name: string) {
     this._title = name[0].toUpperCase() + name.slice(1);
   }
-
-  @Input()
-  get description(): string {
-    return this._description;
-  }
-  set description(text: string) {
-    this._description = text;
+  changeDateFormat(date: string): string {
+    return DateTime.fromISO(date).toFormat(DATE_FORMATS.WEEKDAY_FORMAT);
   }
 }
 

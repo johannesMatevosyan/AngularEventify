@@ -1,5 +1,7 @@
 <div
+  tabindex="0"
   [style.height.%]="eventSpan ? eventSpan * 0.98 : null"
+  [attr.aria-label]="title + ': at ' + changeDateFormat(eventDuration.date) + ', from ' + eventDuration.startTime + ' to ' + eventDuration.endTime"
   [ngStyle]="{
     'background-color': isHovered ? eventUI.eventHoverColor : eventUI.eventBackColor,
     'border-color': eventUI.eventBorderColor
