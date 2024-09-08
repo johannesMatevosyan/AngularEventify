@@ -17,6 +17,11 @@
     margin: auto;
     width: calc(100% - 8px);
   }
+  &:focus {
+    background-color: #1259b6; /* Highlight background on focus */
+    border: 2px solid darkblue; /* Add border to highlight focus */
+    outline: none; /* Remove default browser outline */
+  }
   .event-box__title {
     display: block;
     margin-bottom: 2px;

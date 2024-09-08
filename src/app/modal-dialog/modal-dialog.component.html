@@ -4,7 +4,11 @@
     <div class="ae-modal-header">
       <h4 class="ae-modal-title">{{ title }}</h4>
 
-      <button class="ae-modal-close" type="button" (click)="close()">×</button>
+      <button
+        [attr.aria-label]="'Close'"
+        class="ae-modal-close"
+        type="button"
+        (click)="close()">×</button>
     </div>
     <div class="ae-modal-body">
         <div class="relative">
@@ -76,13 +80,25 @@
     <div class="ae-modal-footer">
       <button
         *ngIf="showRemoveButton"
+        tabindex="0"
+        [attr.aria-label]="'Remove event'"
         type="button"
         class="ae-button delete-button"
         (click)="deleteEvent(data.id)">Remove</button>
 
       <div [ngClass]="{'move-to-end' : !showRemoveButton}">
-        <button type="button" class="ae-button cancel-button" (click)="close()">Cancel</button>
-        <button  type="submit" [disabled]="submitted" class="ae-button save-button">Save</button>
+        <button
+          type="button"
+          tabindex="0"
+          [attr.aria-label]="'Cancel'"
+          class="ae-button cancel-button"
+          (click)="close()">Cancel</button>
+        <button
+          type="submit"
+          tabindex="0"
+          [attr.aria-label]="'Save'"
+          [disabled]="submitted"
+          class="ae-button save-button">Save</button>
       </div>
     </div>
   </form>
