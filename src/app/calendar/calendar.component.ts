@@ -4,7 +4,7 @@ import { ModalDialogComponent } from '../modal-dialog/modal-dialog.component';
 import { DATE_FORMATS } from '../shared/constants';
 import { WeekChange } from '../shared/enums/week-change.enum';
 import { FistLastWeek } from '../shared/enums/first-last-week.enum';
-import { eventUI, IEvent, ISchedule, IScheduleItem, IWeekDay, schedulerUI } from '../shared/interfaces/event.interface';
+import { IEvent, IEventUI, ISchedule, IScheduleItem, IWeekDay, schedulerUI, IUrlData } from '../shared/interfaces/event.interface';
 import { Subscription } from 'rxjs';
 import { EventService } from '../service/event.service';
 
@@ -21,7 +21,7 @@ export class CalendarComponent implements OnInit, OnChanges, OnDestroy {
     schedulerFontColor: '',
     cellColor: ''
   };
-  @Input() eventUI: eventUI = {
+  @Input() eventUI: IEventUI = {
     eventBackColor: '',
     eventHoverColor: '',
     eventBorderColor: '',
@@ -34,7 +34,7 @@ export class CalendarComponent implements OnInit, OnChanges, OnDestroy {
   @Input() isAmPmFormat: boolean = false;
   @Input() disableRightClick: boolean = false;
 
-  @Input() urlData = {
+  @Input() urlData: IUrlData = {
     baseUrl: '',
     getUrl: '',
     addUrl: '',
@@ -64,11 +64,11 @@ export class CalendarComponent implements OnInit, OnChanges, OnDestroy {
   isModalOpen = false;
   private subscription: Subscription = new Subscription();
   constructor(private cdr: ChangeDetectorRef, private eventService: EventService) {
-    this.eventService.init(this.urlData?.getUrl);
+    this.eventService.init(this.urlData);
   }
 
   ngOnChanges(): void {
-    this.eventService.init(this.urlData?.getUrl);
+    this.eventService.init(this.urlData);
   }
 
   ngOnInit(): void {

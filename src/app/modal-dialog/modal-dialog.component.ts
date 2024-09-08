@@ -256,8 +256,7 @@ export class ModalDialogComponent implements OnInit, AfterViewInit, OnChanges, O
       this.eventService.updateEvent(validObj).subscribe({
         next: () => {
           this.submitted = false;
-          // Close modal on successful response
-          this.close();
+          this.close();  // Close modal on successful response
         },
         error: (error: Error) => {
           console.error('Error occurred:', error);
@@ -266,7 +265,16 @@ export class ModalDialogComponent implements OnInit, AfterViewInit, OnChanges, O
       });
 
     } else {
-      this.eventService.addEvent(validObj).subscribe((res) => {if(res) { this.close();}});
+      this.eventService.addEvent(validObj).subscribe({
+        next: () => {
+          this.submitted = false;
+          this.close();  // Close modal on successful response
+        },
+        error: (error: Error) => {
+          console.error('Error occurred:', error);
+          this.submitted = false;
+        },
+      });
     }
   }
   // Get the current date and time

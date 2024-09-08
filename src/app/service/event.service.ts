@@ -1,33 +1,50 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of, Subscription, tap } from 'rxjs';
-import { IEvent } from '../shared/interfaces/event.interface';
+import { BehaviorSubject, Observable, of, tap } from 'rxjs';
+import { IEvent, IUrlData } from '../shared/interfaces/event.interface';
 import { HttpClient } from '@angular/common/http';
-
 
 @Injectable({
   providedIn: 'root'
 })
 export class EventService {
   public url: string = '';
+  public addUrl: string = '';
+  public updateUrl: string = '';
+  public deleteUrl: string = '';
   private isEventAddedSubject = new BehaviorSubject<boolean>(false);
   eventAdded$: Observable<boolean> = this.isEventAddedSubject.asObservable();
   private eventsSubject = new BehaviorSubject<IEvent[]>([]);
   events$: Observable<IEvent[]> = this.eventsSubject.asObservable();
 
-  init(baseUrl: string): void {
-    this.url = baseUrl;
+  init(baseUrl: IUrlData ): void {
+    this.url = baseUrl.baseUrl + baseUrl.getUrl;
+    this.addUrl = baseUrl.baseUrl + baseUrl.addUrl;
+    this.updateUrl = baseUrl.baseUrl + baseUrl.updateUrl;
+    this.deleteUrl = baseUrl.baseUrl + baseUrl.deleteUrl;
   }
 
   constructor(private http: HttpClient) { }
 
-  addEvent(newEvent: IEvent, url = ''): Observable<boolean> {
+  addEvent(newEvent: IEvent): Observable<boolean> {
     if (!newEvent || !newEvent.name || !newEvent.startTime || !newEvent.endTime || !newEvent.date) {
       return of(false);
     }
     const currentEvents = this.eventsSubject.value;
     this.eventsSubject.next([...currentEvents, newEvent]);
     this.isEventAddedSubject.next(true);
-    return of(true);
+
+    return this.http.post<boolean>(`${this.addUrl}`, newEvent).pipe(
+      tap(response => {
+        if(!response) {
+          return of(false);
+        }
+        // Update the event list when new event is added
+        const currentEvents = this.eventsSubject.value;
+        this.eventsSubject.next([...currentEvents, newEvent]);
+        this.isEventAddedSubject.next(true);
+        return of(true);
+      })
+    );
   }
 
   getAllEvents(): Observable<IEvent[]> {
@@ -45,12 +62,12 @@ export class EventService {
       return of(false);
     }
 
-    return this.http.put<boolean>(`${this.url}/${updatedEvent.id}/event`, updatedEvent).pipe(
+    return this.http.put<boolean>(`${this.updateUrl}/${updatedEvent.id}/event`, updatedEvent).pipe(
       tap(response => {
-        // Update the event list when new event is added/updated
         if(!response) {
           return of(false);
         }
+        // Update the event list when new event is updated
         const currentEvents = this.eventsSubject.value;
         const updatedEvents = currentEvents.map(event => event.id === updatedEvent.id ? updatedEvent : event);
         this.eventsSubject.next(updatedEvents);

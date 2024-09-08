@@ -23,7 +23,7 @@ export interface IEvent {
   description: string;
 }
 
-export interface eventUI {
+export interface IEventUI {
   eventBackColor: string,
   eventHoverColor: string,
   eventBorderColor: string,
@@ -36,3 +36,10 @@ export interface schedulerUI {
   cellColor: string
 }
 
+export interface IUrlData {
+  baseUrl: string,
+  getUrl: string,
+  addUrl: string,
+  updateUrl: string,
+  deleteUrl: string
+}
