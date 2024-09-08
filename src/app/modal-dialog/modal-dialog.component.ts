@@ -203,7 +203,7 @@ export class ModalDialogComponent implements OnInit, AfterViewInit, OnChanges, O
   }
 
   openDeletePopup(id: string): void {
-    if (this.deletePopupModal) {
+    if (this.deletePopupModal && id) {
       this.deletePopupModal.open();
     }
   }
@@ -212,8 +212,8 @@ export class ModalDialogComponent implements OnInit, AfterViewInit, OnChanges, O
     if (!eventId) {
       return;
     }
-    this.eventService.deleteEvent(eventId).subscribe((res) => {
-      if(res) {
+    this.eventService.deleteEvent(eventId).subscribe((isDeleted) => {
+      if(isDeleted) {
         this.close();
       }
     });
@@ -253,9 +253,28 @@ export class ModalDialogComponent implements OnInit, AfterViewInit, OnChanges, O
 
     if(this.data.id) {
       validObj.id = this.data.id;
-      this.eventService.updateEvent(validObj).subscribe((res) => {if(res) { this.close();}});
+      this.eventService.updateEvent(validObj).subscribe({
+        next: () => {
+          this.submitted = false;
+          this.close();  // Close modal on successful response
+        },
+        error: (error: Error) => {
+          console.error('Error occurred:', error);
+          this.submitted = false;
+        },
+      });
+
     } else {
-      this.eventService.addEvent(validObj).subscribe((res) => {if(res) { this.close();}});
+      this.eventService.addEvent(validObj).subscribe({
+        next: () => {
+          this.submitted = false;
+          this.close();  // Close modal on successful response
+        },
+        error: (error: Error) => {
+          console.error('Error occurred:', error);
+          this.submitted = false;
+        },
+      });
     }
   }
   // Get the current date and time

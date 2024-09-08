@@ -1,12 +1,12 @@
-import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnChanges, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { DateTime } from "luxon";
-import { EventService } from '../service/event.service';
 import { ModalDialogComponent } from '../modal-dialog/modal-dialog.component';
 import { DATE_FORMATS } from '../shared/constants';
 import { WeekChange } from '../shared/enums/week-change.enum';
 import { FistLastWeek } from '../shared/enums/first-last-week.enum';
-import { eventUI, IEvent, ISchedule, IScheduleItem, IWeekDay, schedulerUI } from '../shared/interfaces/event.interface';
+import { IEvent, IEventUI, ISchedule, IScheduleItem, IWeekDay, schedulerUI, IUrlData } from '../shared/interfaces/event.interface';
 import { Subscription } from 'rxjs';
+import { EventService } from '../service/event.service';
 
 
 @Component({
@@ -14,14 +14,14 @@ import { Subscription } from 'rxjs';
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.scss']
 })
-export class CalendarComponent implements OnInit, OnDestroy {
+export class CalendarComponent implements OnInit, OnChanges, OnDestroy {
   @ViewChild('eventModal') eventModal!: ModalDialogComponent;
   @Input() schedulerUI: schedulerUI = {
     schedulerBackColor: '',
     schedulerFontColor: '',
     cellColor: ''
   };
-  @Input() eventUI: eventUI = {
+  @Input() eventUI: IEventUI = {
     eventBackColor: '',
     eventHoverColor: '',
     eventBorderColor: '',
@@ -33,6 +33,14 @@ export class CalendarComponent implements OnInit, OnDestroy {
   @Input() customClass: string = '';
   @Input() isAmPmFormat: boolean = false;
   @Input() disableRightClick: boolean = false;
+
+  @Input() urlData: IUrlData = {
+    baseUrl: '',
+    getUrl: '',
+    addUrl: '',
+    updateUrl: '',
+    deleteUrl: ''
+  };
 
   now = DateTime.now();
   startOfWeek = this.now.startOf('week');
@@ -55,26 +63,36 @@ export class CalendarComponent implements OnInit, OnDestroy {
   currentEvent = {} as IEvent;
   isModalOpen = false;
   private subscription: Subscription = new Subscription();
-  constructor(private eventService: EventService, private cdr: ChangeDetectorRef) {}
+  constructor(private cdr: ChangeDetectorRef, private eventService: EventService) {
+    this.eventService.init(this.urlData);
+  }
+
+  ngOnChanges(): void {
+    this.eventService.init(this.urlData);
+  }
 
   ngOnInit(): void {
     this.weekDays = this.getWeekDays(this.startOfWeek);
     this.timeSlots = this.generateTimeSlots(this.startTime, this.endTime);
 
-    this.subscription = this.eventService.getAllEvents().subscribe(events => {
-      this.eventsList = events;
-      this.eventGrid = this.generateEventGrid(this.weekDays);
-      this.cdr.detectChanges();
-    });
+    if (this.urlData?.getUrl) {
+      this.subscription = this.eventService.getAllEvents().subscribe(events => {
+        this.eventsList = events;
+        this.eventGrid = this.generateEventGrid(this.weekDays);
+        this.cdr.detectChanges();
+      });
+    }
 
-    this.eventService.eventAdded$.subscribe(event => {
-      if(!event) {
+    this.handleAddedEvent();
+  }
+  handleAddedEvent(): void {
+    this.eventService.eventAdded$.subscribe(isAdded => {
+      if(!isAdded) {
         return;
       }
       this.eventGrid = this.generateEventGrid(this.weekDays);
       this.cdr.detectChanges();
     });
-
   }
   getToday(): void {
     this.startOfWeek = this.now.startOf('week');

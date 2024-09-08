@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { eventUI } from 'src/app/shared/interfaces/event.interface';
+import { IEventUI } from 'src/app/shared/interfaces/event.interface';
 
 @Component({
   selector: 'app-event',
@@ -8,7 +8,7 @@ import { eventUI } from 'src/app/shared/interfaces/event.interface';
 })
 export class EventComponent {
   @Input() eventSpan: number | null = null;
-  @Input() eventUI: eventUI = {
+  @Input() eventUI: IEventUI = {
     eventBackColor: '#1a73e8',
     eventHoverColor: '#4285f4',
     eventBorderColor: '#ffffff',
