@@ -57,6 +57,11 @@
   color: #888;
   cursor: pointer;
   padding: 3px;
+  &:focus {
+    box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(0, 0, 0, 0.5); /* Add border to highlight focus */
+    outline: none; /* Remove default browser outline */
+  }
 }
 .ae-modal-close:hover {
   color: #333;
