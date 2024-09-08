@@ -80,10 +80,19 @@ export class EventService {
     if (!eventId) {
       return of(false);
     }
-    const currentEvents = this.eventsSubject.value;
-    const updatedEvents = currentEvents.filter(event => event.id !== eventId);
-    this.eventsSubject.next(updatedEvents);
-    return of(true);
+
+    return this.http.delete<boolean>(`${this.deleteUrl}/${eventId}`).pipe(
+      tap(response => {
+        if(!response) {
+          return of(false);
+        }
+        // Update the event list when an event is deleted
+        const currentEvents = this.eventsSubject.value;
+        const updatedEvents = currentEvents.filter(event => event.id !== eventId);
+        this.eventsSubject.next(updatedEvents);
+        return of(true);
+      })
+    );
   }
 
 }

@@ -212,8 +212,8 @@ export class ModalDialogComponent implements OnInit, AfterViewInit, OnChanges, O
     if (!eventId) {
       return;
     }
-    this.eventService.deleteEvent(eventId).subscribe((res) => {
-      if(res) {
+    this.eventService.deleteEvent(eventId).subscribe((isDeleted) => {
+      if(isDeleted) {
         this.close();
       }
     });
