@@ -7,7 +7,14 @@
   [customClass]="'custom-class-to-use'"
   [isAmPmFormat]="false"
   [disableRightClick]="false"
-  [eventsList$]="eventsList$"
-  [eventAdded$]="eventAdded$"
+  [urlData]="{
+    baseUrl: 'http://localhost:3000',
+    getUrl: 'http://localhost:3000/events',
+    addUrl: 'assets/events.json',
+    updateUrl: 'assets/events.json',
+    deleteUrl: 'assets/events.json'
+  }"
   ></app-calendar>
+
+
 <router-outlet></router-outlet>

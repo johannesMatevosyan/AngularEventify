@@ -203,7 +203,7 @@ export class ModalDialogComponent implements OnInit, AfterViewInit, OnChanges, O
   }
 
   openDeletePopup(id: string): void {
-    if (this.deletePopupModal) {
+    if (this.deletePopupModal && id) {
       this.deletePopupModal.open();
     }
   }
@@ -253,7 +253,18 @@ export class ModalDialogComponent implements OnInit, AfterViewInit, OnChanges, O
 
     if(this.data.id) {
       validObj.id = this.data.id;
-      this.eventService.updateEvent(validObj).subscribe((res) => {if(res) { this.close();}});
+      this.eventService.updateEvent(validObj).subscribe({
+        next: () => {
+          this.submitted = false;
+          // Close modal on successful response
+          this.close();
+        },
+        error: (error: Error) => {
+          console.error('Error occurred:', error);
+          this.submitted = false;
+        },
+      });
+
     } else {
       this.eventService.addEvent(validObj).subscribe((res) => {if(res) { this.close();}});
     }
