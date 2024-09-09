@@ -1,5 +1,6 @@
 <span
   class="current-time-indicator"
+  [attr.aria-label]="'Current time is ' + currentTime"
   [style.top.%]="calculateCurrentTimePosition(currentTime)"
   [ngStyle]="{'--before-bg-color': barColor}"
   ></span>
