@@ -12,7 +12,7 @@ export class CalendarHeaderComponent {
   @Input() monthName: string = new Date(Date.now()).toLocaleString("en-US", { month: "long" });
   @Input() weekStart: string = '';
   @Input() weekEnd: string = '';
-  @Input() titleColor: string = '';
+  @Input() navigationColor: string = '';
   @Input() todaysDate: string = '';
   @Output() onToday = new EventEmitter<void>();
   @Output() onWeekCHange = new EventEmitter<WeekChange>();

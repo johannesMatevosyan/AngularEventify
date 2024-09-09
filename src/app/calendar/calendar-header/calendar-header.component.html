@@ -2,22 +2,47 @@
   <button
     class="today secondary"
     (click)="getToday()"
+    role="button"
     [attr.aria-label]="'Today is ' + todaysDate.split(' ')[0]"
     tabindex="0">Today</button>
-  <div class="calendar-title" [style.color]="titleColor">
-    <div class="icon secondary chevron chevron-left" (click)="getFirstOrLastWeek(FLWeek.FIRST)">
-      <button [style.color]="titleColor">&#171;</button>
-    </div>
-    <div class="icon secondary chevron chevron-left" (click)="toPreviousWeek()">
-      <button [style.color]="titleColor">&lsaquo;</button>
-    </div>
-    <h1 class="week-label"><span></span><strong>{{ weekStart }} – {{ weekEnd }}</strong>, &nbsp;{{ monthName }} &nbsp; {{ year }}</h1>
-    <div class="icon secondary chevron chevron-right" (click)="toNextWeek()">
-      <button [style.color]="titleColor">&rsaquo;</button>
-    </div>
-    <div class="icon secondary chevron chevron-right" (click)="getFirstOrLastWeek(FLWeek.LAST)">
-      <button [style.color]="titleColor">&#187;</button>
-    </div>
-  </div>
+  <nav
+    aria-label="Calendar navigation">
+    <ul class="calendar-nav">
+      <li>
+        <button
+          [style.color]="navigationColor"
+          aria-label="Go to the first week of the year"
+          class="icon secondary chevron chevron-left"
+          (click)="getFirstOrLastWeek(FLWeek.FIRST)"
+          >&#171;</button>
+      </li>
+      <li>
+        <button
+          [style.color]="navigationColor"
+          aria-label="Go to the previous week"
+          class="icon secondary chevron chevron-left"
+          (click)="toPreviousWeek()">&lsaquo;</button>
+      </li>
+      <li>
+        <h1 class="week-label" [style.color]="navigationColor" role="heading">
+          <span></span><strong>{{ weekStart }} – {{ weekEnd }}</strong>, &nbsp;{{ monthName }} &nbsp; {{ year }}
+        </h1>
+      </li>
+      <li>
+        <button
+          [style.color]="navigationColor"
+          aria-label="Go to the next week"
+          class="icon secondary chevron chevron-right"
+          (click)="toNextWeek()">&rsaquo;</button>
+      </li>
+      <li>
+        <button
+          [style.color]="navigationColor"
+          aria-label="Go to the last week of the year"
+          class="icon secondary chevron chevron-right"
+          (click)="getFirstOrLastWeek(FLWeek.LAST)">&#187;</button>
+      </li>
+    </ul>
+  </nav>
   <div class="header-align"></div>
 </header>
