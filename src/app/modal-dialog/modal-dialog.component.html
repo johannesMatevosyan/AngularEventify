@@ -1,11 +1,11 @@
-<div class="ae-modal-backdrop" *ngIf="isVisible" (click)="close()"></div>
+<div class="ae-modal-backdrop" *ngIf="isVisible" [attr.aria-label]="'Close Dialog'" (click)="close()"></div>
 <div class="ae-modal-content" *ngIf="isVisible">
   <form role="create or update event" [formGroup]="eventForm" (ngSubmit)="onSubmit()">
     <div class="ae-modal-header">
       <h4 class="ae-modal-title">{{ title }}</h4>
 
       <button
-        [attr.aria-label]="'Close'"
+        [attr.aria-label]="'Close Dialog'"
         class="ae-modal-close"
         type="button"
         (click)="close()">×</button>
@@ -19,10 +19,14 @@
             formControlName="name"
             class="event-form-input"
             aria-label="Event Name"
+            aria-describedby="nameError"
             [value]="''" />
 
-          <span class="error absolute"
-              *ngIf="showErrors && hasError('name', 'required')">
+          <span
+            *ngIf="showErrors && hasError('name', 'required')"
+            id="nameError"
+            class="error absolute"
+            aria-live="polite">
               Name is required
           </span>
         </div>
@@ -37,10 +41,14 @@
               formControlName="startTime"
               class="event-form-input"
               aria-label="Start Date"
+              aria-describedby="startDateError startDateBeforeEndDateError"
               #start
               />
-              <span class="error absolute"
-                *ngIf="hasError('startTime', 'required')">
+              <span
+                *ngIf="hasError('startTime', 'required')"
+                id="startDateError"
+                class="error absolute"
+                >
                 Start Time is required
               </span>
 
@@ -55,16 +63,22 @@
               formControlName="endTime"
               class="event-form-input"
               aria-label="End Date"
+              aria-describedby="endDateError startDateBeforeEndDateError"
               #end
               />
-              <span class="error absolute"
-                *ngIf="hasError('endTime', 'required')">
+              <span
+                *ngIf="hasError('endTime', 'required')"
+                class="error absolute"
+                id="endDateError"
+                aria-live="polite">
                 End Time is required
               </span>
           </div>
 
           <span class="error absolute"
-            *ngIf="submitted && eventForm.hasError('startDateBeforeEndDate')">
+            *ngIf="submitted && eventForm.hasError('startDateBeforeEndDate')"
+            id="startDateBeforeEndDateError"
+            aria-live="polite">
             Start date and time must be before the end date and time.
           </span>
 
