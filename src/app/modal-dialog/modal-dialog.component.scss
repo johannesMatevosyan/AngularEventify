@@ -79,6 +79,12 @@
 }
 .save-button {
   background-color: #007bff; /* Primary blue color */
+  transition: background-color 0.3s, box-shadow 0.3s;
+  &:focus {
+    background-color: #0056b3; /* Darker shade of blue */
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5); /* Blue glow */
+    outline: none; /* Remove default outline */
+  }
 }
 /* Button Hover State */
 .save-button:hover {
@@ -86,6 +92,11 @@
 }
 .cancel-button {
   background-color: #9FA6B2; /* Primary blue color */
+  &:focus {
+    background-color: #6c757d; /* Darker shade of gray */
+    box-shadow: 0 0 0 3px rgba(108, 117, 125, 0.6); /* Gray glow */
+    outline: none;
+  }
 }
 /* Button Hover State */
 .cancel-button:hover {
@@ -93,11 +104,13 @@
 }
 .delete-button {
   background-color: #dc3545; /* Primary blue color */
+  &:focus {
+    background-color: #c82333; /* Darker red */
+    box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.5); /* Red glow */
+    outline: none;
+  }
 }
 /* Button Hover State */
-.delete-button:hover {
-  background-color: #ff0000; /* Darker blue on hover */
-}
 .delete-button:hover {
   background-color: #ff0000; /* Darker blue on hover */
 }
