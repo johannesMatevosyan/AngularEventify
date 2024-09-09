@@ -11,6 +11,7 @@
     [year]="this.timeFrame.year"
     [monthName]="this.timeFrame.month"
     [titleColor]="titleColor"
+    [todaysDate]="today"
     (onToday)="getToday()"
     (onWeekCHange)="getWeekChange($event)"
     (onGetFirstOrLastWeek)="getFirstOrLastWeek($event)"
@@ -21,12 +22,17 @@
 <div class="wrap">
   <table class="offset">
     <thead>
-      <tr>
-        <th class="headcol"
+      <tr scope="row">
+        <th
+          class="headcol"
+          scope="col"
           [style]="{
             'border-bottom': '2px solid ' + schedulerUI.cellColor ? schedulerUI.cellColor : '#dddddd'
           }"></th>
-        <th *ngFor="let dayInWeek of weekDays;"
+        <th
+          scope="col"
+          *ngFor="let dayInWeek of weekDays;"
+          [attr.aria-label]="dayInWeek.date"
           [style]="{
             'color': schedulerUI.schedulerFontColor,
             'border-bottom': '2px solid ' + schedulerUI.cellColor ? schedulerUI.cellColor : '#dddddd',
@@ -38,7 +44,10 @@
     </thead>
   <tbody>
 
-    <tr *ngFor="let slot of timeSlots; even as isEven;" [attr.data-time]="slot">
+    <tr
+      *ngFor="let slot of timeSlots; even as isEven;"
+      [attr.data-time]="slot"
+      scope="row">
       <td class="headcol" [style]="{
         'color': schedulerUI.schedulerFontColor,
         'border-right': '1px solid ' + schedulerUI.schedulerFontColor ? schedulerUI.cellColor : '#eeeeee',
@@ -65,11 +74,16 @@
           *ngIf="findEvent(day, slot)?.event; else noEvent"
           [appDisableRightClick]="disableRightClick"
           (click)="openEvent($event, findEvent(day, slot)?.event)"
+          (keydown.enter)="openEvent($event, findEvent(day, slot)?.event)"
           [eventSpan]="getEventSpan(day.date, slot) || null"
           [title]="findEvent(day, slot)?.event?.name || ''"
           [id]="findEvent(day, slot)?.event?.id || ''"
           [eventUI]="eventUI"
-          [description]="findEvent(day, slot)?.event?.description || ''"
+          [eventDuration]="{
+            startTime: findEvent(day, slot)?.event?.startTime || '',
+            endTime: findEvent(day, slot)?.event?.endTime || '',
+            date: findEvent(day, slot)?.event?.date || ''
+          }"
           >
         </app-event>
 

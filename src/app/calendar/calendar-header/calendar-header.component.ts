@@ -13,6 +13,7 @@ export class CalendarHeaderComponent {
   @Input() weekStart: string = '';
   @Input() weekEnd: string = '';
   @Input() titleColor: string = '';
+  @Input() todaysDate: string = '';
   @Output() onToday = new EventEmitter<void>();
   @Output() onWeekCHange = new EventEmitter<WeekChange>();
   @Output() onGetFirstOrLastWeek = new EventEmitter<FistLastWeek>();

@@ -7,8 +7,11 @@
   border: 1px solid #ddd;
   cursor: move;
   z-index: 999;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
+  transition: background-color 0.3s, box-shadow 0.3s, color 0.3s;
   &:hover{
-    background-color: #0d6efd;
+    transform: translateY(-2px); /* Slight lift on hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* More pronounced shadow */
   }
   &.absolute {
     position: absolute;
@@ -18,9 +21,8 @@
     width: calc(100% - 8px);
   }
   &:focus {
-    background-color: #1259b6; /* Highlight background on focus */
-    border: 2px solid darkblue; /* Add border to highlight focus */
-    outline: none; /* Remove default browser outline */
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(26, 115, 232, 0.5); /* Blue glow on focus */
   }
   .event-box__title {
     display: block;
