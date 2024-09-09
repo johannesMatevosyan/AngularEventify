@@ -27,7 +27,7 @@ export class CalendarComponent implements OnInit, OnChanges, OnDestroy {
     eventBorderColor: '',
     eventFontColor: '',
   };
-  @Input() titleColor: string = '#ffffff';
+  @Input() navigationColor: string = '#ffffff';
   @Input() currentDayColor: string = '#ff0000';
   @Input() currentTimeBarColor: string = '#ff0000';
   @Input() customClass: string = '';

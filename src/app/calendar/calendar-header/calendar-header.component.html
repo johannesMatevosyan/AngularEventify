@@ -10,7 +10,7 @@
     <ul class="calendar-nav">
       <li>
         <button
-          [style.color]="titleColor"
+          [style.color]="navigationColor"
           aria-label="Go to the first week of the year"
           class="icon secondary chevron chevron-left"
           (click)="getFirstOrLastWeek(FLWeek.FIRST)"
@@ -18,26 +18,26 @@
       </li>
       <li>
         <button
-          [style.color]="titleColor"
+          [style.color]="navigationColor"
           aria-label="Go to the previous week"
           class="icon secondary chevron chevron-left"
           (click)="toPreviousWeek()">&lsaquo;</button>
       </li>
       <li>
-        <h1 class="week-label" [style.color]="titleColor" role="heading">
+        <h1 class="week-label" [style.color]="navigationColor" role="heading">
           <span></span><strong>{{ weekStart }} – {{ weekEnd }}</strong>, &nbsp;{{ monthName }} &nbsp; {{ year }}
         </h1>
       </li>
       <li>
         <button
-          [style.color]="titleColor"
+          [style.color]="navigationColor"
           aria-label="Go to the next week"
           class="icon secondary chevron chevron-right"
           (click)="toNextWeek()">&rsaquo;</button>
       </li>
       <li>
         <button
-          [style.color]="titleColor"
+          [style.color]="navigationColor"
           aria-label="Go to the last week of the year"
           class="icon secondary chevron chevron-right"
           (click)="getFirstOrLastWeek(FLWeek.LAST)">&#187;</button>
