@@ -1,6 +1,6 @@
 <div class="ae-modal-backdrop" *ngIf="isVisible" (click)="close()"></div>
 <div class="ae-modal-content" *ngIf="isVisible">
-  <form [formGroup]="eventForm" (ngSubmit)="onSubmit()">
+  <form role="create or update event" [formGroup]="eventForm" (ngSubmit)="onSubmit()">
     <div class="ae-modal-header">
       <h4 class="ae-modal-title">{{ title }}</h4>
 
@@ -18,6 +18,7 @@
             name="eventName"
             formControlName="name"
             class="event-form-input"
+            aria-label="Event Name"
             [value]="''" />
 
           <span class="error absolute"
@@ -35,6 +36,7 @@
               name="startTime"
               formControlName="startTime"
               class="event-form-input"
+              aria-label="Start Date"
               #start
               />
               <span class="error absolute"
@@ -52,6 +54,7 @@
               name="endTime"
               formControlName="endTime"
               class="event-form-input"
+              aria-label="End Date"
               #end
               />
               <span class="error absolute"
@@ -73,6 +76,7 @@
           class="event-form-input"
           name="eventDescription"
           formControlName="description"
+          aria-label="Event description"
           >{{''}}</textarea>
 
     </div>
@@ -81,7 +85,7 @@
       <button
         *ngIf="showRemoveButton"
         tabindex="0"
-        [attr.aria-label]="'Remove event'"
+        role="button"
         type="button"
         class="ae-button delete-button"
         (click)="deleteEvent(data.id)">Remove</button>
@@ -90,13 +94,13 @@
         <button
           type="button"
           tabindex="0"
-          [attr.aria-label]="'Cancel'"
+          role="button"
           class="ae-button cancel-button"
           (click)="close()">Cancel</button>
         <button
           type="submit"
           tabindex="0"
-          [attr.aria-label]="'Save'"
+          role="button"
           [disabled]="submitted"
           class="ae-button save-button">Save</button>
       </div>

@@ -2,6 +2,7 @@
   <button
     class="today secondary"
     (click)="getToday()"
+    role="button"
     [attr.aria-label]="'Today is ' + todaysDate.split(' ')[0]"
     tabindex="0">Today</button>
   <nav
@@ -23,7 +24,7 @@
           (click)="toPreviousWeek()">&lsaquo;</button>
       </li>
       <li>
-        <h1 class="week-label" [style.color]="titleColor">
+        <h1 class="week-label" [style.color]="titleColor" role="heading">
           <span></span><strong>{{ weekStart }} – {{ weekEnd }}</strong>, &nbsp;{{ monthName }} &nbsp; {{ year }}
         </h1>
       </li>

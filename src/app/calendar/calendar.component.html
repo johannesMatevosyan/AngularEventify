@@ -1,4 +1,5 @@
 <div class="calendar"
+  role="application"
   [style]="{
     'background-color': schedulerUI.schedulerBackColor,
     'color': schedulerUI.schedulerFontColor,
@@ -20,7 +21,10 @@
   <div class="outer">
 
 <div class="wrap">
-  <table class="offset">
+  <table
+    class="offset"
+    aria-label="Event calendar"
+    >
     <thead>
       <tr scope="row">
         <th
@@ -42,7 +46,7 @@
         </th>
       </tr>
     </thead>
-  <tbody>
+  <tbody role="rowgroup">
 
     <tr
       *ngFor="let slot of timeSlots; even as isEven;"
