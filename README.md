@@ -120,6 +120,16 @@ To run the project locally:
 ```
 Open your browser and navigate to http://localhost:4200/
 
+## Acknowledgments
+
+Use this space to list resources you find helpful and would like to give credit to. I've included a few of my favorites to kick things off!
+
+* [HTML and CSS Techniques to Ensure Your Website is Accessible to Everyone](https://beaccessible.com/post/html-css-accessibility/)
+* [WAI-ARIA basics](https://developer.mozilla.org/en-US/docs/Learn/Accessibility/WAI-ARIA_basics)
+* [aria-label](https://www.aditus.io/aria/aria-label/)
+* [CSS Can Influence Screenreaders](https://benmyers.dev/blog/css-can-influence-screenreaders/)
+* [Accessibility and HTML](https://www.codecademy.com/article/accessibility-and-html)
+
 ## License
 This project is licensed under the MIT License. See the LICENSE file for more details.
 
