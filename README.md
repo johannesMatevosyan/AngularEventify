@@ -71,11 +71,7 @@ Pass in your list of events
     - **endTime**: Start time in ISO 8601 format.
     - **date**: Date
     - **description**: Brief description of an event(150 characters max.)
-
-## Outputs
-- **eventAdded**: Emits an event object when a new event is added.
-- **eventUpdated**: Emits an event object when an event is updated.
-- **eventDeleted**: Emits the event ID when an event is deleted.
+    
 
 ## Time Format Switching
 Event calendar provides the flexibility to display time in both continental (24-hour) and 12-hour (AM/PM) formats. By default 24-hour system is set event calendar component.
@@ -105,6 +101,17 @@ Users can disable the right-click functionality on event boxes within the calend
   <app-calendar [disableRightClick]="true"></app-calendar>
 
 ```
+
+### Accessibility Features
+
+The calendar component has been enhanced with several accessibility features to ensure a more inclusive user experience:
+
+- **ARIA Attributes**: Added `aria-label`, `aria-live`, `aria-describedby`, and `role` attributes to improve screen reader support and provide better context for users with disabilities.
+- **Table Accessibility**: Implemented `scope="row"` and `scope="col"` attributes for the table headers to enhance navigation and understanding of the table structure for screen readers.
+- **Keyboard Navigation**: Added `tabindex` property to form elements and buttons, allowing users to access all interactive elements using the keyboard alone.
+
+These improvements aim to make the application more accessible and user-friendly for individuals using assistive technologies.
+
 
 ## Development
 To run the project locally:
