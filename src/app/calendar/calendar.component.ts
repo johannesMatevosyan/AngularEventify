@@ -33,7 +33,6 @@ export class CalendarComponent implements OnInit, OnChanges, OnDestroy {
   @Input() customClass: string = '';
   @Input() isAmPmFormat: boolean = false;
   @Input() disableRightClick: boolean = false;
-
   @Input() urlData: IUrlData = {
     baseUrl: '',
     getUrl: '',
@@ -76,14 +75,52 @@ export class CalendarComponent implements OnInit, OnChanges, OnDestroy {
     this.timeSlots = this.generateTimeSlots(this.startTime, this.endTime);
 
     if (this.urlData?.getUrl) {
-      this.subscription = this.eventService.getAllEvents().subscribe(events => {
-        this.eventsList = events;
-        this.eventGrid = this.generateEventGrid(this.weekDays);
-        this.cdr.detectChanges();
+      this.subscription = this.eventService.getAllEvents().subscribe({
+        next: (events) => {
+          this.eventsList = events.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+          this.eventGrid = this.generateEventGrid(this.weekDays);
+          this.cdr.detectChanges();
+        },
+        error: (err) => console.error('Error fetching events', err),
+        complete: () => console.log('Event fetching complete')
       });
     }
 
+    this.startReminderCheck();
     this.handleAddedEvent();
+  }
+  startReminderCheck() {
+    // Run the check every minute (60000 ms)
+    setInterval(() => {
+      this.checkForUpcomingEvents();
+    }, 60000);
+  }
+  checkForUpcomingEvents() {
+    const now = DateTime.now();
+    this.eventGrid.forEach(item => {
+      // Check if the event is today
+      if (item.date === this.today.split(' ')[0]) {
+        // Check if the current time is within the event time slot
+        item.slots.forEach(slot => {
+          if (slot && slot?.event) {
+            const eventStartTime = slot.event.startTime;
+            const [slotHour, slotMinute] = eventStartTime.split(':').map(Number);
+            const slotStartTime = DateTime.now().set({ hour: slotHour, minute: slotMinute });
+            // Calculate the time 30 minutes before the event start time
+            const reminderTime = slotStartTime.minus({ minutes: 30 });
+            // If the current time matches the reminder time
+            if (now >= reminderTime && now < slotStartTime) {
+              this.showReminder(slot?.event.name || 'Unknown Event', 30);
+            }
+          }
+
+        });
+      }
+
+    });
+  }
+  showReminder(eventTitle: string, minutes: 30 | 60): void {
+    window.alert(`Reminder: The event "${eventTitle}" starts in ${minutes} minutes!`);
   }
   handleAddedEvent(): void {
     this.eventService.eventAdded$.subscribe(isAdded => {
