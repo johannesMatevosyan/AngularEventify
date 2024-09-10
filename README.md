@@ -51,10 +51,11 @@ Pass in your list of events
  events = [
   {
     id: 1,
-    title: 'Meeting',
-    startTime: '2024-09-01T09:00',
-    endTime: '2024-09-01T10:00',
-    backgroundColor: '#ff0000',
+    name: 'Meeting',
+    date: '2024-09-01',
+    startTime: '09:00',
+    endTime: '10:00',
+    description: 'Plan the marketing strategy for the upcoming quarter.'
   },
   // More events...
 ];
@@ -65,7 +66,7 @@ Pass in your list of events
 
 - **events**: An array of event objects, each containing:
     - **id**: Unique identifier for the event.
-    - **title**: The title of the event.
+    - **name**: The name of the event.
     - **startTime**: Start time in ISO 8601 format.
     - **endTime**: Start time in ISO 8601 format.
     - **date**: Date
@@ -84,19 +85,26 @@ Key Features:
 24-hour format: Display time in the common continental format, e.g., 13:00 for 1:00 PM.
 12-hour format: Switch to AM/PM time format, e.g., 1:00 PM.
 Example Usage:
-You can easily toggle between the time formats via the settings or configuration options by modifying `isAmPmFormat` option:
+You can easily toggle between the time formats via the settings or configuration options by adding `isAmPmFormat` input and set to `true`
 
 
 ```sh
-  // Example configuration for 24-hour format
-  <app-calendar [isAmPmFormat]="false"></app-calendar>
-
   // Example configuration for 12-hour (AM/PM) format
   <app-calendar [isAmPmFormat]="true"></app-calendar>
 
 ```
 
 You can specify the desired time format when initializing the calendar, ensuring the events are displayed in the format that best suits your needs.
+
+## Disable Right-Click on Event Box
+
+Users can disable the right-click functionality on event boxes within the calendar component to prevent unwanted actions. This can be useful for improving user experience by limiting interactions to left-click actions only.
+
+```sh
+  // Example configuration to diable right click event
+  <app-calendar [disableRightClick]="true"></app-calendar>
+
+```
 
 ## Development
 To run the project locally:
