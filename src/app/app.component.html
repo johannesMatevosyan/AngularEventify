@@ -1,9 +1,13 @@
 <app-calendar
-  [schedulerUI]="{schedulerBackColor: '', schedulerFontColor: '', cellColor: ''}"
+  [schedulerUI]="{
+    schedulerBackColor: '',
+    schedulerFontColor: '',
+    cellColor: '',
+    currentDayColor: '#ff0000',
+    currentTimeBarColor: '#ff0000',
+    navigationColor: '',
+    }"
   [eventUI]="{eventBackColor: '', eventHoverColor: '', eventBorderColor: '', eventFontColor: ''}"
-  [currentDayColor]="''"
-  [currentTimeBarColor]="''"
-  [navigationColor]="''"
   [customClass]="'custom-class-to-use'"
   [isAmPmFormat]="false"
   [disableRightClick]="false"
@@ -15,6 +19,5 @@
     deleteUrl: '/events'
   }"
   ></app-calendar>
-
 
 <router-outlet></router-outlet>
