@@ -43,7 +43,7 @@ Import the Event Calendar component into your Angular project:
 
 Include the component in your template:
 ```sh
- <app-calendar [events]="events" [theme]="theme"></app-calendar>
+ <ae-eventify [events]="events" [theme]="theme"></ae-eventify>
 ```
 
 Pass in your list of events 
@@ -66,9 +66,9 @@ Pass in your list of events
 
 - **events**: An array of event objects, each containing:
     - **id**: Unique identifier for the event.
-    - **name**: The name of the event.
-    - **startTime**: Start time in ISO 8601 format.
-    - **endTime**: Start time in ISO 8601 format.
+    - **name**: The name of the event
+    - **startTime**: Start time in ISO 8601 format or 24-hour time format (`HH:mm`), e.g., '09:00', '14:00', '18:30'.
+    - **endTime**: Start time in ISO 8601 format or 24-hour time format (`HH:mm`), e.g., '09:00', '14:00', '18:30'.
     - **date**: Date
     - **description**: Brief description of an event(150 characters max.)
     
@@ -86,7 +86,7 @@ You can easily toggle between the time formats via the settings or configuration
 
 ```sh
   // Example configuration for 12-hour (AM/PM) format
-  <app-calendar [isAmPmFormat]="true"></app-calendar>
+  <ae-eventify [isAmPmFormat]="true"></ae-eventify>
 
 ```
 
@@ -98,7 +98,7 @@ Users can disable the right-click functionality on event boxes within the calend
 
 ```sh
   // Example configuration to diable right click event
-  <app-calendar [disableRightClick]="true"></app-calendar>
+  <ae-eventify [disableRightClick]="true"></ae-eventify>
 
 ```
 
