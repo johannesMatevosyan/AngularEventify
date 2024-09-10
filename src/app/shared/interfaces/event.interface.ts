@@ -32,8 +32,11 @@ export interface IEventUI {
 
 export interface schedulerUI {
   schedulerBackColor: string,
-  schedulerFontColor: string
+  schedulerFontColor: string,
   cellColor: string
+  currentDayColor: string,
+  currentTimeBarColor: string,
+  navigationColor: string,
 }
 
 export interface IUrlData {

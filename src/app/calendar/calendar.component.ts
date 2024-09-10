@@ -19,7 +19,10 @@ export class CalendarComponent implements OnInit, OnChanges, OnDestroy {
   @Input() schedulerUI: schedulerUI = {
     schedulerBackColor: '',
     schedulerFontColor: '',
-    cellColor: ''
+    cellColor: '',
+    currentDayColor: '',
+    currentTimeBarColor: '',
+    navigationColor: '',
   };
   @Input() eventUI: IEventUI = {
     eventBackColor: '',
@@ -27,9 +30,6 @@ export class CalendarComponent implements OnInit, OnChanges, OnDestroy {
     eventBorderColor: '',
     eventFontColor: '',
   };
-  @Input() navigationColor: string = '#ffffff';
-  @Input() currentDayColor: string = '#ff0000';
-  @Input() currentTimeBarColor: string = '#ff0000';
   @Input() customClass: string = '';
   @Input() isAmPmFormat: boolean = false;
   @Input() disableRightClick: boolean = false;
@@ -65,7 +65,9 @@ export class CalendarComponent implements OnInit, OnChanges, OnDestroy {
   constructor(private cdr: ChangeDetectorRef, private eventService: EventService) {
     this.eventService.init(this.urlData);
   }
-
+  get mergedSchColors() {
+    return { ...this.schedulerUI };
+  }
   ngOnChanges(): void {
     this.eventService.init(this.urlData);
   }

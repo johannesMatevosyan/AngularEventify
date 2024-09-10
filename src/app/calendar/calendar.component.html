@@ -1,8 +1,8 @@
 <div class="calendar"
   role="application"
   [style]="{
-    'background-color': schedulerUI.schedulerBackColor,
-    'color': schedulerUI.schedulerFontColor,
+    'background-color': mergedSchColors.schedulerBackColor,
+    'color': mergedSchColors.schedulerFontColor,
   }"
   [ngClass]="customClass">
 
@@ -11,7 +11,7 @@
     [weekEnd]="weekEnd"
     [year]="this.timeFrame.year"
     [monthName]="this.timeFrame.month"
-    [navigationColor]="navigationColor"
+    [navigationColor]="mergedSchColors.navigationColor"
     [todaysDate]="today"
     (onToday)="getToday()"
     (onWeekCHange)="getWeekChange($event)"
@@ -31,18 +31,24 @@
           class="headcol"
           scope="col"
           [style]="{
-            'border-bottom': '2px solid ' + schedulerUI.cellColor ? schedulerUI.cellColor : '#dddddd'
+            'border-bottom': '2px solid ' + mergedSchColors.cellColor ? mergedSchColors.cellColor : '#dddddd'
           }"></th>
         <th
           scope="col"
           *ngFor="let dayInWeek of weekDays;"
           [attr.aria-label]="dayInWeek.date"
           [style]="{
-            'color': schedulerUI.schedulerFontColor,
-            'border-bottom': '2px solid ' + schedulerUI.cellColor ? schedulerUI.cellColor : '#dddddd',
-          }"
-          [ngClass]="{'is-today' : dayInWeek.date === today.split(' ')[0]}">
-            {{ dayInWeek.day }}
+            'color': mergedSchColors.navigationColor,
+            'border-bottom': '2px solid ' + mergedSchColors.cellColor ? mergedSchColors.cellColor : '#dddddd',
+          }">
+            <span class="date"
+              *ngIf="dayInWeek.date !== today.split(' ')[0]"
+              >{{ dayInWeek.day }}</span>
+            <span class="date"
+              *ngIf="dayInWeek.date === today.split(' ')[0]"
+              [style]="{
+                'color': mergedSchColors.currentDayColor,
+              }">{{ dayInWeek.day }}</span>
         </th>
       </tr>
     </thead>
@@ -53,8 +59,8 @@
       [attr.data-time]="slot"
       scope="row">
       <td class="headcol" [style]="{
-        'color': schedulerUI.schedulerFontColor,
-        'border-right': '1px solid ' + schedulerUI.schedulerFontColor ? schedulerUI.cellColor : '#eeeeee',
+        'color': mergedSchColors.schedulerFontColor,
+        'border-right': '1px solid ' + mergedSchColors.schedulerFontColor ? mergedSchColors.cellColor : '#eeeeee',
       }">
         <time
           *ngIf="isEven"
@@ -65,17 +71,16 @@
         </time>
       </td>
       <td *ngFor="let day of eventGrid;"
-        [ngClass]="{'is-today' : day.date === today}"
         [style]="{
-          'border-right': '1px solid ' + schedulerUI.cellColor ? schedulerUI.cellColor : '#eeeeee',
-          'border-bottom': '1px solid ' + schedulerUI.cellColor ? schedulerUI.cellColor : '#eeeeee',
+          'border-right': '1px solid ' + mergedSchColors.cellColor ? mergedSchColors.cellColor : '#eeeeee',
+          'border-bottom': '1px solid ' + mergedSchColors.cellColor ? mergedSchColors.cellColor : '#eeeeee',
         }"
         (click)="findEvent(day, slot) ? addEvent($event, day.date, slot) : null;">
 
         <app-current-time-indicator
           *ngIf="day.date === today.split(' ')[0] && isCurrentTimeInSlot(slot)"
           [currentTime]="slot"
-          [barColor]="currentTimeBarColor"
+          [barColor]="mergedSchColors.currentTimeBarColor"
           ></app-current-time-indicator>
 
         <app-event
