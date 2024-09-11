@@ -20,10 +20,6 @@
     margin: auto;
     width: calc(100% - 8px);
   }
-  &:focus {
-    outline: none;
-    box-shadow: 0 0 0 4px rgba(26, 115, 232, 0.5); /* Blue glow on focus */
-  }
   .event-box__title {
     display: block;
     margin-bottom: 2px;
@@ -34,4 +30,8 @@
     padding-right: 10px;
   }
 
+}
+.event-box:focus {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(26, 115, 232, 0.5); /* Blue glow on focus */
 }
