@@ -102,6 +102,49 @@ Users can disable the right-click functionality on event boxes within the calend
 
 ```
 
+## Event reminder
+
+### Configuring Event Reminder Functionality
+
+The event reminder feature enables alerts for upcoming events. You can configure it from the parent component by updating the **`showReminderData`** object.
+
+### `showReminderData` Object Properties:
+
+- **`showEventReminder`** (`boolean`):  
+  Determines whether the event reminder functionality is enabled.
+  - Default: `false`.
+  - To enable, set this to `true`.
+
+- **`showBeforeMinutes`** (`number`):  
+  Specifies how many minutes before the event the reminder will be shown. This property only accepts two values:
+  - **Accepted values**: `30` or `60`.
+  - Default: `30`.
+
+
+### Example Usage:
+
+You can configure the reminder functionality in the parent component like this:
+
+```sh
+export class ParentComponent {
+  <ae-eventify 
+    [showReminderData]="{
+        showEventReminder: true,  // Enables the reminder functionality
+        showBeforeMinutes: 60     // Shows the reminder 60 minutes before the event
+  }"></ae-eventify>
+}
+
+```
+
+### How It Works:
+
+Once the reminder feature is enabled:
+- The application checks the current time against the event start time and triggers an alert **within a 5-minute window** around the configured reminder time (30 or 60 minutes before the event).
+
+### Note:
+- ***showEventReminder:*** If this is set to false, the reminder feature will be disabled and no alerts will be shown.
+- ***showBeforeMinutes:*** If an invalid value is provided (anything other than 30 or 60), the default value of 30 minutes will be used. 
+
 ### Accessibility Features
 
 The calendar component has been enhanced with several accessibility features to ensure a more inclusive user experience:

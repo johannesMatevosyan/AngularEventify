@@ -5,7 +5,7 @@ import { COLORS, DATE_FORMATS, START_TIME, END_TIME } from '../shared/constants'
 import { WeekChange } from '../shared/enums/week-change.enum';
 import { FistLastWeek } from '../shared/enums/first-last-week.enum';
 import { IEvent, IEventUI, ISchedule, IScheduleItem, IWeekDay, schedulerUI, IUrlData } from '../shared/interfaces/event.interface';
-import { Subscription } from 'rxjs';
+import { interval, Subscription } from 'rxjs';
 import { EventService } from '../service/event.service';
 
 
@@ -40,6 +40,13 @@ export class CalendarComponent implements OnInit, OnChanges, OnDestroy {
     updateUrl: '',
     deleteUrl: ''
   };
+  @Input() showReminderData: {
+    showEventReminder: boolean,
+    showBeforeMinutes: 30 | 60
+  } = {
+    showEventReminder: false,
+    showBeforeMinutes: 30
+  };
   colors = COLORS;
   now = DateTime.now();
   startOfWeek = this.now.startOf('week');
@@ -62,6 +69,7 @@ export class CalendarComponent implements OnInit, OnChanges, OnDestroy {
   currentEvent = {} as IEvent;
   isModalOpen = false;
   private subscription: Subscription = new Subscription();
+  private reminderCheckSubscription: Subscription | null = null;
   constructor(private cdr: ChangeDetectorRef, private eventService: EventService) {
     this.eventService.init(this.urlData);
   }
@@ -87,14 +95,21 @@ export class CalendarComponent implements OnInit, OnChanges, OnDestroy {
       });
     }
 
-    this.startReminderCheck();
+    if (this.showReminderData && this.showReminderData.showEventReminder) {
+      this.startReminderCheck();
+    }
     this.handleAddedEvent();
   }
   startReminderCheck() {
-    // Run the check every minute (60000 ms)
-    setInterval(() => {
-      this.checkForUpcomingEvents();
-    }, 60000);
+    if (this.reminderCheckSubscription) {
+      return; // If already subscribed, do nothing
+    }
+
+    // Run the check every minute (300000 ms)
+    this.reminderCheckSubscription = interval(300000)  // 300,000 ms = 5 minutes
+      .subscribe(() => {
+        this.checkForUpcomingEvents();
+      });
   }
   checkForUpcomingEvents() {
     const now = DateTime.now();
@@ -104,14 +119,15 @@ export class CalendarComponent implements OnInit, OnChanges, OnDestroy {
         // Check if the current time is within the event time slot
         item.slots.forEach(slot => {
           if (slot && slot?.event) {
-            const eventStartTime = slot.event.startTime;
-            const [slotHour, slotMinute] = eventStartTime.split(':').map(Number);
+            const eventName = slot.event.name;
+            const [slotHour, slotMinute] = slot.event.startTime.split(':').map(Number);
             const slotStartTime = DateTime.now().set({ hour: slotHour, minute: slotMinute });
             // Calculate the time 30 minutes before the event start time
             const reminderTime = slotStartTime.minus({ minutes: 30 });
-            // If the current time matches the reminder time
-            if (now >= reminderTime && now < slotStartTime) {
-              this.showReminder(slot?.event.name || 'Unknown Event', 30);
+
+            // Check if the current time is within the last 5 minutes before the reminder time
+            if (now >= reminderTime && now < reminderTime.plus({ minutes: 5 })) {
+              this.showReminder(eventName || 'Unknown Event', this.showReminderData.showBeforeMinutes);
             }
           }
 
@@ -296,5 +312,8 @@ export class CalendarComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe(); // Clean up subscription
+    if (this.reminderCheckSubscription) {
+      this.reminderCheckSubscription.unsubscribe();
+    }
   }
 }
