@@ -31,7 +31,7 @@
           class="headcol"
           scope="col"
           [style]="{
-            'border-bottom': '2px solid ' + mergedSchColors.cellColor ? mergedSchColors.cellColor : '#dddddd'
+            'border-bottom': '2px solid ' + mergedSchColors.cellColor ? mergedSchColors.cellColor : colors.LIGHT_GREY
           }"></th>
         <th
           scope="col"
@@ -39,7 +39,7 @@
           [attr.aria-label]="dayInWeek.date"
           [style]="{
             'color': mergedSchColors.navigationColor,
-            'border-bottom': '2px solid ' + mergedSchColors.cellColor ? mergedSchColors.cellColor : '#dddddd',
+            'border-bottom': '2px solid ' + mergedSchColors.cellColor ? mergedSchColors.cellColor : colors.LIGHT_GREY,
           }">
             <span class="date"
               *ngIf="dayInWeek.date !== today.split(' ')[0]"
@@ -47,7 +47,7 @@
             <span class="date"
               *ngIf="dayInWeek.date === today.split(' ')[0]"
               [style]="{
-                'color': mergedSchColors.currentDayColor,
+                'color': mergedSchColors.currentDayColor ? mergedSchColors.currentDayColor : colors.RED
               }">{{ dayInWeek.day }}</span>
         </th>
       </tr>
@@ -60,7 +60,7 @@
       scope="row">
       <td class="headcol" [style]="{
         'color': mergedSchColors.schedulerFontColor,
-        'border-right': '1px solid ' + mergedSchColors.schedulerFontColor ? mergedSchColors.cellColor : '#eeeeee',
+        'border-right': '1px solid ' + mergedSchColors.schedulerFontColor ? mergedSchColors.cellColor : colors.LIGHT_GREY,
       }">
         <time
           *ngIf="isEven"
@@ -70,10 +70,11 @@
           {{ isAmPmFormat ? (slot | timeFormat) : slot }}
         </time>
       </td>
-      <td *ngFor="let day of eventGrid;"
+      <td
+        *ngFor="let day of eventGrid;"
         [style]="{
-          'border-right': '1px solid ' + mergedSchColors.cellColor ? mergedSchColors.cellColor : '#eeeeee',
-          'border-bottom': '1px solid ' + mergedSchColors.cellColor ? mergedSchColors.cellColor : '#eeeeee',
+          'border-right': '1px solid ' + mergedSchColors.cellColor ? mergedSchColors.cellColor : colors.LIGHT_GREY,
+          'border-bottom': '1px solid ' + mergedSchColors.cellColor ? mergedSchColors.cellColor : colors.LIGHT_GREY,
         }"
         (click)="findEvent(day, slot) ? addEvent($event, day.date, slot) : null;">
 
