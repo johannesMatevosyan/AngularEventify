@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { DateTime } from 'luxon';
+import { COLORS } from 'src/app/shared/constants';
 
 @Component({
   selector: 'app-current-time-indicator',
@@ -10,6 +11,7 @@ export class CurrentTimeIndicatorComponent {
   @Input() currentTime: string = '';
   @Input() barColor: string = '';
   @Input() dateTime: DateTime<true> = DateTime.now();
+  colors = COLORS;
 
     // Calculate the current position of the current time within a given time slot
     calculateCurrentTimePosition(slot: string): number {

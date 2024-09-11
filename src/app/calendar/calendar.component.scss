@@ -27,6 +27,7 @@ body {
   height: calc(100vh - 70px);
   border-radius: 0;
   outline: none;
+  padding-bottom: 40px;
 }
 table {
   width: 100%;
@@ -35,7 +36,7 @@ table {
   table-layout: fixed;
   tbody {
     position: relative;
-    top: 25px;
+    top: 0;
   }
 }
 
@@ -69,16 +70,17 @@ thead {
     width: 100%;
     &:first-child {
       width: 120px;
+      border-bottom: 2px solid transparent;
     }
   }
   z-index: 2;
 }
 tr:nth-child(odd) td:not(.headcol) {
-  border-bottom: 1px solid #e8e8e8;
+  border-bottom: 1px solid #eeeeee;
 }
 
 tr:nth-child(even) td:not(.headcol) {
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #dddddd;
 }
 
 tbody {
@@ -89,7 +91,7 @@ tbody {
       height: 40px;
       padding: 0.25rem 0.25rem 0 0.25rem;
       width: auto;
-      border-right: 1px solid #eee;
+      border-right: 1px solid #dddddd;
       padding: 0;
       white-space: none;
       word-wrap: nowrap;

@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, Input, OnChanges, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { DateTime } from "luxon";
 import { ModalDialogComponent } from '../modal-dialog/modal-dialog.component';
-import { DATE_FORMATS } from '../shared/constants';
+import { COLORS, DATE_FORMATS, START_TIME, END_TIME } from '../shared/constants';
 import { WeekChange } from '../shared/enums/week-change.enum';
 import { FistLastWeek } from '../shared/enums/first-last-week.enum';
 import { IEvent, IEventUI, ISchedule, IScheduleItem, IWeekDay, schedulerUI, IUrlData } from '../shared/interfaces/event.interface';
@@ -40,7 +40,7 @@ export class CalendarComponent implements OnInit, OnChanges, OnDestroy {
     updateUrl: '',
     deleteUrl: ''
   };
-
+  colors = COLORS;
   now = DateTime.now();
   startOfWeek = this.now.startOf('week');
   endOfWeek = this.now.endOf('week');
@@ -52,8 +52,8 @@ export class CalendarComponent implements OnInit, OnChanges, OnDestroy {
   }
   timeSlots: string[] = [];
   weekDays: IWeekDay[] = [];
-  startTime = 6; // 06:00 AM
-  endTime = 18;  // 07:00 PM
+  startTime = parseInt(START_TIME.split(':')[0]); // 06:00 AM
+  endTime = parseInt(END_TIME.split(':')[0]);  // 06:00 PM
   eventGrid: ISchedule[] = [];
   eventsList: IEvent[] = [];
   isToday = false;
@@ -75,7 +75,6 @@ export class CalendarComponent implements OnInit, OnChanges, OnDestroy {
   ngOnInit(): void {
     this.weekDays = this.getWeekDays(this.startOfWeek);
     this.timeSlots = this.generateTimeSlots(this.startTime, this.endTime);
-
     if (this.urlData?.getUrl) {
       this.subscription = this.eventService.getAllEvents().subscribe({
         next: (events) => {
