@@ -40,6 +40,13 @@ export class CalendarComponent implements OnInit, OnChanges, OnDestroy {
     updateUrl: '',
     deleteUrl: ''
   };
+  @Input() showReminderData: {
+    showEventReminder: boolean,
+    showBeforeMinutes: 30 | 60
+  } = {
+    showEventReminder: false,
+    showBeforeMinutes: 30
+  };
   colors = COLORS;
   now = DateTime.now();
   startOfWeek = this.now.startOf('week');
@@ -88,7 +95,9 @@ export class CalendarComponent implements OnInit, OnChanges, OnDestroy {
       });
     }
 
-    this.startReminderCheck();
+    if (this.showReminderData && this.showReminderData.showEventReminder) {
+      this.startReminderCheck();
+    }
     this.handleAddedEvent();
   }
   startReminderCheck() {
@@ -118,7 +127,7 @@ export class CalendarComponent implements OnInit, OnChanges, OnDestroy {
 
             // Check if the current time is within the last 5 minutes before the reminder time
             if (now >= reminderTime && now < reminderTime.plus({ minutes: 5 })) {
-              this.showReminder(eventName || 'Unknown Event', 30);
+              this.showReminder(eventName || 'Unknown Event', this.showReminderData.showBeforeMinutes);
             }
           }
 
