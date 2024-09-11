@@ -57,11 +57,11 @@
   color: #888;
   cursor: pointer;
   padding: 3px;
-  &:focus {
-    box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.1);
-    border: 1px solid rgba(0, 0, 0, 0.5); /* Add border to highlight focus */
-    outline: none; /* Remove default browser outline */
-  }
+}
+.ae-modal-close:focus {
+  box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.5); /* Add border to highlight focus */
+  outline: none; /* Remove default browser outline */
 }
 .ae-modal-close:hover {
   color: #333;
@@ -80,37 +80,34 @@
 .save-button {
   background-color: #007bff; /* Primary blue color */
   transition: background-color 0.3s, box-shadow 0.3s;
-  &:focus {
-    background-color: #0056b3; /* Darker shade of blue */
-    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5); /* Blue glow */
-    outline: none; /* Remove default outline */
-  }
 }
-/* Button Hover State */
+.save-button:focus {
+  background-color: #0056b3; /* Darker shade of blue */
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5); /* Blue glow */
+  outline: none; /* Remove default outline */
+}
 .save-button:hover {
   background-color: #0056b3; /* Darker blue on hover */
 }
 .cancel-button {
   background-color: #9FA6B2;
-  &:focus {
-    background-color: #6c757d; /* Darker shade of gray */
-    box-shadow: 0 0 0 3px rgba(108, 117, 125, 0.6); /* Gray glow */
-    outline: none;
-  }
 }
-/* Button Hover State */
+.cancel-button:focus {
+  background-color: #6c757d; /* Darker shade of gray */
+  box-shadow: 0 0 0 3px rgba(108, 117, 125, 0.6); /* Gray glow */
+  outline: none;
+}
 .cancel-button:hover {
   background-color: #63676d;
 }
 .delete-button {
   background-color: #dc3545;
-  &:focus {
-    background-color: #c82333; /* Darker red */
-    box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.5); /* Red glow */
-    outline: none;
-  }
 }
-/* Button Hover State */
+.delete-button:focus {
+  background-color: #c82333; /* Darker red */
+  box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.5); /* Red glow */
+  outline: none;
+}
 .delete-button:hover {
   background-color: #ff0000;
 }

@@ -30,12 +30,12 @@ button.secondary {
   cursor: pointer;
   font-weight: 500;
   transition: background-color 0.3s, box-shadow 0.3s, color 0.3s;
-  &:focus {
-    background-color: #f8f9fa; /* Slightly off-white on focus */
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.3); /* Soft gray glow */
-    color: rgba(0, 0, 0, 0.7); /* Slightly darker text on focus */
-    outline: none;
-  }
+}
+button.secondary:focus {
+  background-color: #f8f9fa; /* Slightly off-white on focus */
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.3); /* Soft gray glow */
+  color: rgba(0, 0, 0, 0.7); /* Slightly darker text on focus */
+  outline: none;
 }
 button.secondary:active {
   box-shadow: none;
