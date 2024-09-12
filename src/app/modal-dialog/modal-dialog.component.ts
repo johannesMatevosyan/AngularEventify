@@ -266,9 +266,16 @@ export class ModalDialogComponent implements OnInit, AfterViewInit, OnChanges, O
 
     } else {
       this.eventService.addEvent(validObj).subscribe({
-        next: () => {
-          this.submitted = false;
-          this.close();  // Close modal on successful response
+        next: (result: boolean | IEvent) => {
+          if (result === true) {
+            this.submitted = false;
+            this.close();  // Close modal on successful response
+          } else if (typeof result === 'object') {
+            this.submitted = false;
+            this.close();  // Close modal on successful response
+          } else {
+            console.log('Failed to add event');
+          }
         },
         error: (error: Error) => {
           console.error('Error occurred:', error);

@@ -25,22 +25,19 @@ export class EventService {
 
   constructor(private http: HttpClient) { }
 
-  addEvent(newEvent: IEvent): Observable<boolean> {
+  addEvent(newEvent: IEvent): Observable<boolean | IEvent> {
     if (!newEvent || !newEvent.name || !newEvent.startTime || !newEvent.endTime || !newEvent.date) {
       return of(false);
     }
-    const currentEvents = this.eventsSubject.value;
-    this.eventsSubject.next([...currentEvents, newEvent]);
-    this.isEventAddedSubject.next(true);
 
-    return this.http.post<boolean>(`${this.addUrl}`, newEvent).pipe(
+    return this.http.post<IEvent>(`${this.addUrl}`, newEvent).pipe(
       tap(response => {
-        if(!response) {
+        if(!response || !response.id) {
           return of(false);
         }
         // Update the event list when new event is added
         const currentEvents = this.eventsSubject.value;
-        this.eventsSubject.next([...currentEvents, newEvent]);
+        this.eventsSubject.next([...currentEvents, response]);
         this.isEventAddedSubject.next(true);
         return of(true);
       })
