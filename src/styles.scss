@@ -4,6 +4,8 @@
    License: none (public domain)
 */
 
+@import './styles/buttons.scss';
+
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -57,7 +59,8 @@ textarea {
   resize: none;
   min-height: 120px;
 }
-.event-form-input, .event-form-time-picker input {
+.event-form-input,
+.event-form-time-picker input {
   display: block;
   width: 100%;
   padding: 0.5rem !important;
@@ -71,6 +74,13 @@ textarea {
 .relative {
   position: relative;
 }
+.ae-button {
+  @include button-styles;
+  &:last-child {
+    margin-left: 10px;
+  }
+}
+
 .error {
   color: #ff0000;
   font-size: 12px;
@@ -81,23 +91,12 @@ textarea {
   }
 }
 
-button:disabled {
-  background-color:#CCC;
-  pointer-events: none;
-  opacity: 0.75;
+.save-button {
+  @include button-styles($backgroundColor: #007bff, $hoverColor: #0056b3, $focusColor: #0056b3, $shadowColor: 0 0 0 3px rgba(0, 123, 255, 0.5))
 }
-
-
-/* Button Styles */
-.ae-button {
-  color: white; /* White text */
-  border: none; /* No border */
-  padding: 8px 16px; /* Padding inside the buttons */
-  border-radius: 4px; /* Rounded corners */
-  cursor: pointer;
-  font-size: 14px;
-  min-width: 90px;
-  &:last-child {
-    margin-left: 10px;
-  }
+.cancel-button {
+  @include button-styles($backgroundColor: #9FA6B2, $hoverColor: #63676d, $focusColor: #6c757d, $shadowColor: 0 0 0 3px rgba(108, 117, 125, 0.6))
+}
+.delete-button {
+  @include button-styles($backgroundColor: #dc3545, $hoverColor: #ff0000, $focusColor: #c82333, $shadowColor: 0 0 0 3px rgba(220, 53, 69, 0.5))
 }
