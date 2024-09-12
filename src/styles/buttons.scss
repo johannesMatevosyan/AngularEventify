@@ -1,0 +1,27 @@
+button:disabled {
+  background-color:#CCC;
+  pointer-events: none;
+  opacity: 0.75;
+}
+
+/* Button Styles */
+@mixin button-styles($backgroundColor: #007bff, $hoverColor: #0056b3, $focusColor: #0056b3, $shadowColor: 0 0 0 3px rgba(0, 123, 255, 0.5)) {
+  background-color: $backgroundColor;
+  transition: background-color 0.3s, box-shadow 0.3s;
+  color: white; /* White text */
+  border: none; /* No border */
+  padding: 8px 16px; /* Padding inside the buttons */
+  border-radius: 4px; /* Rounded corners */
+  cursor: pointer;
+  font-size: 14px;
+  min-width: 90px;
+  &:focus {
+    background-color: $focusColor; /* Darker shade of blue */
+    box-shadow: $shadowColor; /* Blue glow */
+    outline: none; /* Remove default outline */
+  }
+  &:hover {
+    background-color: $hoverColor;
+  }
+}
+

@@ -77,40 +77,6 @@
   display: flex;
   justify-content: space-between;
 }
-.save-button {
-  background-color: #007bff; /* Primary blue color */
-  transition: background-color 0.3s, box-shadow 0.3s;
-}
-.save-button:focus {
-  background-color: #0056b3; /* Darker shade of blue */
-  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5); /* Blue glow */
-  outline: none; /* Remove default outline */
-}
-.save-button:hover {
-  background-color: #0056b3; /* Darker blue on hover */
-}
-.cancel-button {
-  background-color: #9FA6B2;
-}
-.cancel-button:focus {
-  background-color: #6c757d; /* Darker shade of gray */
-  box-shadow: 0 0 0 3px rgba(108, 117, 125, 0.6); /* Gray glow */
-  outline: none;
-}
-.cancel-button:hover {
-  background-color: #63676d;
-}
-.delete-button {
-  background-color: #dc3545;
-}
-.delete-button:focus {
-  background-color: #c82333; /* Darker red */
-  box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.5); /* Red glow */
-  outline: none;
-}
-.delete-button:hover {
-  background-color: #ff0000;
-}
 
 .event-form-label {
   display: block;
