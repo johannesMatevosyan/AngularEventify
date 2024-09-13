@@ -286,14 +286,22 @@ export class CalendarComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
-  addEvent(ev: Event, date: string, time: string): void {
+  addEvent(ev: Event, date: string, startTime: string): void {
     ev.preventDefault();
     ev.stopPropagation();
     this.dialogTitle = 'Add Event';
+
+    let currentTime = DateTime.now();
+    const timeNumber = parseInt(startTime.split(':')[0])
+    const minutes = parseInt(startTime.split(':')[1]) === 0 ? 0 : 30;
+    const endTime = currentTime
+                      .set({ hour: timeNumber, minute: minutes, second: 0 })
+                      .plus({ minutes: 30 }).toFormat('HH:mm');
+
     this.currentEvent = {
       date,
-      startTime: time,
-      endTime: '',
+      startTime: startTime,
+      endTime: endTime,
       name: '',
       description: ''
     }
