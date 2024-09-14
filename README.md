@@ -145,6 +145,16 @@ Once the reminder feature is enabled:
 - ***showEventReminder:*** If this is set to false, the reminder feature will be disabled and no alerts will be shown.
 - ***showBeforeMinutes:*** If an invalid value is provided (anything other than 30 or 60), the default value of 30 minutes will be used. 
 
+## Custom CSS Class Support
+
+The `AngularEventify` allows users to pass a custom CSS class, providing flexibility for styling the calendar as per their design preferences. 
+By passing a custom class, users can override or extend the default styles of the calendar component without modifying its core styles. To apply a custom class, pass it as an input property to the calendar component:
+
+```sh
+  <ae-eventify [customClass]="myCustomClass"></ae-eventify>
+
+```
+
 ### Accessibility Features
 
 The calendar component has been enhanced with several accessibility features to ensure a more inclusive user experience:
