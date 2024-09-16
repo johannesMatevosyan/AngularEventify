@@ -100,7 +100,7 @@ export class CalendarComponent implements OnInit, OnChanges, OnDestroy {
     }
     this.handleAddedEvent();
   }
-  startReminderCheck() {
+  startReminderCheck(): void {
     if (this.reminderCheckSubscription) {
       return; // If already subscribed, do nothing
     }
@@ -111,8 +111,8 @@ export class CalendarComponent implements OnInit, OnChanges, OnDestroy {
         this.checkForUpcomingEvents();
       });
   }
-  checkForUpcomingEvents() {
-    const now = DateTime.now();
+  checkForUpcomingEvents(): void {
+    const now = this.now;
     this.eventGrid.forEach(item => {
       // Check if the event is today
       if (item.date === this.today.split(' ')[0]) {
@@ -121,7 +121,7 @@ export class CalendarComponent implements OnInit, OnChanges, OnDestroy {
           if (slot && slot?.event) {
             const eventName = slot.event.name;
             const [slotHour, slotMinute] = slot.event.startTime.split(':').map(Number);
-            const slotStartTime = DateTime.now().set({ hour: slotHour, minute: slotMinute });
+            const slotStartTime = now.set({ hour: slotHour, minute: slotMinute });
             // Calculate the time 30 minutes before the event start time
             const reminderTime = slotStartTime.minus({ minutes: 30 });
 
@@ -214,7 +214,7 @@ export class CalendarComponent implements OnInit, OnChanges, OnDestroy {
 
   generateTimeSlots(startTime: number, endTime: number): string[] {
     // Initialize the starting time (06:00 AM)
-    let currentTime = DateTime.now();
+    let currentTime = this.now;
     currentTime = currentTime.set({ hour: startTime, minute: 0, second: 0 });
     const times: string[] = [];
     while (currentTime.hour <= endTime) {
@@ -227,7 +227,6 @@ export class CalendarComponent implements OnInit, OnChanges, OnDestroy {
 
     return times;
   }
-
 
   generateEventGrid(weekDays: IWeekDay[]): ISchedule[] {
     const schedule: ISchedule[] = [];
@@ -263,10 +262,10 @@ export class CalendarComponent implements OnInit, OnChanges, OnDestroy {
   }
   // Check if the current time is within a given time slot
   isCurrentTimeInSlot(slot: string): boolean {
-    const currentTime = DateTime.now();
+    const currentTime = this.now;
     const [slotHour, slotMinute] = slot.split(':').map(Number);
 
-    const slotStartTime = DateTime.now().set({ hour: slotHour, minute: slotMinute });
+    const slotStartTime = currentTime.set({ hour: slotHour, minute: slotMinute });
     const nextSlotTime = slotStartTime.plus({ minutes: 30 });
 
     return currentTime >= slotStartTime && currentTime < nextSlotTime;
@@ -278,7 +277,6 @@ export class CalendarComponent implements OnInit, OnChanges, OnDestroy {
 
     this.dialogTitle = 'Edit Event'
     if (event && event.id) {
-      this.dialogTitle = 'Edit Event'
       this.currentEvent = event;
     }
     if (this.eventModal) {
@@ -291,7 +289,7 @@ export class CalendarComponent implements OnInit, OnChanges, OnDestroy {
     ev.stopPropagation();
     this.dialogTitle = 'Add Event';
 
-    let currentTime = DateTime.now();
+    let currentTime = this.now;
     const timeNumber = parseInt(startTime.split(':')[0])
     const minutes = parseInt(startTime.split(':')[1]) === 0 ? 0 : 30;
     const endTime = currentTime
