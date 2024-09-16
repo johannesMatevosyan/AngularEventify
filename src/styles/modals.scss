@@ -1,0 +1,26 @@
+/* Modal dialog styles */
+
+@mixin ae-modal-backdrop($zIndex: 9999, $bgColor: rgba(0, 0, 0, 0.5)) {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: $bgColor;
+  z-index: $zIndex;
+}
+
+@mixin modal-content($max-width: 600px, $box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1), $zIndex: 10000) {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #ffffff;
+  padding: 20px; /* Padding inside the modal */
+  border-radius: 8px; /* Rounded corners */
+  width: 90%; /* Responsive width */
+  max-width: $max-width;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  z-index: $zIndex;
+}
+
