@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CalendarComponent } from './calendar/calendar.component';
 import { CalendarHeaderComponent } from './calendar/calendar-header/calendar-header.component';
@@ -22,7 +21,6 @@ import { ApplicationPipesModule } from './application-pipes/application-pipes.mo
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     ModalDialogComponent,
     HttpClientModule,
     ApplicationPipesModule
