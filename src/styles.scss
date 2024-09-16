@@ -5,6 +5,7 @@
 */
 
 @import './styles/buttons.scss';
+@import './styles/modals.scss';
 
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -91,6 +92,28 @@ textarea {
   }
 }
 
+/* Modal dialog styles */
+.ae-modal-backdrop {
+  @include ae-modal-backdrop(9999, rgba(0, 0, 0, 0.5));
+}
+.delete-popup-backdrop {
+  @include ae-modal-backdrop(10010, rgba(0, 0, 0, 0.2));
+}
+
+.ae-modal-content {
+  @include modal-content(600px, 0 4px 10px rgba(0, 0, 0, 0.1), 10000);
+}
+.delete-popup-content {
+  @include modal-content(400px, 0px 0px 50px 15px rgba(0, 0, 0, 0.2), 10010);
+}
+
+.ae-modal-title {
+  font-size: 18px; /* Font size for the title */
+  font-weight: 600; /* Bold font for emphasis */
+  color: #333;
+  margin: 0;
+}
+
 .save-button {
   @include button-styles($backgroundColor: #007bff, $hoverColor: #0056b3, $focusColor: #0056b3, $shadowColor: 0 0 0 3px rgba(0, 123, 255, 0.5))
 }
@@ -100,3 +123,4 @@ textarea {
 .delete-button {
   @include button-styles($backgroundColor: #dc3545, $hoverColor: #ff0000, $focusColor: #c82333, $shadowColor: 0 0 0 3px rgba(220, 53, 69, 0.5))
 }
+

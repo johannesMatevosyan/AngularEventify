@@ -1,13 +1,4 @@
-@import url('../modal-dialog/modal-dialog.component.scss');
 
-.ae-modal-content {
-  position: fixed;
-  padding: 20px; /* Padding inside the modal */
-  width: 90%; /* Responsive width */
-  max-width: 400px;
-  box-shadow: 0px 0px 50px 15px rgba(0, 0, 0, 0.2);
-  z-index: 10010;
-}
 .delete-popup-footer {
   display: flex;
   justify-content: center;
