@@ -8,6 +8,10 @@ import { IEvent, IEventUI, ISchedule, IScheduleItem, IWeekDay, schedulerUI, IUrl
 import { interval, Subscription } from 'rxjs';
 import { EventService } from '../service/event.service';
 
+interface ITimeFrame {
+  monthName: string;
+  year: number;
+}
 
 @Component({
   selector: 'app-calendar',
@@ -53,8 +57,8 @@ export class CalendarComponent implements OnInit, OnChanges, OnDestroy {
   endOfWeek = this.now.endOf('week');
   weekStart = this.startOfWeek.toFormat(DATE_FORMATS.WEEKDAY_FORMAT);
   weekEnd = this.endOfWeek.toFormat(DATE_FORMATS.WEEKDAY_FORMAT);
-  timeFrame = {
-    month: this.startOfWeek.monthLong,
+  timeFrame: ITimeFrame = {
+    monthName: this.startOfWeek.monthLong,
     year: this.now.year
   }
   timeSlots: string[] = [];
@@ -155,7 +159,7 @@ export class CalendarComponent implements OnInit, OnChanges, OnDestroy {
     this.weekEnd = this.endOfWeek.toFormat(DATE_FORMATS.WEEKDAY_FORMAT);
     // get month name of the current year
     this.timeFrame.year = this.now.year;
-    this.timeFrame.month = this.startOfWeek.monthLong;
+    this.timeFrame.monthName = this.startOfWeek.monthLong;
     // Create an array of dates for the first week of the year
     this.weekDays = this.getWeekDays(this.startOfWeek);
     this.eventGrid = this.generateEventGrid(this.weekDays);
@@ -163,8 +167,8 @@ export class CalendarComponent implements OnInit, OnChanges, OnDestroy {
   getWeekChange(event$: WeekChange): void {
     this.startOfWeek = this.detectWeekChange(event$);
     // get month name of the current year
-    this.timeFrame.month = this.checkMonth(this.startOfWeek.monthLong);
-    this.timeFrame.year = this.checkYear(this.startOfWeek.year);
+    this.timeFrame.monthName = this.checkYearMonth('monthName', this.startOfWeek.monthLong);
+    this.timeFrame.year = this.checkYearMonth('year', this.startOfWeek.year);
 
     this.endOfWeek = this.startOfWeek.endOf('week');
     this.weekStart = this.startOfWeek.toFormat(DATE_FORMATS.WEEKDAY_FORMAT);
@@ -184,7 +188,7 @@ export class CalendarComponent implements OnInit, OnChanges, OnDestroy {
     this.startOfWeek = resultWeek.startOf('week');
 
     // Get the first or last month name of the the year
-    this.timeFrame.month = this.startOfWeek.monthLong;
+    this.timeFrame.monthName = this.startOfWeek.monthLong;
     this.weekStart = this.startOfWeek.toFormat(DATE_FORMATS.WEEKDAY_FORMAT);
     this.endOfWeek = this.startOfWeek.endOf('week');
     this.weekEnd = this.endOfWeek.toFormat(DATE_FORMATS.WEEKDAY_FORMAT);
@@ -204,12 +208,8 @@ export class CalendarComponent implements OnInit, OnChanges, OnDestroy {
       }
     );
   }
-  checkMonth(value: string): string{
-    return this.timeFrame.month === value ? this.timeFrame.month : value;
-  }
-
-  checkYear(value: number): number {
-    return this.timeFrame.year === value ? this.timeFrame.year : value;
+  checkYearMonth<T extends keyof ITimeFrame>(type: T, value: ITimeFrame[T]): ITimeFrame[T] {
+    return this.timeFrame[type] === value ? this.timeFrame[type] : value;
   }
 
   generateTimeSlots(startTime: number, endTime: number): string[] {
