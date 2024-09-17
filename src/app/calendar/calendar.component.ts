@@ -7,7 +7,7 @@ import { FistLastWeek } from '../shared/enums/first-last-week.enum';
 import { IEvent, IEventUI, ISchedule, IScheduleItem, IWeekDay, schedulerUI, IUrlData } from '../shared/interfaces/event.interface';
 import { interval, Subscription } from 'rxjs';
 import { EventService } from '../service/event.service';
-import { formatToFullDate } from '../utils/helpers';
+import { formatToFullDate, formatWeekData } from '../utils/helpers';
 
 interface ITimeFrame {
   monthName: string;
@@ -56,7 +56,7 @@ export class CalendarComponent implements OnInit, OnChanges, OnDestroy {
   now = DateTime.now();
   startOfWeek = this.now.startOf('week');
   endOfWeek = this.now.endOf('week');
-  weekStart = this.startOfWeek.toFormat(DATE_FORMATS.WEEKDAY_FORMAT);
+  weekStart = formatWeekData(this.startOfWeek);
   weekEnd = this.endOfWeek.toFormat(DATE_FORMATS.WEEKDAY_FORMAT);
   timeFrame: ITimeFrame = {
     monthName: this.startOfWeek.monthLong,
@@ -156,8 +156,8 @@ export class CalendarComponent implements OnInit, OnChanges, OnDestroy {
   getToday(): void {
     this.startOfWeek = this.now.startOf('week');
     this.endOfWeek = this.now.endOf('week');
-    this.weekStart = this.startOfWeek.toFormat(DATE_FORMATS.WEEKDAY_FORMAT);
-    this.weekEnd = this.endOfWeek.toFormat(DATE_FORMATS.WEEKDAY_FORMAT);
+    this.weekStart = formatWeekData(this.startOfWeek);
+    this.weekEnd = formatWeekData(this.endOfWeek);
     // get month name of the current year
     this.timeFrame.year = this.now.year;
     this.timeFrame.monthName = this.startOfWeek.monthLong;
@@ -172,8 +172,8 @@ export class CalendarComponent implements OnInit, OnChanges, OnDestroy {
     this.timeFrame.year = this.checkYearMonth('year', this.startOfWeek.year);
 
     this.endOfWeek = this.startOfWeek.endOf('week');
-    this.weekStart = this.startOfWeek.toFormat(DATE_FORMATS.WEEKDAY_FORMAT);
-    this.weekEnd = this.endOfWeek.toFormat(DATE_FORMATS.WEEKDAY_FORMAT);
+    this.weekStart = formatWeekData(this.startOfWeek);
+    this.weekEnd = formatWeekData(this.endOfWeek);
     // Create an array of dates for the first week of the year
     this.weekDays = this.getWeekDays(this.startOfWeek);
     this.eventGrid = this.generateEventGrid(this.weekDays);
@@ -190,9 +190,9 @@ export class CalendarComponent implements OnInit, OnChanges, OnDestroy {
 
     // Get the first or last month name of the the year
     this.timeFrame.monthName = this.startOfWeek.monthLong;
-    this.weekStart = this.startOfWeek.toFormat(DATE_FORMATS.WEEKDAY_FORMAT);
+    this.weekStart = formatWeekData(this.startOfWeek);
     this.endOfWeek = this.startOfWeek.endOf('week');
-    this.weekEnd = this.endOfWeek.toFormat(DATE_FORMATS.WEEKDAY_FORMAT);
+    this.weekEnd = formatWeekData(this.endOfWeek);
     // Create an array of dates for the first week of the year
     this.weekDays = this.getWeekDays(this.startOfWeek);
     this.eventGrid = this.generateEventGrid(this.weekDays);
