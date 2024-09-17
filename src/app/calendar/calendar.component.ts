@@ -7,7 +7,7 @@ import { FistLastWeek } from '../shared/enums/first-last-week.enum';
 import { IEvent, IEventUI, ISchedule, IScheduleItem, IWeekDay, schedulerUI, IUrlData } from '../shared/interfaces/event.interface';
 import { interval, Subscription } from 'rxjs';
 import { EventService } from '../service/event.service';
-import { formatToFullDate, formatWeekData } from '../utils/helpers';
+import { formatToFullDate, formatWeekData, getWeekDays } from '../utils/helpers';
 
 interface ITimeFrame {
   monthName: string;
@@ -86,7 +86,7 @@ export class CalendarComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.weekDays = this.getWeekDays(this.startOfWeek);
+    this.weekDays = getWeekDays(this.startOfWeek);
     this.timeSlots = this.generateTimeSlots(this.startTime, this.endTime);
     if (this.urlData?.getUrl) {
       this.subscription = this.eventService.getAllEvents().subscribe({
@@ -162,7 +162,7 @@ export class CalendarComponent implements OnInit, OnChanges, OnDestroy {
     this.timeFrame.year = this.now.year;
     this.timeFrame.monthName = this.startOfWeek.monthLong;
     // Create an array of dates for the first week of the year
-    this.weekDays = this.getWeekDays(this.startOfWeek);
+    this.weekDays = getWeekDays(this.startOfWeek);
     this.eventGrid = this.generateEventGrid(this.weekDays);
   }
   getWeekChange(event$: WeekChange): void {
@@ -175,7 +175,7 @@ export class CalendarComponent implements OnInit, OnChanges, OnDestroy {
     this.weekStart = formatWeekData(this.startOfWeek);
     this.weekEnd = formatWeekData(this.endOfWeek);
     // Create an array of dates for the first week of the year
-    this.weekDays = this.getWeekDays(this.startOfWeek);
+    this.weekDays = getWeekDays(this.startOfWeek);
     this.eventGrid = this.generateEventGrid(this.weekDays);
   }
   detectWeekChange(event$: WeekChange): DateTime<true> {
@@ -194,21 +194,10 @@ export class CalendarComponent implements OnInit, OnChanges, OnDestroy {
     this.endOfWeek = this.startOfWeek.endOf('week');
     this.weekEnd = formatWeekData(this.endOfWeek);
     // Create an array of dates for the first week of the year
-    this.weekDays = this.getWeekDays(this.startOfWeek);
+    this.weekDays = getWeekDays(this.startOfWeek);
     this.eventGrid = this.generateEventGrid(this.weekDays);
   }
 
-  getWeekDays(data: DateTime<true>): IWeekDay[] {
-    return Array.from({ length: 7 }, (_, i) =>
-      {
-        const date = data.plus({ days: i });
-        return {
-          day: date.toFormat(DATE_FORMATS.WEEKDAY_FORMAT),
-          date: date.toFormat(DATE_FORMATS.DEFAULT),
-        };
-      }
-    );
-  }
   checkYearMonth<T extends keyof ITimeFrame>(type: T, value: ITimeFrame[T]): ITimeFrame[T] {
     return this.timeFrame[type] === value ? this.timeFrame[type] : value;
   }
