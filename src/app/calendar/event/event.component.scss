@@ -3,8 +3,8 @@
   background-color: #1a73e8;
   height: 97%;
   padding: 0.25rem 0.5rem;
-  border-radius: 3px;
-  border: 1px solid #ddd;
+  border-radius: 8px;
+  border: 2px solid #ddd;
   cursor: move;
   z-index: 999;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
@@ -16,9 +16,9 @@
   &.absolute {
     position: absolute;
     top: 1px;
-    left: 1px;
+    left: 2px;
     margin: auto;
-    width: calc(100% - 8px);
+    width: calc(100% - 5px);
   }
   .event-box__title {
     display: block;
