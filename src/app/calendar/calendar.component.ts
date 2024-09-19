@@ -7,7 +7,7 @@ import { FistLastWeek } from '../shared/enums/first-last-week.enum';
 import { IEvent, IEventUI, ISchedule, IScheduleItem, IWeekDay, schedulerUI, IUrlData } from '../shared/interfaces/event.interface';
 import { interval, Subscription } from 'rxjs';
 import { EventService } from '../service/event.service';
-import { formatToFullDate, formatWeekData, getWeekDays } from '../utils/helpers';
+import { formatToFullDate, formatWeekData, getWeekDays, isCurrentTimeInSlot } from '../utils/helpers';
 
 interface ITimeFrame {
   monthName: string;
@@ -70,7 +70,6 @@ export class CalendarComponent implements OnInit, OnChanges, OnDestroy {
   eventsList: IEvent[] = [];
   isToday = false;
   today: string = this.now.toFormat(DATE_FORMATS.FULL_DATE);
-  dialogTitle: string  = ''
   currentEvent = {} as IEvent;
   isModalOpen = false;
   private subscription: Subscription = new Subscription();
@@ -81,6 +80,8 @@ export class CalendarComponent implements OnInit, OnChanges, OnDestroy {
   get mergedSchColors() {
     return { ...this.schedulerUI };
   }
+  // Check if the current time is within a given time slot
+  checkIndicatorPosition = isCurrentTimeInSlot
   ngOnChanges(): void {
     this.eventService.init(this.urlData);
   }
@@ -251,22 +252,10 @@ export class CalendarComponent implements OnInit, OnChanges, OnDestroy {
     return duration >= 30 ? min30Slot  * 100 : min30Slot * 50; // Number of 30-minute slots the event spans multiplayed by 100%
   }
 
-  // Check if the current time is within a given time slot
-  isCurrentTimeInSlot(slot: string): boolean {
-    const currentTime = this.now;
-    const [slotHour, slotMinute] = slot.split(':').map(Number);
-
-    const slotStartTime = currentTime.set({ hour: slotHour, minute: slotMinute });
-    const nextSlotTime = slotStartTime.plus({ minutes: 30 });
-
-    return currentTime >= slotStartTime && currentTime < nextSlotTime;
-  }
-
   openEvent(ev: Event, event: IEvent | null | undefined): void {
     ev.preventDefault();
     ev.stopPropagation();
 
-    this.dialogTitle = 'Edit Event'
     if (event && event.id) {
       this.currentEvent = event;
     }
@@ -278,7 +267,6 @@ export class CalendarComponent implements OnInit, OnChanges, OnDestroy {
   addEvent(ev: Event, date: string, startTime: string): void {
     ev.preventDefault();
     ev.stopPropagation();
-    this.dialogTitle = 'Add Event';
 
     let currentTime = this.now;
     const timeNumber = parseInt(startTime.split(':')[0])

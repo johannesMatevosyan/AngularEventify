@@ -21,3 +21,13 @@ export function getWeekDays(data: DateTime<true>): IWeekDay[] {
     }
   );
 }
+
+export function isCurrentTimeInSlot(slot: string): boolean {
+  const currentTime = DateTime.now();
+  const [slotHour, slotMinute] = slot.split(':').map(Number);
+
+  const slotStartTime = currentTime.set({ hour: slotHour, minute: slotMinute });
+  const nextSlotTime = slotStartTime.plus({ minutes: 30 });
+
+  return currentTime >= slotStartTime && currentTime < nextSlotTime;
+}

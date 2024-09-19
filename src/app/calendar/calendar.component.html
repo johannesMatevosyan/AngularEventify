@@ -79,7 +79,7 @@
         (click)="findEvent(day, slot) ? addEvent($event, day.date, slot) : null;">
 
         <app-current-time-indicator
-          *ngIf="day.date === today.split(' ')[0] && isCurrentTimeInSlot(slot)"
+          *ngIf="day.date === today.split(' ')[0] && checkIndicatorPosition(slot)"
           [currentTime]="slot"
           [barColor]="mergedSchColors.currentTimeBarColor"
           ></app-current-time-indicator>
@@ -116,7 +116,6 @@
 
 <app-modal-dialog
   #eventModal
-  [title]="dialogTitle"
   [data]="currentEvent"
   [isAmPmFormat]="isAmPmFormat"
   [hideOnEsc]='true'>

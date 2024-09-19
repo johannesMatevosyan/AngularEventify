@@ -55,9 +55,8 @@ export class ModalDialogComponent implements OnInit, AfterViewInit, OnChanges, O
       description: '',
   };
   @Input() hideOnEsc: boolean = true;
-  @Input() title: string = '';
   @Input() isAmPmFormat: boolean = false;
-
+  dialogTitle: string = '';
   isVisible = false;
   submitted = false;
   showErrors = false;
@@ -98,6 +97,7 @@ export class ModalDialogComponent implements OnInit, AfterViewInit, OnChanges, O
   setFormData(): void {
     this.cdr.detectChanges();
 
+    this.dialogTitle = this.data.id && this.data.name ? 'Edit Event' : 'Add Event'
     this.eventForm.patchValue({
       name: this.data.name?? '',
       date: this.data.date ? this.data.date : '',
