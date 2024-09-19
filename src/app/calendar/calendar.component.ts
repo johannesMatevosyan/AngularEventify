@@ -7,7 +7,7 @@ import { FistLastWeek } from '../shared/enums/first-last-week.enum';
 import { IEvent, IEventUI, ISchedule, IScheduleItem, IWeekDay, schedulerUI, IUrlData } from '../shared/interfaces/event.interface';
 import { interval, Subscription } from 'rxjs';
 import { EventService } from '../service/event.service';
-import { formatToFullDate, formatWeekData, getWeekDays } from '../utils/helpers';
+import { formatToFullDate, formatWeekData, getWeekDays, isCurrentTimeInSlot } from '../utils/helpers';
 
 interface ITimeFrame {
   monthName: string;
@@ -81,6 +81,8 @@ export class CalendarComponent implements OnInit, OnChanges, OnDestroy {
   get mergedSchColors() {
     return { ...this.schedulerUI };
   }
+  // Check if the current time is within a given time slot
+  checkIndicatorPosition = isCurrentTimeInSlot
   ngOnChanges(): void {
     this.eventService.init(this.urlData);
   }
@@ -249,17 +251,6 @@ export class CalendarComponent implements OnInit, OnChanges, OnDestroy {
     const duration = endTime.diff(startTime, 'minutes').minutes;
     const min30Slot = Math.ceil(duration / 30);
     return duration >= 30 ? min30Slot  * 100 : min30Slot * 50; // Number of 30-minute slots the event spans multiplayed by 100%
-  }
-
-  // Check if the current time is within a given time slot
-  isCurrentTimeInSlot(slot: string): boolean {
-    const currentTime = this.now;
-    const [slotHour, slotMinute] = slot.split(':').map(Number);
-
-    const slotStartTime = currentTime.set({ hour: slotHour, minute: slotMinute });
-    const nextSlotTime = slotStartTime.plus({ minutes: 30 });
-
-    return currentTime >= slotStartTime && currentTime < nextSlotTime;
   }
 
   openEvent(ev: Event, event: IEvent | null | undefined): void {
