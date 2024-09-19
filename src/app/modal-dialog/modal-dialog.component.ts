@@ -86,18 +86,13 @@ export class ModalDialogComponent implements OnInit, AfterViewInit, OnChanges, O
   }
 
   toggleRemoveButton(): void {
-    if(this.data.id) {
-      this.showRemoveButton = true;
-    } else {
-      this.showRemoveButton = false;
-    }
+    this.showRemoveButton = this.data.id ? true : false;
+    this.dialogTitle = this.data.id && this.data.name ? 'Edit Event' : 'Add Event'
     this.cdr.detectChanges();
   }
 
   setFormData(): void {
     this.cdr.detectChanges();
-
-    this.dialogTitle = this.data.id && this.data.name ? 'Edit Event' : 'Add Event'
     this.eventForm.patchValue({
       name: this.data.name?? '',
       date: this.data.date ? this.data.date : '',
