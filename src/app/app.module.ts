@@ -9,6 +9,7 @@ import { ModalDialogComponent } from './modal-dialog/modal-dialog.component';
 import { CurrentTimeIndicatorComponent } from './calendar/current-time-indicator/current-time-indicator.component';
 import { DisableRightClickDirective } from './directives/disable-right-click.directive';
 import { ApplicationPipesModule } from './application-pipes/application-pipes.module';
+import { TableHeaderComponent } from './calendar/table-header/table-header.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { ApplicationPipesModule } from './application-pipes/application-pipes.mo
     CalendarHeaderComponent,
     EventComponent,
     CurrentTimeIndicatorComponent,
-    DisableRightClickDirective
+    DisableRightClickDirective,
+    TableHeaderComponent
   ],
   imports: [
     BrowserModule,

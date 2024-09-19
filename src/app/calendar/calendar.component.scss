@@ -29,16 +29,6 @@ body {
   outline: none;
   padding-bottom: 40px;
 }
-table {
-  width: 100%;
-  height: 100%;
-  border-collapse: collapse;
-  table-layout: fixed;
-  tbody {
-    position: relative;
-    top: 0;
-  }
-}
 
 .headcol {
   width: 40px;
@@ -56,53 +46,6 @@ table {
     font-weight: 500;
     &.am-pm {
       right: 5px;
-    }
-  }
-}
-
-thead {
-  th {
-    font-size: 1.1rem;
-    font-weight: bold;
-    padding: 1rem;
-    border-bottom: 2px solid #ddd;
-    text-align: center;
-    width: 100%;
-    &:first-child {
-      width: 120px;
-      border-bottom: 2px solid transparent;
-    }
-  }
-  z-index: 2;
-}
-tr:nth-child(odd) td:not(.headcol) {
-  border-bottom: 1px solid #eeeeee;
-}
-
-tr:nth-child(even) td:not(.headcol) {
-  border-bottom: 1px solid #dddddd;
-}
-
-tbody {
-  tr {
-    td {
-      position: relative;
-      vertical-align: top;
-      height: 40px;
-      padding: 0.25rem 0.25rem 0 0.25rem;
-      width: auto;
-      border-right: 1px solid #dddddd;
-      padding: 0;
-      white-space: none;
-      word-wrap: nowrap;
-      text-align: center;
-      cursor: pointer;
-      &:first-child {
-        cursor: default;
-        &:hover {
-          background: transparent !important;
-        }
-      }
     }
   }
 }
