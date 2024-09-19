@@ -25,33 +25,10 @@
     class="offset"
     aria-label="Event calendar"
     >
-    <thead>
-      <tr scope="row">
-        <th
-          class="headcol"
-          scope="col"
-          [style]="{
-            'border-bottom': '2px solid ' + mergedSchColors.cellColor ? mergedSchColors.cellColor : colors.LIGHT_GREY
-          }"></th>
-        <th
-          scope="col"
-          *ngFor="let dayInWeek of weekDays;"
-          [attr.aria-label]="dayInWeek.date"
-          [style]="{
-            'color': mergedSchColors.navigationColor,
-            'border-bottom': '2px solid ' + mergedSchColors.cellColor ? mergedSchColors.cellColor : colors.LIGHT_GREY,
-          }">
-            <span class="date"
-              *ngIf="dayInWeek.date !== today.split(' ')[0]"
-              >{{ dayInWeek.day }}</span>
-            <span class="date"
-              *ngIf="dayInWeek.date === today.split(' ')[0]"
-              [style]="{
-                'color': mergedSchColors.currentDayColor ? mergedSchColors.currentDayColor : colors.RED
-              }">{{ dayInWeek.day }}</span>
-        </th>
-      </tr>
-    </thead>
+    <app-table-header
+      [weekDays]="weekDays"
+      [todaysDate]="today.split(' ')[0]"
+      [mergedSchColors]="mergedSchColors"></app-table-header>
   <tbody role="rowgroup">
 
     <tr

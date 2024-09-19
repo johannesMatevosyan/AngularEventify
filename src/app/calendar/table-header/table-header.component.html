@@ -1,0 +1,25 @@
+<tr scope="row">
+  <th
+    class="headcol"
+    scope="col"
+    [style]="{
+      'border-bottom': '2px solid ' + mergedSchColors.cellColor ? mergedSchColors.cellColor : colors.LIGHT_GREY
+    }"></th>
+  <th
+    scope="col"
+    *ngFor="let dayInWeek of weekDays;"
+    [attr.aria-label]="dayInWeek.date"
+    [style]="{
+      'color': mergedSchColors.navigationColor,
+      'border-bottom': '2px solid ' + mergedSchColors.cellColor ? mergedSchColors.cellColor : colors.LIGHT_GREY,
+    }">
+      <span class="date"
+        *ngIf="dayInWeek.date !== todaysDate"
+        >{{ dayInWeek.day }}</span>
+      <span class="date"
+        *ngIf="dayInWeek.date === todaysDate"
+        [style]="{
+          'color': mergedSchColors.currentDayColor ? mergedSchColors.currentDayColor : colors.RED
+        }">{{ dayInWeek.day }}</span>
+  </th>
+</tr>
