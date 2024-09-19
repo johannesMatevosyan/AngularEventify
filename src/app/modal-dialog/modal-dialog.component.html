@@ -2,7 +2,7 @@
 <div class="ae-modal-content" *ngIf="isVisible">
   <form role="create or update event" [formGroup]="eventForm" (ngSubmit)="onSubmit()">
     <div class="ae-modal-header">
-      <h4 class="ae-modal-title">{{ title }}</h4>
+      <h4 class="ae-modal-title">{{ dialogTitle }}</h4>
 
       <button
         [attr.aria-label]="'Close Dialog'"

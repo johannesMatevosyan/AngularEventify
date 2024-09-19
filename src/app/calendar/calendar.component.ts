@@ -70,7 +70,6 @@ export class CalendarComponent implements OnInit, OnChanges, OnDestroy {
   eventsList: IEvent[] = [];
   isToday = false;
   today: string = this.now.toFormat(DATE_FORMATS.FULL_DATE);
-  dialogTitle: string  = ''
   currentEvent = {} as IEvent;
   isModalOpen = false;
   private subscription: Subscription = new Subscription();
@@ -257,7 +256,6 @@ export class CalendarComponent implements OnInit, OnChanges, OnDestroy {
     ev.preventDefault();
     ev.stopPropagation();
 
-    this.dialogTitle = 'Edit Event'
     if (event && event.id) {
       this.currentEvent = event;
     }
@@ -269,7 +267,6 @@ export class CalendarComponent implements OnInit, OnChanges, OnDestroy {
   addEvent(ev: Event, date: string, startTime: string): void {
     ev.preventDefault();
     ev.stopPropagation();
-    this.dialogTitle = 'Add Event';
 
     let currentTime = this.now;
     const timeNumber = parseInt(startTime.split(':')[0])
