@@ -7,7 +7,7 @@ import { FistLastWeek } from '../shared/enums/first-last-week.enum';
 import { IEvent, IEventUI, ISchedule, IScheduleItem, IWeekDay, schedulerUI, IUrlData } from '../shared/interfaces/event.interface';
 import { interval, Subscription } from 'rxjs';
 import { EventService } from '../service/event.service';
-import { formatToFullDate, formatWeekData, getWeekDays, isCurrentTimeInSlot } from '../utils/helpers';
+import { formatToFullDate, formatWeekData, getEventTime, getWeekDays, isCurrentTimeInSlot } from '../utils/helpers';
 
 interface ITimeFrame {
   monthName: string;
@@ -269,16 +269,12 @@ export class CalendarComponent implements OnInit, OnChanges, OnDestroy {
     ev.stopPropagation();
 
     let currentTime = this.now;
-    const timeNumber = parseInt(startTime.split(':')[0])
-    const minutes = parseInt(startTime.split(':')[1]) === 0 ? 0 : 30;
-    const endTime = currentTime
-                      .set({ hour: timeNumber, minute: minutes, second: 0 })
-                      .plus({ minutes: 30 }).toFormat('HH:mm');
+    const eventDateTime = getEventTime(currentTime, startTime);
 
     this.currentEvent = {
-      date,
-      startTime: startTime,
-      endTime: endTime,
+      date: date,
+      startTime: eventDateTime.startTime,
+      endTime: eventDateTime.endTime,
       name: '',
       description: ''
     }

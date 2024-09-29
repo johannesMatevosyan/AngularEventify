@@ -56,3 +56,11 @@
   </div>
 
 </header>
+
+
+<app-modal-dialog
+  #eventModal
+  [data]="currentEvent"
+  [isAmPmFormat]="isAmPmFormat"
+  [hideOnEsc]='true'>
+</app-modal-dialog>

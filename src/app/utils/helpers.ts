@@ -31,3 +31,17 @@ export function isCurrentTimeInSlot(slot: string): boolean {
 
   return currentTime >= slotStartTime && currentTime < nextSlotTime;
 }
+
+export function getEventTime(currentTime: DateTime<true>, startTime: string): { startTime: string, endTime: string } {
+
+  const timeNumber = parseInt(startTime.split(':')[0])
+  const minutes = parseInt(startTime.split(':')[1]) === 0 ? 0 : 30;
+  const endTime = currentTime
+    .set({ hour: timeNumber, minute: minutes, second: 0 })
+    .plus({ minutes: 30 }).toFormat('HH:mm');
+
+  return {
+    startTime,
+    endTime
+  }
+}
