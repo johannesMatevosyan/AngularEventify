@@ -1,10 +1,5 @@
 <header>
-  <button
-    class="today secondary"
-    (click)="getToday()"
-    role="button"
-    [attr.aria-label]="'Today is ' + todaysDate.split(' ')[0]"
-    tabindex="0">Today</button>
+  <div class="header-align"></div>
   <nav
     aria-label="Calendar navigation">
     <ul class="calendar-nav">
@@ -44,5 +39,20 @@
       </li>
     </ul>
   </nav>
-  <div class="header-align"></div>
+
+  <div>
+    <button
+      class="today secondary"
+      (click)="getToday()"
+      role="button"
+      [attr.aria-label]="'Today is ' + todaysDate.split(' ')[0]"
+      tabindex="0">Today</button>
+    <button
+      class="today secondary ml05"
+      (click)="addEvent()"
+      role="button"
+      [attr.aria-label]="'Add event'"
+      tabindex="0">Add event</button>
+  </div>
+
 </header>

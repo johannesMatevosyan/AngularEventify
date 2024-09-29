@@ -35,4 +35,8 @@ export class CalendarHeaderComponent {
   getFirstOrLastWeek(value: FistLastWeek): void {
     this.onGetFirstOrLastWeek.emit(value);
   }
+
+  addEvent(): void {
+    console.log('add event');
+  }
 }
