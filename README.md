@@ -165,13 +165,18 @@ The calendar component has been enhanced with several accessibility features to 
 
 These improvements aim to make the application more accessible and user-friendly for individuals using assistive technologies.
 
+## Event Creation
 
-## Development
-To run the project locally:
-```sh
- ng serve
-```
-Open your browser and navigate to http://localhost:4200/
+The event calendar library allows users to create new events effortlessly in two ways:
+
+### Clicking on a Time Slot:
+By clicking directly on any time slot (cell) rendered in the calendar view, a modal dialog will open. This dialog contains a form to create a new event. The start time of the event will automatically be set to the date and time of the clicked slot, although you can modify this before saving the event.
+
+### Using the 'Add Event' Button:
+Alternatively, you can create a new event by clicking the 'Add Event' button located in the navigation menu. In this case, the modal dialog will open with the current date and time as the default start time, which can also be changed.
+
+### Time Slot Restrictions
+Events can only be created within time slots ranging from 6:00 AM to 7:00 PM. If an attempt is made to create an event outside of this time range, the event will be assigned the last available time slot of the current date.
 
 ## Acknowledgments
 
