@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of, tap } from 'rxjs';
+import { BehaviorSubject, catchError, Observable, of, tap } from 'rxjs';
 import { IEvent, IUrlData } from '../shared/interfaces/event.interface';
 import { HttpClient } from '@angular/common/http';
 
@@ -11,12 +11,15 @@ export class EventService {
   public addUrl: string = '';
   public updateUrl: string = '';
   public deleteUrl: string = '';
+  errorMessage = 'Failed to create event. Please try again later.';
   private isEventAddedSubject = new BehaviorSubject<boolean>(false);
   eventAdded$: Observable<boolean> = this.isEventAddedSubject.asObservable();
   private eventsSubject = new BehaviorSubject<IEvent[]>([]);
   events$: Observable<IEvent[]> = this.eventsSubject.asObservable();
   private eventSubject = new BehaviorSubject<IEvent | null>(null);
   event$: Observable<IEvent | null> = this.eventSubject.asObservable();
+  private eventFailureSubject = new BehaviorSubject<string>('');
+  eventFailure$: Observable<string> = this.eventFailureSubject.asObservable();
 
   init(baseUrl: IUrlData ): void {
     this.url = baseUrl.baseUrl + baseUrl.getUrl;
@@ -43,6 +46,11 @@ export class EventService {
         this.eventsSubject.next([...currentEvents, response]);
         this.isEventAddedSubject.next(true);
         return of(true);
+      }),
+      catchError((error) => {
+        // Handle the error inside the pipe
+        this.eventFailureSubject.next(this.errorMessage);
+        return of(false);
       })
     );
   }
@@ -73,6 +81,11 @@ export class EventService {
         const updatedEvents = currentEvents.map(event => event.id === updatedEvent.id ? updatedEvent : event);
         this.eventsSubject.next(updatedEvents);
         return of(true);
+      }),
+      catchError((error) => {
+        // Handle the error inside the pipe
+        this.eventFailureSubject.next(this.errorMessage);
+        return of(false);
       })
     );
   }

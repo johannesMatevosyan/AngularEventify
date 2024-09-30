@@ -16,6 +16,10 @@ export class AppComponent {
     date: string;
     description: string;
   }): void {
-    console.log('Event created ', event);
+    console.log('Event created successfully: ', event);
+  }
+
+  onEventCreationFailed(errorMessage: string): void {
+    console.log('Event creation error: ', errorMessage);
   }
 }

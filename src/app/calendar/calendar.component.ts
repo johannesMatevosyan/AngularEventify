@@ -53,6 +53,7 @@ export class CalendarComponent implements OnInit, OnChanges, OnDestroy {
     showBeforeMinutes: 30
   };
   @Output() eventCreated: EventEmitter<IEvent> = new EventEmitter();
+  @Output() eventCreationFailed: EventEmitter<string> = new EventEmitter();
   colors = COLORS;
   now = DateTime.now();
   startOfWeek = this.now.startOf('week');
@@ -159,7 +160,12 @@ export class CalendarComponent implements OnInit, OnChanges, OnDestroy {
         return;
       }
       this.eventCreated.emit(event);
-    })
+    });
+    this.eventService.eventFailure$.subscribe(error => {
+      if (error) {
+        this.eventCreationFailed.emit(error);
+      }
+    });
   }
   getToday(): void {
     this.startOfWeek = this.now.startOf('week');
