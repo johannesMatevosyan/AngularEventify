@@ -162,9 +162,9 @@ export class CalendarComponent implements OnInit, OnChanges, OnDestroy {
       }
       this.eventCreated.emit(event);
     });
-    this.eventService.eventFailure$.subscribe(error => {
-      if (error) {
-        this.eventCreationFailed.emit(error);
+    this.eventService.eventFailure$.subscribe(errorMessage => {
+      if (errorMessage) {
+        this.eventCreationFailed.emit(errorMessage);
       }
     });
     this.eventService.eventDeletion$.subscribe(deletedEventId => {
