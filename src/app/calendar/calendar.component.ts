@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input, OnChanges, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { DateTime } from "luxon";
 import { ModalDialogComponent } from '../modal-dialog/modal-dialog.component';
 import { COLORS, DATE_FORMATS, START_TIME, END_TIME } from '../shared/constants';
@@ -52,6 +52,7 @@ export class CalendarComponent implements OnInit, OnChanges, OnDestroy {
     showEventReminder: false,
     showBeforeMinutes: 30
   };
+  @Output() eventCreated: EventEmitter<IEvent> = new EventEmitter();
   colors = COLORS;
   now = DateTime.now();
   startOfWeek = this.now.startOf('week');
@@ -104,7 +105,7 @@ export class CalendarComponent implements OnInit, OnChanges, OnDestroy {
     if (this.showReminderData && this.showReminderData.showEventReminder) {
       this.startReminderCheck();
     }
-    this.handleAddedEvent();
+    this.handleEventSubjects();
   }
   startReminderCheck(): void {
     if (this.reminderCheckSubscription) {
@@ -145,7 +146,7 @@ export class CalendarComponent implements OnInit, OnChanges, OnDestroy {
   showReminder(eventTitle: string, minutes: 30 | 60): void {
     window.alert(`Reminder: The event "${eventTitle}" starts in ${minutes} minutes!`);
   }
-  handleAddedEvent(): void {
+  handleEventSubjects(): void {
     this.eventService.eventAdded$.subscribe(isAdded => {
       if(!isAdded) {
         return;
@@ -153,6 +154,12 @@ export class CalendarComponent implements OnInit, OnChanges, OnDestroy {
       this.eventGrid = this.generateEventGrid(this.weekDays);
       this.cdr.detectChanges();
     });
+    this.eventService.event$.subscribe(event => {
+      if (!event) {
+        return;
+      }
+      this.eventCreated.emit(event);
+    })
   }
   getToday(): void {
     this.startOfWeek = this.now.startOf('week');

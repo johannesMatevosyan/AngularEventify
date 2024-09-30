@@ -15,6 +15,8 @@ export class EventService {
   eventAdded$: Observable<boolean> = this.isEventAddedSubject.asObservable();
   private eventsSubject = new BehaviorSubject<IEvent[]>([]);
   events$: Observable<IEvent[]> = this.eventsSubject.asObservable();
+  private eventSubject = new BehaviorSubject<IEvent | null>(null);
+  event$: Observable<IEvent | null> = this.eventSubject.asObservable();
 
   init(baseUrl: IUrlData ): void {
     this.url = baseUrl.baseUrl + baseUrl.getUrl;
@@ -35,6 +37,7 @@ export class EventService {
         if(!response || !response.id) {
           return of(false);
         }
+        this.eventSubject.next(response);
         // Update the event list when new event is added
         const currentEvents = this.eventsSubject.value;
         this.eventsSubject.next([...currentEvents, response]);
@@ -64,6 +67,7 @@ export class EventService {
         if(!response) {
           return of(false);
         }
+        this.eventSubject.next(updatedEvent);
         // Update the event list when new event is updated
         const currentEvents = this.eventsSubject.value;
         const updatedEvents = currentEvents.map(event => event.id === updatedEvent.id ? updatedEvent : event);
