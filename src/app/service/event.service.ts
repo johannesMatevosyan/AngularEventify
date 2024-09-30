@@ -20,6 +20,8 @@ export class EventService {
   event$: Observable<IEvent | null> = this.eventSubject.asObservable();
   private eventFailureSubject = new BehaviorSubject<string>('');
   eventFailure$: Observable<string> = this.eventFailureSubject.asObservable();
+  private eventDeletionSubject = new BehaviorSubject<string>('');
+  eventDeletion$: Observable<string> = this.eventDeletionSubject.asObservable();
 
   init(baseUrl: IUrlData ): void {
     this.url = baseUrl.baseUrl + baseUrl.getUrl;
@@ -92,6 +94,7 @@ export class EventService {
 
   deleteEvent(eventId: string): Observable<boolean> {
     if (!eventId) {
+
       return of(false);
     }
 
@@ -100,6 +103,7 @@ export class EventService {
         if(!response) {
           return of(false);
         }
+        this.eventDeletionSubject.next(eventId);
         // Update the event list when an event is deleted
         const currentEvents = this.eventsSubject.value;
         const updatedEvents = currentEvents.filter(event => event.id !== eventId);
