@@ -30,6 +30,10 @@ export class AppComponent {
     console.log('Event updated successfully: ', event);
   }
 
+  onEventDeleted(eventID: string): void {
+    console.log('Deleted event ID: ', eventID);
+  }
+
   onEventCreationFailed(errorMessage: string): void {
     console.log('Event cration error: ', errorMessage);
   }
@@ -38,7 +42,7 @@ export class AppComponent {
     console.log('Event update error: ', errorMessage);
   }
 
-  onEventDeleted(eventID: string): void {
-    console.log('Deleted event ID: ', eventID);
+  onEventDeleteFailed(errorMessage: string): void {
+    console.log('Event delete error: ', errorMessage);
   }
 }

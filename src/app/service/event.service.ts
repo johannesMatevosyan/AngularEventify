@@ -11,19 +11,21 @@ export class EventService {
   public addUrl: string = '';
   public updateUrl: string = '';
   public deleteUrl: string = '';
-  errorMessage = 'Failed to create event. Please try again later.';
+  errorMessage = 'Request failed. Please try again later.';
   private eventsSubject = new BehaviorSubject<IEvent[]>([]);
   events$: Observable<IEvent[]> = this.eventsSubject.asObservable();
   private eventAddedSubject = new BehaviorSubject<IEvent | null>(null);
   eventAdded$: Observable<IEvent | null> = this.eventAddedSubject.asObservable();
-  private eventUpdatedSubject = new BehaviorSubject<IEvent | null>(null);
-  eventUpdated$: Observable<IEvent | null> = this.eventUpdatedSubject.asObservable();
   private eventAddFailureSubject = new BehaviorSubject<string>('');
   eventAddFailure$: Observable<string> = this.eventAddFailureSubject.asObservable();
+  private eventUpdatedSubject = new BehaviorSubject<IEvent | null>(null);
+  eventUpdated$: Observable<IEvent | null> = this.eventUpdatedSubject.asObservable();
   private eventUpdateFailureSubject = new BehaviorSubject<string>('');
   eventUpdateFailure$: Observable<string> = this.eventUpdateFailureSubject.asObservable();
   private eventDeletionSubject = new BehaviorSubject<string>('');
   eventDeletion$: Observable<string> = this.eventDeletionSubject.asObservable();
+  private eventDeleteFailureSubject = new BehaviorSubject<string>('');
+  eventDeleteFailed$: Observable<string> = this.eventDeleteFailureSubject.asObservable();
 
   init(baseUrl: IUrlData ): void {
     this.url = baseUrl.baseUrl + baseUrl.getUrl;
@@ -96,7 +98,6 @@ export class EventService {
 
   deleteEvent(eventId: string): Observable<boolean> {
     if (!eventId) {
-
       return of(false);
     }
 
@@ -111,6 +112,11 @@ export class EventService {
         const updatedEvents = currentEvents.filter(event => event.id !== eventId);
         this.eventsSubject.next(updatedEvents);
         return of(true);
+      }),
+      catchError((error) => {
+        // Handle the error inside the pipe
+        this.eventDeleteFailureSubject.next(this.errorMessage);
+        return of(false);
       })
     );
   }

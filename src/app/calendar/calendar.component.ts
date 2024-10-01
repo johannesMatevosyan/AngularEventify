@@ -54,9 +54,11 @@ export class CalendarComponent implements OnInit, OnChanges, OnDestroy {
   };
   @Output() eventCreated: EventEmitter<IEvent> = new EventEmitter();
   @Output() eventUpdated: EventEmitter<IEvent> = new EventEmitter();
+  @Output() eventDeleted: EventEmitter<string> = new EventEmitter();
   @Output() eventCreationFailed: EventEmitter<string> = new EventEmitter();
   @Output() eventUpdateFailed: EventEmitter<string> = new EventEmitter();
-  @Output() eventDeleted: EventEmitter<string> = new EventEmitter();
+  @Output() eventDeletionFailed: EventEmitter<string> = new EventEmitter();
+
   colors = COLORS;
   now = DateTime.now();
   startOfWeek = this.now.startOf('week');
@@ -178,6 +180,11 @@ export class CalendarComponent implements OnInit, OnChanges, OnDestroy {
     this.eventService.eventDeletion$.subscribe(deletedEventId => {
       if (deletedEventId) {
         this.eventDeleted.emit(deletedEventId);
+      }
+    });
+    this.eventService.eventDeleteFailed$.subscribe(errorMessage => {
+      if (errorMessage) {
+        this.eventDeletionFailed.emit(errorMessage);
       }
     });
   }
