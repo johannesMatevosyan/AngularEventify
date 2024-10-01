@@ -31,7 +31,11 @@ export class AppComponent {
   }
 
   onEventCreationFailed(errorMessage: string): void {
-    console.log('Event creation error: ', errorMessage);
+    console.log('Event cration error: ', errorMessage);
+  }
+
+  onEventUpdateFailed(errorMessage: string): void {
+    console.log('Event update error: ', errorMessage);
   }
 
   onEventDeleted(eventID: string): void {

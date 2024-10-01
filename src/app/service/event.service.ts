@@ -18,8 +18,10 @@ export class EventService {
   eventAdded$: Observable<IEvent | null> = this.eventAddedSubject.asObservable();
   private eventUpdatedSubject = new BehaviorSubject<IEvent | null>(null);
   eventUpdated$: Observable<IEvent | null> = this.eventUpdatedSubject.asObservable();
-  private eventFailureSubject = new BehaviorSubject<string>('');
-  eventFailure$: Observable<string> = this.eventFailureSubject.asObservable();
+  private eventAddFailureSubject = new BehaviorSubject<string>('');
+  eventAddFailure$: Observable<string> = this.eventAddFailureSubject.asObservable();
+  private eventUpdateFailureSubject = new BehaviorSubject<string>('');
+  eventUpdateFailure$: Observable<string> = this.eventUpdateFailureSubject.asObservable();
   private eventDeletionSubject = new BehaviorSubject<string>('');
   eventDeletion$: Observable<string> = this.eventDeletionSubject.asObservable();
 
@@ -51,7 +53,7 @@ export class EventService {
       }),
       catchError((error) => {
         // Handle the error inside the pipe
-        this.eventFailureSubject.next(this.errorMessage);
+        this.eventAddFailureSubject.next(this.errorMessage);
         return of(false);
       })
     );
@@ -86,7 +88,7 @@ export class EventService {
       }),
       catchError((error) => {
         // Handle the error inside the pipe
-        this.eventFailureSubject.next(this.errorMessage);
+        this.eventUpdateFailureSubject.next(this.errorMessage);
         return of(false);
       })
     );
