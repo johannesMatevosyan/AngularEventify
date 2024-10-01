@@ -76,10 +76,10 @@
           </div>
 
           <span class="error absolute"
-            *ngIf="submitted && eventForm.hasError('startDateBeforeEndDate')"
-            id="startDateBeforeEndDateError"
+            *ngIf="submitted && eventForm.hasError('multiDayEvent')"
+            id="multiDayEvent"
             aria-live="polite">
-            Start date and time must be before the end date and time.
+            The Events start and end dates must be within the same day.
           </span>
 
         </div>
