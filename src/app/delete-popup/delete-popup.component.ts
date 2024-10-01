@@ -11,7 +11,10 @@ import { CommonModule } from '@angular/common';
 export class DeletePopupComponent {
   @Input() id = ''
   @Input() name = ''
-  @Output() confirmEventDelete = new EventEmitter<string>();
+  @Output() confirmEventDelete = new EventEmitter<{
+    eventId: string,
+    eventName: string
+  }>();
   isDeletePopupVisible = false;
 
   open(): void {
@@ -20,8 +23,11 @@ export class DeletePopupComponent {
   close(): void {
     this.isDeletePopupVisible = false;
   }
-  deleteEvent(id: string): void {
-    this.confirmEventDelete.emit(id);
+  deleteEvent(eventId: string, eventName: string): void {
+    this.confirmEventDelete.emit({
+      eventId,
+      eventName
+    });
     this.close();
   }
 }

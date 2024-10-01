@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input, OnChanges, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { DateTime } from "luxon";
 import { ModalDialogComponent } from '../modal-dialog/modal-dialog.component';
 import { COLORS, DATE_FORMATS, START_TIME, END_TIME } from '../shared/constants';
@@ -52,6 +52,16 @@ export class CalendarComponent implements OnInit, OnChanges, OnDestroy {
     showEventReminder: false,
     showBeforeMinutes: 30
   };
+  @Output() eventCreated: EventEmitter<IEvent> = new EventEmitter();
+  @Output() eventUpdated: EventEmitter<IEvent> = new EventEmitter();
+  @Output() eventDeleted: EventEmitter<{
+    name: string,
+    id: string
+  }> = new EventEmitter();
+  @Output() eventCreationFailed: EventEmitter<string> = new EventEmitter();
+  @Output() eventUpdateFailed: EventEmitter<string> = new EventEmitter();
+  @Output() eventDeletionFailed: EventEmitter<string> = new EventEmitter();
+
   colors = COLORS;
   now = DateTime.now();
   startOfWeek = this.now.startOf('week');
@@ -104,7 +114,7 @@ export class CalendarComponent implements OnInit, OnChanges, OnDestroy {
     if (this.showReminderData && this.showReminderData.showEventReminder) {
       this.startReminderCheck();
     }
-    this.handleAddedEvent();
+    this.handleEventSubjects();
   }
   startReminderCheck(): void {
     if (this.reminderCheckSubscription) {
@@ -145,13 +155,40 @@ export class CalendarComponent implements OnInit, OnChanges, OnDestroy {
   showReminder(eventTitle: string, minutes: 30 | 60): void {
     window.alert(`Reminder: The event "${eventTitle}" starts in ${minutes} minutes!`);
   }
-  handleAddedEvent(): void {
-    this.eventService.eventAdded$.subscribe(isAdded => {
-      if(!isAdded) {
+  handleEventSubjects(): void {
+    this.eventService.eventAdded$.subscribe(event => {
+      if (!event) {
         return;
       }
       this.eventGrid = this.generateEventGrid(this.weekDays);
       this.cdr.detectChanges();
+      this.eventCreated.emit(event);
+    });
+    this.eventService.eventUpdated$.subscribe(event => {
+      if (!event) {
+        return;
+      }
+      this.eventUpdated.emit(event);
+    });
+    this.eventService.eventAddFailure$.subscribe(errorMessage => {
+      if (errorMessage) {
+        this.eventCreationFailed.emit(errorMessage);
+      }
+    });
+    this.eventService.eventUpdateFailure$.subscribe(errorMessage => {
+      if (errorMessage) {
+        this.eventUpdateFailed.emit(errorMessage);
+      }
+    });
+    this.eventService.eventDeletion$.subscribe(deletedEvent => {
+      if (deletedEvent && deletedEvent.id) {
+        this.eventDeleted.emit(deletedEvent);
+      }
+    });
+    this.eventService.eventDeleteFailed$.subscribe(errorMessage => {
+      if (errorMessage) {
+        this.eventDeletionFailed.emit(errorMessage);
+      }
     });
   }
   getToday(): void {
