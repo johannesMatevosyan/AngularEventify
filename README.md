@@ -72,6 +72,15 @@ Pass in your list of events
     - **date**: Date
     - **description**: Brief description of an event(150 characters max.)
     
+## Form Validation Rules Set
+
+When creating or updating an event, the following validation rules must be met:
+
+- **Name**: The event name is required. It cannot be left empty.
+- **Start Time**: The event start time is required and must be specified.
+- **End Time**: The event end time is required and must be specified.
+- **Same Day Rule**: The start and end dates must be within the same day. Events that span across multiple days are not supported.
+- **Time Range**: Events can only be scheduled between 6:00 AM and 7:00 PM. If the specified time is outside this range, it will be adjusted to the last available time slot of the day.
 
 ## Time Format Switching
 Event calendar provides the flexibility to display time in both continental (24-hour) and 12-hour (AM/PM) formats. By default 24-hour system is set event calendar component.

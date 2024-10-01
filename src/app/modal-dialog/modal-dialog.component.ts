@@ -45,7 +45,7 @@ export class ModalDialogComponent implements OnInit, AfterViewInit, OnChanges, O
     endTime: new FormControl('', [Validators.required]),
     date: new FormControl(''),
     description: new FormControl(''),
-  }, { validators: this.startDateBeforeEndDateValidator() });
+  }, { validators: this.multipleDayEventValidator() });
   @Input() data: IEvent = {
       id: '',
       name: '',
@@ -284,12 +284,14 @@ export class ModalDialogComponent implements OnInit, AfterViewInit, OnChanges, O
     return DateTime.now().toISODate();
   }
 
-  startDateBeforeEndDateValidator(): ValidatorFn {
+  multipleDayEventValidator(): ValidatorFn {
     return (group: AbstractControl): ValidationErrors | null => {
       const startTime = group.get('startTime')?.value;
       const endTime = group.get('endTime')?.value;
-      if (startTime && endTime && startTime >= endTime) {
-        return { startDateBeforeEndDate: true }; // Error key
+      const startDate = startTime?.split(' ')[0];
+      const endDate = endTime?.split(' ')[0];
+      if (startDate && endDate && startDate !== endDate) {
+        return { multiDayEvent: true }; // Error key
       }
       return null; // No error
     };
