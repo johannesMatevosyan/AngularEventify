@@ -110,29 +110,24 @@ The event reminder feature enables alerts for upcoming events. You can configure
 
 ### `showReminderData` Object Properties:
 
-- **`showEventReminder`** (`boolean`):  
-  Determines whether the event reminder functionality is enabled.
+- **`showEventReminder`** (`boolean`):  Determines whether the event reminder functionality is enabled.
   - Default: `false`.
   - To enable, set this to `true`.
 
-- **`showBeforeMinutes`** (`number`):  
-  Specifies how many minutes before the event the reminder will be shown. This property only accepts two values:
+- **`showBeforeMinutes`** (`number`):  Specifies how many minutes before the event the reminder will be shown. This property only accepts two values:
   - **Accepted values**: `30` or `60`.
   - Default: `30`.
-
 
 ### Example Usage:
 
 You can configure the reminder functionality in the parent component like this:
 
 ```sh
-export class ParentComponent {
   <ae-eventify 
     [showReminderData]="{
         showEventReminder: true,  // Enables the reminder functionality
         showBeforeMinutes: 60     // Shows the reminder 60 minutes before the event
   }"></ae-eventify>
-}
 
 ```
 
@@ -144,6 +139,70 @@ Once the reminder feature is enabled:
 ### Note:
 - ***showEventReminder:*** If this is set to false, the reminder feature will be disabled and no alerts will be shown.
 - ***showBeforeMinutes:*** If an invalid value is provided (anything other than 30 or 60), the default value of 30 minutes will be used. 
+
+## Event Emission Features
+
+Library provides robust event emission features to handle various scenarios, including event creation, updates, deletion, and error handling.
+
+### Event Creation and Update
+When a new event is successfully created (either by clicking a time slot or using the "Add Event" button), 
+the library emits an event containing the data of the newly created event. Moreover, the library also emits an event when an existing event is successfully updated. 
+Example emitted data:
+
+```sh
+  {
+    "id": "55",
+    "name": "Meeting with Team",
+    "startTime": "10:00",
+    "endTime": "11:00",
+    "date": "2024-10-03"
+    "description": "Discuss new changes",
+  }
+
+```
+
+### Event Deletion
+When an event is successfully deleted, the library emits an event containing details of the deleted event (e.g., event ID or name). Emmited data example.
+
+```sh
+  {
+    "eventId": "8487",
+    "name": "UI Meetup",
+  }
+
+```
+
+### Error Handling
+If an error occurs during event creation, update, or deletion, the library emits an error message with a description of the issue.
+
+```sh
+  {
+    "error": "Request failed. Please try again later.",
+  }
+
+```
+
+### Event Listeners
+The parent component can listen to the following emitted events:
+
+`eventCreated`: Triggered when a new event is successfully created.
+`eventUpdated`: Triggered when an event is successfully updated.
+`eventDeleted`: Triggered when an event is successfully deleted.
+`eventCreationFailed`, `eventUpdateFailed`, `eventDeletionFailed`: Triggered in case of failure during event creation, update, or deletion, respectively.
+
+Example Usage:
+```sh
+  <ae-eventify  
+    (eventCreated)="onEventCreated($event)" 
+    (eventUpdated)="onEventUpdated($event)" 
+    (eventDeleted)="onEventDeleted($event)" 
+    (eventCreationFailed)="onEventCreationFailed($event)" 
+    (eventUpdateFailed)="onEventUpdateFailed($event)" 
+    (eventDeletionFailed)="onEventDeletionFailed($event)"></ae-eventify>
+
+```
+
+In this way, you can handle all emitted events and errors in your parent component.
 
 ## Custom CSS Class Support
 
