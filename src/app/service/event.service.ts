@@ -22,8 +22,14 @@ export class EventService {
   eventUpdated$: Observable<IEvent | null> = this.eventUpdatedSubject.asObservable();
   private eventUpdateFailureSubject = new BehaviorSubject<string>('');
   eventUpdateFailure$: Observable<string> = this.eventUpdateFailureSubject.asObservable();
-  private eventDeletionSubject = new BehaviorSubject<string>('');
-  eventDeletion$: Observable<string> = this.eventDeletionSubject.asObservable();
+  private eventDeletionSubject = new BehaviorSubject<{
+    name: string,
+    id: string
+  } | null>(null);
+  eventDeletion$: Observable<{
+    name: string,
+    id: string
+  } | null> = this.eventDeletionSubject.asObservable();
   private eventDeleteFailureSubject = new BehaviorSubject<string>('');
   eventDeleteFailed$: Observable<string> = this.eventDeleteFailureSubject.asObservable();
 
@@ -96,7 +102,7 @@ export class EventService {
     );
   }
 
-  deleteEvent(eventId: string): Observable<boolean> {
+  deleteEvent(eventId: string, name: string): Observable<boolean> {
     if (!eventId) {
       return of(false);
     }
@@ -106,7 +112,10 @@ export class EventService {
         if(!response) {
           return of(false);
         }
-        this.eventDeletionSubject.next(eventId);
+        this.eventDeletionSubject.next({
+          id: eventId,
+          name,
+        });
         // Update the event list when an event is deleted
         const currentEvents = this.eventsSubject.value;
         const updatedEvents = currentEvents.filter(event => event.id !== eventId);
