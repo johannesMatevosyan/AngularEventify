@@ -19,6 +19,17 @@ export class AppComponent {
     console.log('Event created successfully: ', event);
   }
 
+  onEventUpdated(event: {
+    id?: string;
+    name: string;
+    startTime: string;
+    endTime: string;
+    date: string;
+    description: string;
+  }): void {
+    console.log('Event updated successfully: ', event);
+  }
+
   onEventCreationFailed(errorMessage: string): void {
     console.log('Event creation error: ', errorMessage);
   }

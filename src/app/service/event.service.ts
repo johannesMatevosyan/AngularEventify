@@ -12,12 +12,12 @@ export class EventService {
   public updateUrl: string = '';
   public deleteUrl: string = '';
   errorMessage = 'Failed to create event. Please try again later.';
-  private isEventAddedSubject = new BehaviorSubject<boolean>(false);
-  eventAdded$: Observable<boolean> = this.isEventAddedSubject.asObservable();
   private eventsSubject = new BehaviorSubject<IEvent[]>([]);
   events$: Observable<IEvent[]> = this.eventsSubject.asObservable();
-  private eventSubject = new BehaviorSubject<IEvent | null>(null);
-  event$: Observable<IEvent | null> = this.eventSubject.asObservable();
+  private eventAddedSubject = new BehaviorSubject<IEvent | null>(null);
+  eventAdded$: Observable<IEvent | null> = this.eventAddedSubject.asObservable();
+  private eventUpdatedSubject = new BehaviorSubject<IEvent | null>(null);
+  eventUpdated$: Observable<IEvent | null> = this.eventUpdatedSubject.asObservable();
   private eventFailureSubject = new BehaviorSubject<string>('');
   eventFailure$: Observable<string> = this.eventFailureSubject.asObservable();
   private eventDeletionSubject = new BehaviorSubject<string>('');
@@ -42,11 +42,11 @@ export class EventService {
         if(!response || !response.id) {
           return of(false);
         }
-        this.eventSubject.next(response);
+        this.eventAddedSubject.next(response);
         // Update the event list when new event is added
         const currentEvents = this.eventsSubject.value;
         this.eventsSubject.next([...currentEvents, response]);
-        this.isEventAddedSubject.next(true);
+
         return of(true);
       }),
       catchError((error) => {
@@ -77,7 +77,7 @@ export class EventService {
         if(!response) {
           return of(false);
         }
-        this.eventSubject.next(updatedEvent);
+        this.eventUpdatedSubject.next(updatedEvent);
         // Update the event list when new event is updated
         const currentEvents = this.eventsSubject.value;
         const updatedEvents = currentEvents.map(event => event.id === updatedEvent.id ? updatedEvent : event);

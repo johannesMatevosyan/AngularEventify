@@ -53,6 +53,7 @@ export class CalendarComponent implements OnInit, OnChanges, OnDestroy {
     showBeforeMinutes: 30
   };
   @Output() eventCreated: EventEmitter<IEvent> = new EventEmitter();
+  @Output() eventUpdated: EventEmitter<IEvent> = new EventEmitter();
   @Output() eventCreationFailed: EventEmitter<string> = new EventEmitter();
   @Output() eventDeleted: EventEmitter<string> = new EventEmitter();
   colors = COLORS;
@@ -149,18 +150,19 @@ export class CalendarComponent implements OnInit, OnChanges, OnDestroy {
     window.alert(`Reminder: The event "${eventTitle}" starts in ${minutes} minutes!`);
   }
   handleEventSubjects(): void {
-    this.eventService.eventAdded$.subscribe(isAdded => {
-      if(!isAdded) {
+    this.eventService.eventAdded$.subscribe(event => {
+      if (!event) {
         return;
       }
       this.eventGrid = this.generateEventGrid(this.weekDays);
       this.cdr.detectChanges();
+      this.eventCreated.emit(event);
     });
-    this.eventService.event$.subscribe(event => {
+    this.eventService.eventUpdated$.subscribe(event => {
       if (!event) {
         return;
       }
-      this.eventCreated.emit(event);
+      this.eventUpdated.emit(event);
     });
     this.eventService.eventFailure$.subscribe(errorMessage => {
       if (errorMessage) {

@@ -28,6 +28,8 @@
     deleteUrl: '/events'
   }"
    (eventCreated)="onEventCreated($event)"
-   (eventCreationFailed)="onEventCreationFailed($event)"
+   (eventUpdated)="onEventUpdated($event)"
    (eventDeleted)="onEventDeleted($event)"
+   (eventCreationFailed)="onEventCreationFailed($event)"
+
   ></app-calendar>
