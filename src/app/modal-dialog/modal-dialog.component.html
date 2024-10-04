@@ -82,6 +82,13 @@
             The Events start and end dates must be within the same day.
           </span>
 
+          <span class="error absolute"
+            *ngIf="submitted && eventForm.hasError('startTimeBeforeEndTIme')"
+            id="startTimeBeforeEndTIme"
+            aria-live="polite">
+            Start date and time must be before the end date and time
+          </span>
+
         </div>
 
         <label for="eventDescription" class="event-form-label">Description:</label>

@@ -45,3 +45,9 @@ export function getEventTime(currentTime: DateTime<true>, startTime: string): { 
     endTime
   }
 }
+
+export function compareTimes(time1: string, time2: string) {
+  const date1 = new Date(`1970-01-01T${time1}:00`); // Creating Date object for both times
+  const date2 = new Date(`1970-01-01T${time2}:00`);
+  return date1 > date2;  // Will return true if time2 is less than time1
+}

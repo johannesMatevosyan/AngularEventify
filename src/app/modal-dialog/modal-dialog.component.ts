@@ -9,6 +9,7 @@ import { Instance } from 'flatpickr/dist/types/instance';
 import { DateTime } from 'luxon';
 import { DATE_FORMATS, END_TIME, START_TIME } from '../shared/constants';
 import { DeletePopupComponent } from '../delete-popup/delete-popup.component';
+import { compareTimes, getEventTime } from '../utils/helpers';
 
 @Component({
   selector: 'app-modal-dialog',
@@ -45,7 +46,7 @@ export class ModalDialogComponent implements OnInit, AfterViewInit, OnChanges, O
     endTime: new FormControl('', [Validators.required]),
     date: new FormControl(''),
     description: new FormControl(''),
-  }, { validators: this.multipleDayEventValidator() });
+  }, { validators: this.startDateBeforeEndDateValidator() });
   @Input() data: IEvent = {
       id: '',
       name: '',
@@ -121,7 +122,6 @@ export class ModalDialogComponent implements OnInit, AfterViewInit, OnChanges, O
 
   ngAfterViewInit(): void {
     this.initializeFlatpickr();
-    this.detectPickerOnChange();
     this.cdr.detectChanges(); // Ensure that changes are detected
   }
 
@@ -132,29 +132,27 @@ export class ModalDialogComponent implements OnInit, AfterViewInit, OnChanges, O
     const configs = {...this.configs};
     configs.time_24hr = this.isAmPmFormat ? false : true;
     configs.altFormat = this.isAmPmFormat ? DATE_FORMATS.AMPM_TIME : DATE_FORMATS.CONTINENTAL_TIME;
-    this.flatpickrInstance1 = flatpickr(this.eventStart.nativeElement, configs);
+    this.flatpickrInstance1 = flatpickr(this.eventStart.nativeElement, {
+      ...configs,
+      onChange: this.onStartDateChange.bind(this)
+    });
     this.flatpickrInstance2 = flatpickr(this.eventEnd.nativeElement, configs);
   }
 
-  detectPickerOnChange(): void{
-    flatpickr('#startDate', {
-      enableTime: true,
-      onChange: (selectedDates, dateStr: string | undefined, instance) => {
-        if (dateStr) {
-          this.eventForm.get('startDate')?.setValue(dateStr as never); // TODO fix this
-          const endDatePicker = flatpickr('#endDate') as flatpickr.Instance;
-          const minDate = new Date(dateStr); // Convert string to Date object
-          endDatePicker.set('minDate', minDate);
-        }
-      }
-    });
+  onStartDateChange(selectedDates: Date[]): void {
+    if (selectedDates.length > 0) {
+      const jsDate = new Date(selectedDates[0]);
+      const luxonDate = DateTime.fromJSDate(jsDate) as DateTime<true>;
 
-    flatpickr('#endDate', {
-      enableTime: true,
-      onChange: (selectedDates, dateStr, instance) => {
-        this.eventForm.get('endDate')?.setValue(dateStr as never); // TODO fix this
-      }
-    });
+      const selectedDate = luxonDate.toFormat(DATE_FORMATS.DEFAULT).split(' ')[0];
+      const startTime = luxonDate.toFormat('HH:mm').slice(0, 5)
+      // Add 30 minutes to the selected start date
+      const eventStartEndTime = getEventTime(luxonDate, startTime);
+      const eventEndDate = selectedDate + ' ' + eventStartEndTime.endTime;
+      // Update the end date picker
+      this.flatpickrInstance2.setDate(eventEndDate);
+      this.eventForm.patchValue({ endTime: eventEndDate });
+    }
   }
 
   get eventFormControl() {
@@ -228,8 +226,8 @@ export class ModalDialogComponent implements OnInit, AfterViewInit, OnChanges, O
 
     const data = {... this.eventForm.value};
     const name = this.getValidString(data.name, 'Default Name');
-    const startTime = this.getValidString(data.startTime?.split(' ')[1], '18:30');  // set current time if not provided
-    const endTime = this.getValidString(data.endTime?.split(' ')[1], '18:45');      // set current time + 15 minutes if not provided
+    const startTime = this.getValidString(data.startTime?.split(' ')[1], '18:00');  // set current time if not provided
+    const endTime = this.getValidString(data.endTime?.split(' ')[1], '18:30');      // set current time + 15 minutes if not provided
     const date = this.getValidString(data.startTime?.split(' ')[0], this.getCurrentDate());    // set current date if not provided
     const description = this.getValidString(data.description, '');   // set empty string if not provided
 
@@ -284,14 +282,17 @@ export class ModalDialogComponent implements OnInit, AfterViewInit, OnChanges, O
     return DateTime.now().toISODate();
   }
 
-  multipleDayEventValidator(): ValidatorFn {
+  startDateBeforeEndDateValidator(): ValidatorFn {
     return (group: AbstractControl): ValidationErrors | null => {
-      const startTime = group.get('startTime')?.value;
-      const endTime = group.get('endTime')?.value;
-      const startDate = startTime?.split(' ')[0];
-      const endDate = endTime?.split(' ')[0];
+      const eventStartDate = group.get('startTime')?.value;
+      const eventEndDate = group.get('endTime')?.value;
+      const [startDate, startTime] = eventStartDate?.split(' ') || [];
+      const [endDate, endTime] = eventEndDate?.split(' ') || [];
+      const checkTime = compareTimes(startTime, endTime);
       if (startDate && endDate && startDate !== endDate) {
         return { multiDayEvent: true }; // Error key
+      } else if (startTime && endTime && checkTime) {
+        return { startTimeBeforeEndTIme: true }; // Error key
       }
       return null; // No error
     };

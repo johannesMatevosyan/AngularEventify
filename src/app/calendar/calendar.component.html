@@ -32,7 +32,7 @@
   <tbody role="rowgroup">
 
     <tr
-      *ngFor="let slot of timeSlots; even as isEven;"
+      *ngFor="let slot of timeSlots; even as isEven; trackBy: trackByTimeSlot;"
       [attr.data-time]="slot"
       scope="row">
       <td class="headcol" [style]="{
@@ -48,7 +48,7 @@
         </time>
       </td>
       <td
-        *ngFor="let day of eventGrid;"
+        *ngFor="let day of eventGrid; trackBy: trackByEvent"
         [style]="{
           'border-right': '1px solid ' + mergedSchColors.cellColor ? mergedSchColors.cellColor : colors.LIGHT_GREY,
           'border-bottom': '1px solid ' + mergedSchColors.cellColor ? mergedSchColors.cellColor : colors.LIGHT_GREY,
