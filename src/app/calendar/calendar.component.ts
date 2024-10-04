@@ -320,9 +320,9 @@ export class CalendarComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
-  trackByTimeSlot(index: number, slot: string): number {
-    return index + Math.floor(Math.random() * 100); // Assuming each slot has a unique 'time' property
-  }
+  // trackByTimeSlot(index: number, slot: string): number {
+  //   return index + Math.floor(Math.random() * 100); // Assuming each slot has a unique 'time' property
+  // }
 
   trackByEvent(index: number, data:ISchedule): number {
     return index + Math.min(Math.max(1000, 0), 100); // Assuming each event has a unique 'id' property
