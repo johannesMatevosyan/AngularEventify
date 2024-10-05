@@ -133,18 +133,17 @@ table {
   tbody {
     position: relative;
     top: 0;
-    tr:nth-child(odd) td:not(.headcol) {
-      border-bottom: 1px solid #eeeeee;
-    }
-    tr:nth-child(even) td:not(.headcol) {
-      border-bottom: 1px solid #dddddd;
-    }
     tr {
+      &:nth-child(odd) td:not(.headcol) {
+        border-bottom: 1px solid #eeeeee;
+      }
+      &:nth-child(even) td:not(.headcol) {
+        border-bottom: 1px solid #dddddd;
+      }
       td {
         position: relative;
         vertical-align: top;
         height: 40px;
-        padding: 0.25rem 0.25rem 0 0.25rem;
         width: auto;
         border-right: 1px solid #dddddd;
         padding: 0;

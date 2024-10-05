@@ -74,8 +74,6 @@ export class CalendarComponent implements OnInit, OnChanges, OnDestroy {
   }
   timeSlots: string[] = [];
   weekDays: IWeekDay[] = [];
-  startTime = parseInt(START_TIME.split(':')[0]); // 06:00 AM
-  endTime = parseInt(END_TIME.split(':')[0]);  // 06:00 PM
   eventGrid: ISchedule[] = [];
   eventsList: IEvent[] = [];
   isToday = false;
@@ -98,7 +96,7 @@ export class CalendarComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnInit(): void {
     this.weekDays = getWeekDays(this.startOfWeek);
-    this.timeSlots = this.generateTimeSlots(this.startTime, this.endTime);
+    this.timeSlots = this.generateTimeSlots();
     if (this.urlData?.getUrl) {
       this.subscription = this.eventService.getAllEvents().subscribe({
         next: (events) => {
@@ -143,7 +141,7 @@ export class CalendarComponent implements OnInit, OnChanges, OnDestroy {
 
             // Check if the current time is within the last 5 minutes before the reminder time
             if (now >= reminderTime && now < reminderTime.plus({ minutes: 5 })) {
-              this.showReminder(eventName || 'Unknown Event', this.showReminderData.showBeforeMinutes);
+              this.showReminderAlert(eventName || 'Unknown Event', this.showReminderData.showBeforeMinutes);
             }
           }
 
@@ -152,7 +150,8 @@ export class CalendarComponent implements OnInit, OnChanges, OnDestroy {
 
     });
   }
-  showReminder(eventTitle: string, minutes: 30 | 60): void {
+  // show alert
+  showReminderAlert(eventTitle: string, minutes: 30 | 60): void {
     window.alert(`Reminder: The event "${eventTitle}" starts in ${minutes} minutes!`);
   }
   handleEventSubjects(): void {
@@ -240,17 +239,20 @@ export class CalendarComponent implements OnInit, OnChanges, OnDestroy {
     return this.timeFrame[type] === value ? this.timeFrame[type] : value;
   }
 
-  generateTimeSlots(startTime: number, endTime: number): string[] {
+  generateTimeSlots(): string[] {
     // Initialize the starting time (06:00 AM)
+    const dayStart = parseInt(START_TIME.split(':')[0]); // 06:00 AM
+    const dayEnd = parseInt(END_TIME.split(':')[0]);  // 06:00 PM
+
     let currentTime = this.now;
-    currentTime = currentTime.set({ hour: startTime, minute: 0, second: 0 });
+    currentTime = currentTime.set({ hour: dayStart, minute: 0, second: 0 });
     const times: string[] = [];
-    while (currentTime.hour <= endTime) {
+    while (currentTime.hour <= dayEnd) {
       // Format the current time as HH:mm
       const formattedTime = currentTime.toFormat('HH:mm').slice(0, 5);
       times.push(formattedTime);
       // Increment the time by one hour
-      currentTime = currentTime.plus({ minutes: 30 });
+      currentTime = currentTime.plus({ minutes: 15 });
     }
 
     return times;
