@@ -3,11 +3,13 @@
   [style.height.%]="eventSpan ? eventSpan * 0.98 : null"
   [attr.aria-label]="title + ': at ' + changeDateFormat(eventDuration.date) + ', from ' + eventDuration.startTime + ' to ' + eventDuration.endTime"
   [ngStyle]="{
-    'background-color': isHovered ? eventUI.eventHoverColor : eventUI.eventBackColor,
-    'border-color': eventUI.eventBorderColor
+    '--event-bg-color': isHovered ? eventHoverColor : eventBackColor,
+    '--event-border-color': eventBorderColor
     }"
   (mouseover)="isHovered = true"
   (mouseleave)="isHovered = false"
   class="event-box absolute">
-  <span class="event-box__title" [style.color]="eventUI.eventFontColor">{{ title }}</span>
+  <span
+    class="event-box__title"
+    [ngStyle]="{'--event-title-color': eventFontColor}">{{ title }}</span>
 </div>

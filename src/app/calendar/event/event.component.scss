@@ -1,10 +1,10 @@
 
 .event-box {
-  background-color: #1a73e8;
+  background-color: var(--event-bg-color);
   height: 97%;
   padding: 0 0.5rem;
   border-radius: 8px;
-  border: 2px solid #ddd;
+  border: 2px solid var(--event-border-color);
   cursor: pointer;
   z-index: 999;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
@@ -12,6 +12,7 @@
   &:hover{
     transform: translateY(-2px); /* Slight lift on hover */
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* More pronounced shadow */
+    background-color: var(--event-bg-color);
   }
   &.absolute {
     position: absolute;
@@ -26,7 +27,7 @@
     font-size: 13px;
     font-weight: 500;
     line-height: 14px;
-    color: #ffffff;
+    color: var(--event-title-color);
     padding-right: 10px;
     white-space: nowrap;
     overflow: hidden;
