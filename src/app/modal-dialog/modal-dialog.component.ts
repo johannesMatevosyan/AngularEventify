@@ -134,6 +134,7 @@ export class ModalDialogComponent implements OnInit, AfterViewInit, OnChanges, O
     configs.altFormat = this.isAmPmFormat ? DATE_FORMATS.AMPM_TIME : DATE_FORMATS.CONTINENTAL_TIME;
     this.flatpickrInstance1 = flatpickr(this.eventStart.nativeElement, {
       ...configs,
+      minDate: this.getCurrentDate(),
       onChange: this.onStartDateChange.bind(this)
     });
     this.flatpickrInstance2 = flatpickr(this.eventEnd.nativeElement, configs);
