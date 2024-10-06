@@ -149,6 +149,37 @@ Once the reminder feature is enabled:
 - ***showEventReminder:*** If this is set to false, the reminder feature will be disabled and no alerts will be shown.
 - ***showBeforeMinutes:*** If an invalid value is provided (anything other than 30 or 60), the default value of 30 minutes will be used. 
 
+## Disallow users from adding new events to past dates
+
+The `disallowPastDates` feature in the event calendar component allows you to prevent users from adding events on past dates. When this option is enabled, dates before the current date are automatically disabled in the date picker, and any attempt to add an event to a past date will be restricted.
+
+### Key Benefits:
+- ***Improved User Experience:*** Users can only schedule events for today or future dates, avoiding confusion or invalid data entry.
+- ***Built-in Validation:*** No need for additional logic to validate past dates; this feature ensures consistent behavior throughout the calendar. 
+- ***Seamless Integration:*** Works directly with the date selection inputs (e.g., via Flatpickr) and event scheduling forms, making it easy to manage date restrictions. 
+
+### How to Use:
+
+**Enable** `disallowPastDates` **in the Component**: To enable the feature, set the disallowPastDates boolean property to true in the calendar component’s configuration:
+
+>```sh
+>  <ae-eventify [disallowPastDates]="true"></ae-eventify>
+>```
+
+**Automatic Date Picker Integration**: When enabled, the date picker (configured with Flatpickr) will automatically disable past dates. You don’t need to write additional logic to prevent users from selecting past dates.
+
+**Alert Message for Past Dates**: If the user clicks on a time slot that belongs to a past date, an alert window will appear with the following message:
+
+> ```sh
+> You cannot add an event to a past date.
+> ```
+
+
+This helps guide users and prevent them from mistakenly trying to schedule events on dates that have already passed.
+
+#### Example
+If the current date is **October 5, 2024**, any date before this will be disabled for selection, and attempting to create events on those dates will not be allowed. Additionally, clicking a time slot from a past date will trigger an alert notifying the user that past events cannot be added.
+
 ## Event Emission Features
 
 Library provides robust event emission features to handle various scenarios, including event creation, updates, deletion, and error handling.
