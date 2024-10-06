@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { DateTime } from 'luxon';
-import { DATE_FORMATS } from 'src/app/shared/constants';
+import { COLORS, DATE_FORMATS } from 'src/app/shared/constants';
 import { IEventUI } from 'src/app/shared/interfaces/event.interface';
 
 @Component({
@@ -9,6 +9,7 @@ import { IEventUI } from 'src/app/shared/interfaces/event.interface';
   styleUrls: ['./event.component.scss']
 })
 export class EventComponent {
+  colors = COLORS;
   @Input() eventSpan: number | null = null;
   @Input() eventUI: IEventUI = {
     eventBackColor: '',
@@ -21,6 +22,7 @@ export class EventComponent {
     endTime: '',
     date: '',
   }
+
   isHovered = false;
   _title: string = '';
   _description: string = '';
@@ -31,6 +33,18 @@ export class EventComponent {
   }
   set title(name: string) {
     this._title = name[0].toUpperCase() + name.slice(1);
+  }
+  get eventBackColor(): string {
+    return this.eventUI?.eventBackColor || this.colors.PRIMARY;
+  }
+  get eventHoverColor(): string {
+    return this.eventUI?.eventHoverColor || this.colors.PRIMARY_HOVER;
+  }
+  get eventBorderColor(): string {
+    return this.eventUI?.eventBorderColor || this.colors.LIGHT_GREY;
+  }
+  get eventFontColor(): string {
+    return this.eventUI?.eventFontColor || this.colors.WHITE;
   }
   changeDateFormat(date: string): string {
     return DateTime.fromISO(date).toFormat(DATE_FORMATS.WEEKDAY_FORMAT);

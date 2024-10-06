@@ -22,6 +22,7 @@ export const COLORS = {
   WHITE: '#ffffff',
   BLACK: '#000000',
   RED: '#ff0000',
+  PRIMARY_HOVER: '#4a90e2',
   TRANSPARENT: 'transparent',
   LIGHT_GREY: '#dddddd',
   MEDIUM_GREY: '#888888',

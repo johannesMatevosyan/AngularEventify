@@ -19,7 +19,7 @@ export class CurrentTimeIndicatorComponent {
       const [slotHour, slotMinute] = slot.split(':').map(Number);
 
       const slotStartTime = this.dateTime.set({ hour: slotHour, minute: slotMinute });
-      const nextSlotTime = slotStartTime.plus({ minutes: 30 });
+      const nextSlotTime = slotStartTime.plus({ minutes: 15 });
 
       const totalMinutesInSlot = nextSlotTime.diff(slotStartTime, 'minutes').minutes;
       const minutesSinceSlotStart = currentTime.diff(slotStartTime, 'minutes').minutes;

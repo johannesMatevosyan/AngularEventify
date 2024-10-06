@@ -27,7 +27,7 @@ export function isCurrentTimeInSlot(slot: string): boolean {
   const [slotHour, slotMinute] = slot.split(':').map(Number);
 
   const slotStartTime = currentTime.set({ hour: slotHour, minute: slotMinute });
-  const nextSlotTime = slotStartTime.plus({ minutes: 30 });
+  const nextSlotTime = slotStartTime.plus({ minutes: 15 });
 
   return currentTime >= slotStartTime && currentTime < nextSlotTime;
 }
