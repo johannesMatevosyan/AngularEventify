@@ -1,4 +1,7 @@
-
+// SCSS function to generate box-shadow color with opacity
+@function dynamic-shadow($color, $opacity) {
+  @return rgba($color, $opacity);
+}
 .event-box {
   background-color: var(--event-bg-color);
   height: 97%;
@@ -13,6 +16,11 @@
     transform: translateY(-2px); /* Slight lift on hover */
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* More pronounced shadow */
     background-color: var(--event-bg-color);
+  }
+  &:focus {
+    transform: translateY(-1px); /* Slight lift on hover */
+    outline: var(--event-bg-color) solid 2px;
+    box-shadow: dynamic-shadow(var(--event-bg-color), 0.5); /* glow on focus */
   }
   &.absolute {
     position: absolute;
@@ -34,8 +42,4 @@
     text-overflow: ellipsis;
   }
 
-}
-.event-box:focus {
-  outline: none;
-  box-shadow: 0 0 0 4px rgba(26, 115, 232, 0.5); /* Blue glow on focus */
 }
