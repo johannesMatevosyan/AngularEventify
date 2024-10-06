@@ -52,6 +52,7 @@ export class CalendarComponent implements OnInit, OnChanges, OnDestroy {
     showEventReminder: false,
     showBeforeMinutes: 30
   };
+  @Input() disallowPastDates: boolean = false;
   @Output() eventCreated: EventEmitter<IEvent> = new EventEmitter();
   @Output() eventUpdated: EventEmitter<IEvent> = new EventEmitter();
   @Output() eventDeleted: EventEmitter<{
@@ -303,9 +304,21 @@ export class CalendarComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
+  // Method to check if the selected date is in the past
+  isDateInPast(dateString: string): boolean {
+    const today = DateTime.now().startOf('day');  // Get the current date without the time
+    const selectedDate = DateTime.fromISO(dateString).startOf('day');  // Parse the input date
+    return selectedDate < today;
+  }
+
   addEvent(ev: Event, date: string, startTime: string): void {
     ev.preventDefault();
     ev.stopPropagation();
+
+    if(this.disallowPastDates && this.isDateInPast(date)) {
+      alert("You cannot add an event to a past date.");
+      return;
+    }
 
     let currentTime = this.now;
     const eventDateTime = getEventTime(currentTime, startTime);
