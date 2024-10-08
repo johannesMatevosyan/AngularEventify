@@ -20,25 +20,23 @@ The Event Calendar is an Angular component that provides a user-friendly interfa
 
 ## Installation
 
-Clone the repository:
-```sh
- git clone https://github.com/johannesMatevosyan/AngularEventify
-```
-Navigate to the project directory:
+# Installation
+To install the package via npm, run the following command:
 
 ```sh
-cd your-project-directory
+npm install angular-eventify
 ```
-Install dependencies:
+
+or 
 
 ```sh
-npm install
+yarn add angular-eventify
 ```
 
 ## Usage
-Import the Event Calendar component into your Angular project:
+Import the styles file your Angular project:
 ```sh
- import { EventCalendarComponent } from 'your-calendar-path';
+ import 'angular-eventify/dist/style.css'
 ```
 
 Include the component in your template:
@@ -80,7 +78,7 @@ When creating or updating an event, the following validation rules must be met:
 - **Start Time**: The event start time is required and must be specified.
 - **End Time**: The event end time is required and must be specified.
 - **Same Day Rule**: The start and end dates must be within the same day. Events that span across multiple days are not supported.
-- **Time Range**: Events can only be scheduled between 6:00 AM and 7:00 PM. If the specified time is outside this range, it will be adjusted to the last available time slot of the day.
+- **Time Range**: Events can only be scheduled between **6:00 AM** and **6:30 PM**. If the specified time is outside this range, it will be adjusted to the last available time slot of the day.
 
 ## Time Format Switching
 Event calendar provides the flexibility to display time in both continental (24-hour) and 12-hour (AM/PM) formats. By default 24-hour system is set event calendar component.
@@ -275,7 +273,7 @@ By clicking directly on any time slot (cell) rendered in the calendar view, a mo
 Alternatively, you can create a new event by clicking the 'Add Event' button located in the navigation menu. In this case, the modal dialog will open with the current date and time as the default start time, which can also be changed.
 
 ### Time Slot Restrictions
-Events can only be created within time slots ranging from 6:00 AM to 7:00 PM. If an attempt is made to create an event outside of this time range, the event will be assigned the last available time slot of the current date.
+Events can only be created within time slots ranging from **6:00 AM** to **18:30 PM**. If an attempt is made to create an event outside of this time range, the event will be assigned the last available time slot of the current date.
 
 ## Acknowledgments
 
