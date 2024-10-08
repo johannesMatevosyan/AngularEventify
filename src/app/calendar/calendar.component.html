@@ -70,6 +70,7 @@
           [title]="findEvent(day, slot)?.event?.name || ''"
           [id]="findEvent(day, slot)?.event?.id || ''"
           [eventUI]="eventUI"
+          [isAmPmFormat]="isAmPmFormat"
           [eventDuration]="{
             startTime: findEvent(day, slot)?.event?.startTime || '',
             endTime: findEvent(day, slot)?.event?.endTime || '',

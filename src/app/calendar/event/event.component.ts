@@ -22,7 +22,7 @@ export class EventComponent {
     endTime: '',
     date: '',
   }
-
+  @Input() isAmPmFormat: boolean = false;
   isHovered = false;
   _title: string = '';
   _description: string = '';
