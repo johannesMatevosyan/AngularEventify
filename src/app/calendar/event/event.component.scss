@@ -4,8 +4,8 @@
 }
 .event-box {
   background-color: var(--event-bg-color);
-  height: 97%;
-  padding: 0 0.5rem;
+  height: 99%;
+  padding: 2px 0.5rem 0 0.5rem;
   border-radius: 8px;
   border: 2px solid var(--event-border-color);
   cursor: pointer;
@@ -31,7 +31,7 @@
   }
   .event-box__title {
     display: block;
-    margin-bottom: 2px;
+    margin-bottom: 3px;
     font-size: 13px;
     font-weight: 500;
     line-height: 14px;
@@ -40,6 +40,13 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+  .event-box__duration {
+    display: block;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 14px;
+    color: var(--event-duration-color);
   }
 
 }

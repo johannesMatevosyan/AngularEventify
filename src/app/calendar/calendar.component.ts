@@ -286,10 +286,12 @@ export class CalendarComponent implements OnInit, OnChanges, OnDestroy {
     // Calculate how many 30-minute slots the event spans
     const startTime = formatToFullDate(event.date, event.startTime) ;// DateTime.fromFormat(`${event.date} ${event.startTime}`, DATE_FORMATS.FULL_DATE);
     const endTime = formatToFullDate(event.date, event.endTime); // Assume event has an endTime property
-
     const duration = endTime.diff(startTime, 'minutes').minutes;
-    const min30Slot = Math.ceil(duration / 30);
-    return duration >= 30 ? min30Slot  * 100 : min30Slot * 50; // Number of 30-minute slots the event spans multiplayed by 100%
+    if (duration <= 0) {
+      return 1;
+    }
+    const min30Slot = Math.ceil(duration / 15); // 15 minutes per slot
+    return duration >= 15 ? min30Slot  * 100 : min30Slot * 50; // Number of 30-minute slots the event spans multiplayed by 100%
   }
 
   openEvent(ev: Event, event: IEvent | null | undefined): void {
