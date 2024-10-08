@@ -12,4 +12,7 @@
   <span
     class="event-box__title"
     [ngStyle]="{'--event-title-color': eventFontColor}">{{ title }}</span>
+  <span
+    class="event-box__duration"
+    [ngStyle]="{'--event-duration-color': eventFontColor}">{{ eventDuration.startTime }} - {{ eventDuration.endTime }}</span>
 </div>
