@@ -283,7 +283,7 @@ export class CalendarComponent implements OnInit, OnChanges, OnDestroy {
       return 1; // No event at this time, so the cell spans only one row
     }
 
-    // Calculate how many 30-minute slots the event spans
+    // Calculate how many 15-minute slots the event spans
     const startTime = formatToFullDate(event.date, event.startTime) ;// DateTime.fromFormat(`${event.date} ${event.startTime}`, DATE_FORMATS.FULL_DATE);
     const endTime = formatToFullDate(event.date, event.endTime); // Assume event has an endTime property
     const duration = endTime.diff(startTime, 'minutes').minutes;
