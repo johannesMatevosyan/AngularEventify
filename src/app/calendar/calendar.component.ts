@@ -337,16 +337,16 @@ export class CalendarComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
-  trackByTimeSlot(index: number, slot: string): string {
-    const randomNum = Math.floor(Math.random() * 10000);
-    const uniqueId = (index > 1 ? index : 2)*randomNum;
-    return `${uniqueId}-${slot}__${randomNum}`
+  trackByTimeSlot(eventGrid: ISchedule[]): (index: number, slot: string) => string {
+    return (index: number, slot: string): string => {
+      return `${eventGrid[index]?.date}__${slot}`
+    }
   }
 
-  trackByEvent(index: number, obj:ISchedule): string {
-    const randomNum = Math.floor(Math.random() * 10000);
-    const uniqueId = (index > 1 ? index : 2)*randomNum;
-    return  `${uniqueId}-${obj.date}_${randomNum}`;
+  trackByEvent(slot: string): (index: number, obj:ISchedule) => string {
+    return (index: number, obj:ISchedule): string => {
+      return `${obj?.date}__${slot}`
+    }
   }
 
   ngOnDestroy(): void {
