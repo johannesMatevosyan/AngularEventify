@@ -1,13 +1,13 @@
-<header>
+<header class="ae-header">
   <div class="header-align"></div>
   <nav
     aria-label="Calendar navigation">
-    <ul class="calendar-nav">
+    <ul class="ae-navigation">
       <li>
         <button
           [style.color]="navigationColor"
           aria-label="Go to the first week of the year"
-          class="icon secondary chevron chevron-left"
+          class="ae-icon ae-header-button chevron chevron-left"
           (click)="getFirstOrLastWeek(FLWeek.FIRST)"
           >&#171;</button>
       </li>
@@ -15,7 +15,7 @@
         <button
           [style.color]="navigationColor"
           aria-label="Go to the previous week"
-          class="icon secondary chevron chevron-left"
+          class="ae-icon ae-header-button chevron chevron-left"
           (click)="toPreviousWeek()">&lsaquo;</button>
       </li>
       <li>
@@ -27,14 +27,14 @@
         <button
           [style.color]="navigationColor"
           aria-label="Go to the next week"
-          class="icon secondary chevron chevron-right"
+          class="ae-icon ae-header-button chevron chevron-right"
           (click)="toNextWeek()">&rsaquo;</button>
       </li>
       <li>
         <button
           [style.color]="navigationColor"
           aria-label="Go to the last week of the year"
-          class="icon secondary chevron chevron-right"
+          class="ae-icon ae-header-button chevron chevron-right"
           (click)="getFirstOrLastWeek(FLWeek.LAST)">&#187;</button>
       </li>
     </ul>
@@ -42,13 +42,13 @@
 
   <div>
     <button
-      class="today secondary"
+      class="today ae-header-button"
       (click)="getToday()"
       role="button"
       [attr.aria-label]="'Today is ' + todaysDate.split(' ')[0]"
       tabindex="0">Today</button>
     <button
-      class="today secondary ml05"
+      class="today ae-header-button ml05"
       (click)="addEvent()"
       role="button"
       [attr.aria-label]="'Add event'"

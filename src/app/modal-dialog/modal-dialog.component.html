@@ -17,7 +17,7 @@
             id="eventName"
             name="eventName"
             formControlName="name"
-            class="event-form-input"
+            class="ae-input"
             aria-label="Event Name"
             aria-describedby="nameError"
             [value]="''" />
@@ -25,21 +25,21 @@
           <span
             *ngIf="showErrors && hasError('name', 'required')"
             id="nameError"
-            class="error absolute"
+            class="ae-error absolute"
             aria-live="polite">
               Name is required
           </span>
         </div>
 
         <div class="event-form-time relative">
-          <div class="event-form-time-picker relative">
+          <div class="ae-time-picker relative">
             <label for="eventStartDate" class="event-form-label">Start Date:</label>
             <input
               id="startDate"
               type="text"
               name="startTime"
               formControlName="startTime"
-              class="event-form-input"
+              class="ae-input"
               aria-label="Start Date"
               aria-describedby="startDateError startDateBeforeEndDateError"
               #start
@@ -47,42 +47,42 @@
               <span
                 *ngIf="hasError('startTime', 'required')"
                 id="startDateError"
-                class="error absolute"
+                class="ae-error absolute"
                 >
                 Start Time is required
               </span>
 
           </div>
 
-          <div class="event-form-time-picker relative">
+          <div class="ae-time-picker relative">
             <label for="eventEndDate" class="event-form-label">End Date:</label>
             <input
               id="endDate"
               type="text"
               name="endTime"
               formControlName="endTime"
-              class="event-form-input"
+              class="ae-input"
               aria-label="End Date"
               aria-describedby="endDateError startDateBeforeEndDateError"
               #end
               />
               <span
                 *ngIf="hasError('endTime', 'required')"
-                class="error absolute"
+                class="ae-error absolute"
                 id="endDateError"
                 aria-live="polite">
                 End Time is required
               </span>
           </div>
 
-          <span class="error absolute"
+          <span class="ae-error absolute"
             *ngIf="submitted && eventForm.hasError('multiDayEvent')"
             id="multiDayEvent"
             aria-live="polite">
             The Events start and end dates must be within the same day.
           </span>
 
-          <span class="error absolute"
+          <span class="ae-error absolute"
             *ngIf="submitted && eventForm.hasError('startTimeBeforeEndTIme')"
             id="startTimeBeforeEndTIme"
             aria-live="polite">
@@ -94,7 +94,7 @@
         <label for="eventDescription" class="event-form-label">Description:</label>
         <textarea
           id="eventDescription"
-          class="event-form-input"
+          class="ae-input"
           name="eventDescription"
           formControlName="description"
           aria-label="Event description"
