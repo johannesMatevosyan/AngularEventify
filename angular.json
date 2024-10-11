@@ -32,7 +32,9 @@
             "styles": [
               "node_modules/flatpickr/dist/flatpickr.min.css",
               "node_modules/flatpickr/dist/plugins/confirmDate/confirmDate.css",
-              "src/styles.scss"
+              "src/styles.scss",
+              "src/styles/modals.scss",
+              "src/styles/buttons.scss"
             ],
             "scripts": [
               "node_modules/flatpickr/dist/flatpickr.min.js"
