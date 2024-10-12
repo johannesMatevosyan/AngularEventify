@@ -17,8 +17,7 @@ interface ITimeFrame {
 @Component({
   selector: 'lib-ae-eventify',
   templateUrl: './ae-eventify.component.html',
-  styles: [
-  ]
+  styleUrls: ['./ae-eventify.component.scss']
 })
 export class AeEventifyComponent {
   @ViewChild('eventModal') eventModal!: ModalDialogComponent;
@@ -99,14 +98,11 @@ export class AeEventifyComponent {
   ngOnInit(): void {
     this.weekDays = getWeekDays(this.startOfWeek);
     this.timeSlots = this.generateTimeSlots();
-    console.log('timeSlots ', this.timeSlots);
     if (this.urlData?.getUrl) {
       this.subscription = this.eventService.getAllEvents().subscribe({
         next: (events) => {
           this.eventsList = events.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
-          console.log('Events fetched successfully', this.eventsList);
           this.eventGrid = this.generateEventGrid(this.weekDays);
-          console.log('eventGrid ', this.eventGrid);
           this.cdr.detectChanges();
         },
         error: (err) => console.error('Error fetching events', err),
