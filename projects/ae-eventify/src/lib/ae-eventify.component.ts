@@ -108,6 +108,8 @@ export class AeEventifyComponent {
         error: (err) => console.error('Error fetching events', err),
         complete: () => console.log('Event fetching complete')
       });
+    } else {
+      this.eventGrid = this.generateEventGrid(this.weekDays);
     }
 
     if (this.showReminderData && this.showReminderData.showEventReminder) {
