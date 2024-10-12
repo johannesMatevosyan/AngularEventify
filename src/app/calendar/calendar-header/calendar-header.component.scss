@@ -1,5 +1,7 @@
-
-header {
+ul {
+  list-style-type: none;
+}
+.ae-header {
   padding: 1rem 45px 1rem 45px;
   color: rgba(0, 0, 0, 0.7);
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
@@ -9,18 +11,18 @@ header {
   justify-content: space-between;
   align-items: center;
   border-radius: 0;
+  h1 {
+    font-size: 1.25rem;
+    text-align: center;
+    font-weight: normal;
+  }
 }
-header h1 {
- font-size: 1.25rem;
- text-align: center;
- font-weight: normal;
-}
-.calendar-nav {
+.ae-navigation {
   display: flex;
   align-items: center;
   justify-content: center;
 }
-button.secondary {
+button.ae-header-button {
   border: 1px solid rgba(0, 0, 0, 0.1);
   background: white;
   padding: 0.5rem 0.75rem;
@@ -31,19 +33,19 @@ button.secondary {
   font-weight: 500;
   transition: background-color 0.3s, box-shadow 0.3s, color 0.3s;
 }
-button.secondary:focus {
+button.ae-header-button:focus {
   background-color: #f8f9fa; /* Slightly off-white on focus */
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.3); /* Soft gray glow */
   color: rgba(0, 0, 0, 0.7); /* Slightly darker text on focus */
   outline: none;
 }
-button.secondary:active {
+button.ae-header-button:active {
   box-shadow: none;
 }
-button.secondary:focus {
+button.ae-header-button:focus {
   outline: 0;
 }
-.icon {
+.ae-icon {
   font-size: 1.5rem;
   margin: 0 0.3rem;
   text-align: center;
@@ -65,4 +67,9 @@ button.secondary:focus {
 .header-align {
   align-self: flex-start;
   flex: 0 0 1
+}
+
+
+.ml05 {
+  margin-left: 0.5rem;
 }

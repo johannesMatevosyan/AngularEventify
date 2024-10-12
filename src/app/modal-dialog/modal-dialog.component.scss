@@ -2,7 +2,13 @@
   display: block;
   width: 100%;
 }
-
+* {
+  box-sizing: border-box;
+}
+textarea {
+  resize: none;
+  min-height: 120px;
+}
 .ae-modal-body {
   margin: 15px 0;
 }
@@ -52,18 +58,43 @@
   margin-bottom: 0.25rem;
   text-align: left;
 }
+.ae-input,
+.ae-time-picker input {
+  display: block;
+  width: 100%;
+  padding: 0.5rem !important;
+  border: 1px solid #e8e8e8 !important;
+  border-radius: 4px;
+  outline: none;
+  font-size: 1rem !important;
+  margin-bottom: 1rem;
+  color: rgba(0, 0, 0, 0.75) !important;
+}
 .event-form-time {
   display: flex;
   justify-content: space-between;
   width: 100%;
 }
-.event-form-time .event-form-time-picker {
+.event-form-time .ae-time-picker {
   width: 48%;
 }
 .move-to-end {
   display: flex;
   justify-content: flex-end;
   width: 100%;
+}
+.ae-error {
+  color: #ff0000;
+  font-size: 12px;
+  &.absolute {
+    position: absolute;
+    top: 58px;
+    left: 2px;
+  }
+}
+
+.relative {
+  position: relative;
 }
 
 /* Responsive Design */

@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, Input, OnChanges, OnDestroy, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, Input, OnChanges, OnDestroy, OnInit, Renderer2, ViewChild, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import flatpickr from 'flatpickr';
@@ -17,6 +17,7 @@ import { compareTimes, getEventTime } from '../utils/helpers';
   imports: [CommonModule, ReactiveFormsModule, DeletePopupComponent],
   templateUrl: './modal-dialog.component.html',
   styleUrls: ['./modal-dialog.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class ModalDialogComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy {
   @ViewChild('deletePopupModal') deletePopupModal!: DeletePopupComponent;

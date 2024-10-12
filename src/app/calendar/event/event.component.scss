@@ -2,7 +2,7 @@
 @function dynamic-shadow($color, $opacity) {
   @return rgba($color, $opacity);
 }
-.event-box {
+.ae-event {
   background-color: var(--event-bg-color);
   height: 99%;
   padding: 2px 0.5rem 0 0.5rem;
@@ -12,6 +12,7 @@
   z-index: 999;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
   transition: background-color 0.3s, box-shadow 0.3s, color 0.3s;
+  box-sizing: border-box;
   &:hover{
     transform: translateY(-2px); /* Slight lift on hover */
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* More pronounced shadow */
@@ -29,7 +30,7 @@
     margin: auto;
     width: calc(100% - 5px);
   }
-  .event-box__title {
+  .ae-event__title {
     display: block;
     margin-bottom: 3px;
     font-size: 13px;
@@ -41,7 +42,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  .event-box__duration {
+  .ae-event__duration {
     display: block;
     font-size: 12px;
     font-weight: 400;
