@@ -10,6 +10,7 @@ import { CurrentTimeIndicatorComponent } from './calendar/current-time-indicator
 import { DisableRightClickDirective } from './directives/disable-right-click.directive';
 import { ApplicationPipesModule } from './application-pipes/application-pipes.module';
 import { TableHeaderComponent } from './calendar/table-header/table-header.component';
+import { AeEventifyModule } from 'ae-eventify';
 
 @NgModule({
   declarations: [
@@ -19,13 +20,14 @@ import { TableHeaderComponent } from './calendar/table-header/table-header.compo
     EventComponent,
     CurrentTimeIndicatorComponent,
     DisableRightClickDirective,
-    TableHeaderComponent
+    TableHeaderComponent,
   ],
   imports: [
     BrowserModule,
     ModalDialogComponent,
     HttpClientModule,
-    ApplicationPipesModule
+    ApplicationPipesModule,
+    AeEventifyModule
   ],
   providers: [],
   bootstrap: [AppComponent]
