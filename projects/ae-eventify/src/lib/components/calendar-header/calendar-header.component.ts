@@ -1,11 +1,11 @@
 import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
-import { WeekChange } from '../../shared/enums/week-change.enum';
-import { FistLastWeek } from '../../shared/enums/first-last-week.enum';
+import { FistLastWeek } from '../../enums/first-last-week.enum';
 import { DateTime } from 'luxon';
-import { DATE_FORMATS } from '../../shared/constants';
-import { IEvent } from '../../shared/interfaces/event.interface';
-import { ModalDialogComponent } from '../../modal-dialog/modal-dialog.component';
-import { getEventTime } from '../../utils/helpers';
+import { getEventTime } from '../../helpers';
+import { WeekChange } from '../../enums/week-change.enum';
+import { DATE_FORMATS } from '../../constants';
+import { ModalDialogComponent } from '../modal-dialog/modal-dialog.component';
+import { IEvent } from '../../interfaces/event.interface';
 
 @Component({
   selector: 'app-calendar-header',
@@ -22,8 +22,8 @@ export class CalendarHeaderComponent {
   @Input() todaysDate: string = '';
   @Input() isAmPmFormat: boolean = false;
   @Output() onToday = new EventEmitter<void>();
-  @Output() onWeekCHange = new EventEmitter<WeekChange>();
-  @Output() onGetFirstOrLastWeek = new EventEmitter<FistLastWeek>();
+  @Output() onWeekCHange = new EventEmitter<any>();
+  @Output() onGetFirstOrLastWeek = new EventEmitter<any>();
 
   FLWeek = FistLastWeek;
   now = DateTime.now();

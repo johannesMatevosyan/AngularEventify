@@ -141,6 +141,39 @@
           }
         }
       }
+    },
+    "ae-eventify": {
+      "projectType": "library",
+      "root": "projects/ae-eventify",
+      "sourceRoot": "projects/ae-eventify/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/ae-eventify/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/ae-eventify/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/ae-eventify/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "tsConfig": "projects/ae-eventify/tsconfig.spec.json",
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ]
+          }
+        }
+      }
     }
   },
   "cli": {

@@ -1,0 +1,53 @@
+// SCSS function to generate box-shadow color with opacity
+@function dynamic-shadow($color, $opacity) {
+  @return rgba($color, $opacity);
+}
+.ae-event {
+  background-color: var(--event-bg-color);
+  height: 99%;
+  padding: 2px 0.5rem 0 0.5rem;
+  border-radius: 8px;
+  border: 2px solid var(--event-border-color);
+  cursor: pointer;
+  z-index: 999;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
+  transition: background-color 0.3s, box-shadow 0.3s, color 0.3s;
+  box-sizing: border-box;
+  &:hover{
+    transform: translateY(-2px); /* Slight lift on hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* More pronounced shadow */
+    background-color: var(--event-bg-color);
+  }
+  &:focus {
+    transform: translateY(-1px); /* Slight lift on hover */
+    outline: var(--event-bg-color) solid 2px;
+    box-shadow: dynamic-shadow(var(--event-bg-color), 0.5); /* glow on focus */
+  }
+  &.absolute {
+    position: absolute;
+    top: 1px;
+    left: 2px;
+    margin: auto;
+    width: calc(100% - 5px);
+  }
+  .ae-event__title {
+    display: block;
+    margin-bottom: 3px;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 14px;
+    color: var(--event-title-color);
+    padding-right: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .ae-event__duration {
+    display: block;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 14px;
+    color: var(--event-duration-color);
+  }
+
+}
