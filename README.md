@@ -25,13 +25,13 @@ With AngularEventify, you'll have everything you need to build an event scheduli
 To install the package via npm, run the following command:
 
 ```sh
-npm install angular-eventify
+npm install ae-eventify
 ```
 
 or 
 
 ```sh
-yarn add angular-eventify
+yarn add ae-eventify
 ```
 
 ## Usage
