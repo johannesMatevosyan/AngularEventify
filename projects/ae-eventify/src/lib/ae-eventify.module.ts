@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { AeEventifyComponent } from './ae-eventify.component';
-import { CalendarHeaderComponent } from './components/calendar-header/calendar-header.component';
+import { AeHeaderComponent } from './components/ae-header/ae-header.component';
 import { CommonModule } from '@angular/common';
 import { ModalDialogComponent } from './components/modal-dialog/modal-dialog.component';
 import { ApplicationPipesModule } from './application-pipes/application-pipes.module';
@@ -13,7 +13,7 @@ import { DisableRightClickDirective } from './directives/disable-right-click.dir
 
 @NgModule({
   declarations: [
-    CalendarHeaderComponent,
+    AeHeaderComponent,
     AeEventifyComponent,
     TableHeaderComponent,
     CurrentTimeIndicatorComponent,

@@ -5,7 +5,7 @@
     'color': mergedSchColors.schedulerFontColor,
   }"
   [ngClass]="customClass">
-<app-calendar-header
+<app-ae-header
   [weekStart]="weekStart"
   [weekEnd]="weekEnd"
   [year]="this.timeFrame.year"
@@ -15,7 +15,7 @@
   (onToday)="getToday()"
   (onWeekCHange)="getWeekChange($event)"
   (onGetFirstOrLastWeek)="getFirstOrLastWeek($event)"
-  ></app-calendar-header>
+  ></app-ae-header>
 
   <div class="outer">
 

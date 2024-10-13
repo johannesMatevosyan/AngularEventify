@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { CalendarComponent } from './calendar/calendar.component';
-import { CalendarHeaderComponent } from './calendar/calendar-header/calendar-header.component';
+import { AeHeaderComponent } from './calendar/ae-header/ae-header.component';
 import { EventComponent } from './calendar/event/event.component';
 import { ModalDialogComponent } from './modal-dialog/modal-dialog.component';
 import { CurrentTimeIndicatorComponent } from './calendar/current-time-indicator/current-time-indicator.component';
@@ -16,7 +16,7 @@ import { AeEventifyModule } from 'ae-eventify';
   declarations: [
     AppComponent,
     CalendarComponent,
-    CalendarHeaderComponent,
+    AeHeaderComponent,
     EventComponent,
     CurrentTimeIndicatorComponent,
     DisableRightClickDirective,
