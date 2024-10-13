@@ -8,6 +8,6 @@
     ]
   },
   "allowedNonPeerDependencies": [
-    "some-external-library"
+    "luxon", "flatpickr"
   ]
 }
