@@ -1,18 +1,18 @@
 import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { WeekChange } from '../../shared/enums/week-change.enum';
-import { FistLastWeek } from 'src/app/shared/enums/first-last-week.enum';
+import { FistLastWeek } from '../../shared/enums/first-last-week.enum';
 import { DateTime } from 'luxon';
-import { DATE_FORMATS } from 'src/app/shared/constants';
-import { IEvent } from 'src/app/shared/interfaces/event.interface';
-import { ModalDialogComponent } from 'src/app/modal-dialog/modal-dialog.component';
-import { getEventTime } from 'src/app/utils/helpers';
+import { DATE_FORMATS } from '../../shared/constants';
+import { IEvent } from '../../shared/interfaces/event.interface';
+import { ModalDialogComponent } from '../../modal-dialog/modal-dialog.component';
+import { getEventTime } from '../../utils/helpers';
 
 @Component({
-  selector: 'app-calendar-header',
-  templateUrl: './calendar-header.component.html',
-  styleUrls: ['./calendar-header.component.scss']
+  selector: 'app-ae-header',
+  templateUrl: './ae-header.component.html',
+  styleUrls: ['./ae-header.component.scss']
 })
-export class CalendarHeaderComponent {
+export class AeHeaderComponent {
   @ViewChild('eventModal') eventModal!: ModalDialogComponent;
   @Input() year: number = new Date().getFullYear();
   @Input() monthName: string = new Date(Date.now()).toLocaleString("en-US", { month: "long" });

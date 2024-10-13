@@ -1,0 +1,13 @@
+<div class="ae-modal-backdrop delete-popup-backdrop" *ngIf="isDeletePopupVisible" (click)="close()"></div>
+<div class="delete-popup-content" *ngIf="isDeletePopupVisible">
+  <h2 class="ae-modal-title">Delete event</h2>
+
+  <p class="delete-popup-message">Are you sure you want to delete <span class="deleted-event-name">"{{name}}"</span> event?.
+    The event will be deleted permanntly. It can't be undone.</p>
+
+  <div class="delete-popup-footer">
+    <button class="ae-button cancel-button" type="button" (click)="close()">Cancel</button>
+    <button class="ae-button delete-button" type="button" (click)="deleteEvent(id, name)">Ok</button>
+  </div>
+</div>
+

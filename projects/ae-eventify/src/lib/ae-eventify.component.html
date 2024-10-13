@@ -1,0 +1,102 @@
+<div class="ae-calendar"
+  role="application"
+  [style]="{
+    'background-color': mergedSchColors.schedulerBackColor,
+    'color': mergedSchColors.schedulerFontColor,
+  }"
+  [ngClass]="customClass">
+<app-ae-header
+  [weekStart]="weekStart"
+  [weekEnd]="weekEnd"
+  [year]="this.timeFrame.year"
+  [monthName]="this.timeFrame.monthName"
+  [navigationColor]="mergedSchColors.navigationColor"
+  [todaysDate]="today"
+  (onToday)="getToday()"
+  (onWeekCHange)="getWeekChange($event)"
+  (onGetFirstOrLastWeek)="getFirstOrLastWeek($event)"
+  ></app-ae-header>
+
+  <div class="outer">
+
+    <div class="ae-wrapper">
+      <table
+        class="offset"
+        aria-label="Event calendar"
+      >
+      <app-table-header
+        [weekDays]="weekDays"
+        [todaysDate]="today.split(' ')[0]"
+        [mergedSchColors]="mergedSchColors"></app-table-header>
+
+      <tbody role="rowgroup">
+
+        <tr
+          *ngFor="let slot of timeSlots; even as isEven; trackBy: trackByTimeSlot(eventGrid)"
+          [attr.data-time]="slot"
+          scope="row">
+          <td class="headcol" [style]="{
+            'color': mergedSchColors.schedulerFontColor,
+            'border-right': '1px solid ' + mergedSchColors.schedulerFontColor ? mergedSchColors.cellColor : colors.LIGHT_GREY,
+          }">
+            <time
+              *ngIf="isEven"
+              class="headcol-text"
+              [attr.aria-label]="isAmPmFormat ? (slot | timeFormat) : slot"
+              [ngClass]="{'am-pm' : isAmPmFormat}">
+              {{ isAmPmFormat ? (slot | timeFormat) : slot }}
+            </time>
+          </td>
+          <td
+            *ngFor="let day of eventGrid; trackBy: trackByEvent(slot)"
+            [style]="{
+              'border-right': '1px solid ' + mergedSchColors.cellColor ? mergedSchColors.cellColor : colors.LIGHT_GREY,
+              'border-bottom': '1px solid ' + mergedSchColors.cellColor ? mergedSchColors.cellColor : colors.LIGHT_GREY,
+            }"
+            (click)="findEvent(day, slot) ? addEvent($event, day.date, slot) : null;">
+
+            <app-current-time-indicator
+              *ngIf="day.date === today.split(' ')[0] && checkIndicatorPosition(slot)"
+              [currentTime]="slot"
+              [barColor]="mergedSchColors.currentTimeBarColor"
+              ></app-current-time-indicator>
+
+            <app-event
+              *ngIf="findEvent(day, slot)?.event; else noEvent"
+              [appDisableRightClick]="disableRightClick"
+              (click)="openEvent($event, findEvent(day, slot)?.event)"
+              (keydown.enter)="openEvent($event, findEvent(day, slot)?.event)"
+              [eventSpan]="getEventSpan(day.date, slot) || null"
+              [title]="findEvent(day, slot)?.event?.name || ''"
+              [id]="findEvent(day, slot)?.event?.id || ''"
+              [eventUI]="eventUI"
+              [isAmPmFormat]="isAmPmFormat"
+              [eventDuration]="{
+                startTime: findEvent(day, slot)?.event?.startTime || '',
+                endTime: findEvent(day, slot)?.event?.endTime || '',
+                date: findEvent(day, slot)?.event?.date || ''
+              }"
+              >
+            </app-event>
+
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+    </div>
+
+  </div>
+
+</div>
+
+<ng-template #noEvent>
+  <!-- Placeholder or empty cell -->
+</ng-template>
+
+<app-modal-dialog
+  #eventModal
+  [data]="currentEvent"
+  [isAmPmFormat]="isAmPmFormat"
+  [hideOnEsc]='true'>
+</app-modal-dialog>

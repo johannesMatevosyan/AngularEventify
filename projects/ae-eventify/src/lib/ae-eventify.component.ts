@@ -1,13 +1,13 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
-import { DateTime } from "luxon";
-import { ModalDialogComponent } from '../modal-dialog/modal-dialog.component';
-import { COLORS, DATE_FORMATS, START_TIME, END_TIME } from '../shared/constants';
-import { WeekChange } from '../shared/enums/week-change.enum';
-import { FistLastWeek } from '../shared/enums/first-last-week.enum';
-import { IEvent, IEventUI, ISchedule, IScheduleItem, IWeekDay, schedulerUI, IUrlData } from '../shared/interfaces/event.interface';
+import { ChangeDetectorRef, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { IEvent, IEventUI, ISchedule, IScheduleItem, IUrlData, IWeekDay, schedulerUI } from './interfaces/event.interface';
+import { formatToFullDate, formatWeekData, getEventTime, getWeekDays, isCurrentTimeInSlot } from './helpers';
+import { ModalDialogComponent } from './components/modal-dialog/modal-dialog.component';
+import { COLORS, DATE_FORMATS, END_TIME, START_TIME } from './constants';
+import { DateTime } from 'luxon';
 import { interval, Subscription } from 'rxjs';
-import { EventService } from '../service/event.service';
-import { formatToFullDate, formatWeekData, getEventTime, getWeekDays, isCurrentTimeInSlot } from '../utils/helpers';
+import { WeekChange } from './enums/week-change.enum';
+import { FistLastWeek } from './enums/first-last-week.enum';
+import { AeEventifyService } from './ae-eventify.service';
 
 interface ITimeFrame {
   monthName: string;
@@ -15,11 +15,11 @@ interface ITimeFrame {
 }
 
 @Component({
-  selector: 'app-calendar',
-  templateUrl: './calendar.component.html',
-  styleUrls: ['./calendar.component.scss']
+  selector: 'lib-ae-eventify',
+  templateUrl: './ae-eventify.component.html',
+  styleUrls: ['./ae-eventify.component.scss']
 })
-export class CalendarComponent implements OnInit, OnChanges, OnDestroy {
+export class AeEventifyComponent {
   @ViewChild('eventModal') eventModal!: ModalDialogComponent;
   @Input() schedulerUI: schedulerUI = {
     schedulerBackColor: '',
@@ -83,7 +83,7 @@ export class CalendarComponent implements OnInit, OnChanges, OnDestroy {
   isModalOpen = false;
   private subscription: Subscription = new Subscription();
   private reminderCheckSubscription: Subscription | null = null;
-  constructor(private cdr: ChangeDetectorRef, private eventService: EventService) {
+  constructor(private cdr: ChangeDetectorRef, private eventService: AeEventifyService) {
     this.eventService.init(this.urlData);
   }
   get mergedSchColors() {

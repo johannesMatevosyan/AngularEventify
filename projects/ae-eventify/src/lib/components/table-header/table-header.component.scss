@@ -1,0 +1,16 @@
+:host {
+  display: table-header-group; /* Make the component behave as <thead> */
+  width: 100%;
+}
+th {
+  font-size: 1.1rem;
+  font-weight: bold;
+  padding: 1rem;
+  border-bottom: 2px solid #ddd;
+  text-align: center;
+  width: 100%;
+  &:first-child {
+    width: 120px;
+    border-bottom: 2px solid transparent;
+  }
+}

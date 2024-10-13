@@ -2,6 +2,14 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "paths": {
+      "ae-eventify": [
+        "dist/ae-eventify"
+      ],
+      "angular-eventify": [
+        "dist/angular-eventify"
+      ]
+    },
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,

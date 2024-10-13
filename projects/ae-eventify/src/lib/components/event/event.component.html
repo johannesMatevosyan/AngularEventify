@@ -1,0 +1,22 @@
+<div
+  tabindex="0"
+  [style.height.%]="eventSpan ? eventSpan : null"
+  [attr.aria-label]="title + ': at ' + changeDateFormat(eventDuration.date) + ', from ' + eventDuration.startTime + ' to ' + eventDuration.endTime"
+  [ngStyle]="{
+    '--event-bg-color': isHovered ? eventHoverColor : eventBackColor,
+    '--event-border-color': eventBorderColor
+    }"
+  (mouseover)="isHovered = true"
+  (mouseleave)="isHovered = false"
+  class="ae-event absolute">
+  <span
+    class="ae-event__title"
+    [ngStyle]="{'--event-title-color': eventFontColor}">{{ title }}</span>
+  <span
+    class="ae-event__duration"
+    [ngStyle]="{'--event-duration-color': eventFontColor}">
+      <ng-container *ngIf="isAmPmFormat">{{ eventDuration.startTime  | timeFormat }} - {{ eventDuration.endTime  | timeFormat }}</ng-container>
+      <ng-container *ngIf="!isAmPmFormat">{{ eventDuration.startTime }} - {{ eventDuration.endTime }}</ng-container>
+
+  </span>
+</div>
