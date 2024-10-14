@@ -60,14 +60,42 @@ Once the package is installed, you need to import it into your AppModule (or any
 
 ### Additional Setup
 
+#### Add Required Styles
+
+To ensure the proper styling of the components provided by Angular Eventify, you need to add the following styles to your project's angular.json file:
+
+- **Flatpickr**: This library uses Flatpickr under the hood for date and time picking functionality.
+- **Angular Eventify Styles**: Custom styles provided by the library need to be included for a consistent look and feel.
+
+In your angular.json file, locate the styles array (usually inside the build options) and add the following paths:
+
+```sh
+{
+  "projects": {
+    "your-app-name": {
+      "architect": {
+        "build": {
+          "options": {
+            "styles": [
+              "node_modules/flatpickr/dist/flatpickr.min.css",
+              "node_modules/angular-eventify/styles/ui-styles.scss"
+            ]
+          }
+        }
+      }
+    }
+  }
+}
+
+```
+
 #### Configure Flatpickr Plugin
 
-The library comes with built-in support for date and time selection using the `flatpickr` library under the hood, offering a lightweight and customizable date picker experience.
+As mentioned above the library comes with built-in support for date and time selection using the `flatpickr` library . 
 
-Due to usage of `flatpickr` plugin (like the confirmDate plugin) in your project, you may encounter a warning related to CommonJS optimization in Angular. To avoid this warning, you need to add an exception for CommonJS dependencies in your angular.json file.
+Since **Angular Eventify** uses the flatpickr plugin for date confirmation (`confirmDate`), you need to allow this CommonJS dependency to avoid optimization warnings during your build.
 
-- Open your project's `angular.json` file.
-- Under the `build` section of your application, add the following inside the `options` object:
+Add the following to your `angular.json` file under the `build` options:
 
 
 ```sh
