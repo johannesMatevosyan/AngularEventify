@@ -9,5 +9,12 @@
   },
   "allowedNonPeerDependencies": [
     "luxon", "flatpickr"
+  ],
+  "assets": [
+    {
+      "input": "src/lib/styles",
+      "glob": "**/*.scss",
+      "output": "styles"
+    }
   ]
 }
