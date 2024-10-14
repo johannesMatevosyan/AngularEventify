@@ -1,13 +1,15 @@
 {
   "name": "angular-eventify",
-  "version": "0.0.3",
+  "version": "0.0.8",
   "peerDependencies": {
     "@angular/common": "^15.0.0",
     "@angular/core": "^15.0.0"
+
   },
   "dependencies": {
     "tslib": "^2.3.0",
     "luxon": "^3.5.0",
-    "flatpickr": "^4.6.13"
+    "flatpickr": "^4.6.13",
+    "@types/luxon": "^3.4.2"
   }
 }
