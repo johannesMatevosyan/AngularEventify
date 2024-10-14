@@ -25,20 +25,105 @@ With AngularEventify, you'll have everything you need to build an event scheduli
 To install the package via npm, run the following command:
 
 ```sh
-npm install ae-eventify
+npm install angular-eventify
 ```
 
 or 
 
 ```sh
-yarn add ae-eventify
+yarn add angular-eventify
 ```
+### Import in your Angular app:
 
-## Usage
-Import the styles file your Angular project:
+Once the package is installed, you need to import it into your AppModule (or any other module where you want to use it).
+
+ - Open the app.module.ts file.
+ - Import the module from the installed package.
 
 ```sh
- import 'angular-eventify/dist/style.css'
+  import { AeEventifyModule } from 'angular-eventify';
+
+  @NgModule({
+    declarations: [
+      // Your components here
+    ],
+    imports: [
+      // Other modules here
+      AeEventifyModule
+    ],
+    providers: [],
+    bootstrap: [AppComponent]
+  })
+  export class AppModule { }
+
+```
+
+### Additional Setup
+
+#### Add Required Styles
+
+To ensure the proper styling of the components provided by Angular Eventify, you need to add the following styles to your project's angular.json file:
+
+- **Flatpickr**: This library uses Flatpickr under the hood for date and time picking functionality.
+- **Angular Eventify Styles**: Custom styles provided by the library need to be included for a consistent look and feel.
+
+In your angular.json file, locate the styles array (usually inside the build options) and add the following paths:
+
+```sh
+{
+  "projects": {
+    "your-app-name": {
+      "architect": {
+        "build": {
+          "options": {
+            "styles": [
+              "node_modules/flatpickr/dist/flatpickr.min.css",
+              "node_modules/angular-eventify/styles/ui-styles.scss"
+            ]
+          }
+        }
+      }
+    }
+  }
+}
+
+```
+
+#### Configure Flatpickr Plugin
+
+As mentioned above the library comes with built-in support for date and time selection using the `flatpickr` library . 
+
+Since **Angular Eventify** uses the flatpickr plugin for date confirmation (`confirmDate`), you need to allow this CommonJS dependency to avoid optimization warnings during your build.
+
+Add the following to your `angular.json` file under the `build` options:
+
+
+```sh
+{
+    "projects": {
+        "your-app": {
+			"architect": {
+				"build": {
+					"options": {
+						"allowedCommonJsDependencies": [
+							"flatpickr/dist/plugins/confirmDate/confirmDate"
+						]
+					}
+				}
+			}
+        }
+    }
+}
+```
+
+This will allow Angular to use the flatpickr plugin without warning about CommonJS modules.
+
+#### Add HttpClientModule
+
+Since `angular-eventify` uses HttpClient internally, make sure to import `HttpClientModule` in your application's AppModule to avoid the error:
+
+```sh
+ ERROR NullInjectorError: No provider for HttpClient!
 ```
 
 Include the component in your template:
