@@ -21,6 +21,14 @@
   ],
   "author": "Your Name hovmatevosyan@gmail.com",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/johannesMatevosyan/AngularEventify"
+  },
+  "bugs": {
+    "url": "https://github.com/johannesMatevosyan/AngularEventify/issues"
+  },
+  "homepage": "https://github.com/johannesMatevosyan/AngularEventify#readme",
   "scripts": {
     "build": "ng build ae-eventify",
     "postinstall": "npm run build"
