@@ -1,6 +1,10 @@
 {
   "name": "angular-eventify",
   "version": "1.0.0",
+  "scripts": {
+    "build": "ng build ae-eventify",
+    "postinstall": "npm run build"
+  },
   "peerDependencies": {
     "@angular/common": "^15.0.0",
     "@angular/core": "^15.0.0"
