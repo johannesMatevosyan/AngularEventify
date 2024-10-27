@@ -25,13 +25,13 @@ With AngularEventify, you'll have everything you need to build an event scheduli
 To install the package via npm, run the following command:
 
 ```sh
-npm install angular-eventify
+npm install ae-eventify
 ```
 
 or 
 
 ```sh
-yarn add angular-eventify
+yarn add ae-eventify
 ```
 ### Import in your Angular app:
 
@@ -41,7 +41,7 @@ Once the package is installed, you need to import it into your AppModule (or any
  - Import the module from the installed package.
 
 ```sh
-  import { AeEventifyModule } from 'angular-eventify';
+  import { AeEventifyModule } from 'ae-eventify';
 
   @NgModule({
     declarations: [
@@ -62,7 +62,7 @@ Once the package is installed, you need to import it into your AppModule (or any
 Import the styles file your Angular project:
 
 ```sh
- import 'angular-eventify/dist/style.css'
+ import 'ae-eventify/dist/style.css'
 ```
 
 Include the component in your template:
