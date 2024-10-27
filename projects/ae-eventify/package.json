@@ -1,5 +1,5 @@
 {
-  "name": "angular-eventify",
+  "name": "ae-eventify",
   "version": "1.0.1",
   "description": "AngularEventify is a fully customizable event scheduling and calendar component library for Angular applications. It supports time slot management, event creation, and custom theming.",
   "keywords": [
